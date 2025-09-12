@@ -89,7 +89,7 @@ export default function Home() {
 
       <footer className="border-t border-gray-100 py-8">
         <div className="max-w-6xl mx-auto px-4 text-center text-gray-600">
-          <p>&copy; 2025 clearly.gift. Simple gift lists, clearly done.</p>
+          <p>&copy; 2025 clearly.gift. Share your wishlist, keep the surprise.</p>
         </div>
       </footer>
     </div>

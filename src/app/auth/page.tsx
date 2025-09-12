@@ -7,7 +7,7 @@ export default function AuthPage() {
             <span className="text-white font-bold">C</span>
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Welcome to clearly.gift</h1>
-          <p className="text-gray-600 mt-2">Enter your email to get started</p>
+          <p className="text-gray-600 mt-2">Share your wishlist, keep the surprise</p>
         </div>
 
         <form className="space-y-6">

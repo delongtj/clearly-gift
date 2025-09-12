@@ -35,7 +35,7 @@ export default function Dashboard() {
           </div>
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Create your first list</h2>
           <p className="text-gray-600 mb-6">
-            Start by creating a wish list to share with friends and family
+            Share your wishlist, keep the surprise
           </p>
           <button className="bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700">
             Create Your First List

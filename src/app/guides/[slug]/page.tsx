@@ -235,7 +235,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
               <span className="text-2xl font-bold text-gray-900">clearly.gift</span>
             </div>
             <p className="text-gray-600 mb-6">
-              Simple gift lists, clearly done.
+              Share your wishlist, keep the surprise.
             </p>
             <div className="flex justify-center space-x-6 text-sm text-gray-600">
               <a href="/guides" className="hover:text-gray-900">All Guides</a>
