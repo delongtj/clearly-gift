@@ -120,12 +120,12 @@ export default async function GuidePage({ params }: GuidePageProps) {
       <header className="bg-white shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+            <a href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
               <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">C</span>
               </div>
               <span className="text-xl font-bold text-gray-900">clearly.gift</span>
-            </div>
+            </a>
             <div className="flex items-center space-x-4">
               <a href="/guides" className="text-gray-600 hover:text-gray-900 font-medium">
                 All Guides
@@ -246,8 +246,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
           
           {/* Affiliate Disclaimer */}
           <div className="border-t border-gray-200 pt-8 text-center">
-            <p className="text-sm text-gray-500 max-w-2xl mx-auto leading-relaxed">
-              <strong>Affiliate Disclosure:</strong> This guide contains affiliate links. When you purchase through these links, clearly.gift may earn a commission at no additional cost to you. We only recommend products we genuinely believe in and that align with our commitment to helping you find the perfect gifts. Your support helps us continue creating helpful content.
+            <p className="text-xs text-gray-500">
+              This site contains affiliate links. We may earn a commission when you purchase through these links at no additional cost to you.
             </p>
             <p className="text-xs text-gray-400 mt-4">
               &copy; 2025 clearly.gift. All rights reserved.

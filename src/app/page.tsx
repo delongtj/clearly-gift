@@ -29,7 +29,7 @@ export default function Home() {
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
             The simplest way to share your wish list
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
             Create beautiful, clutter-free wish lists that friends and family can view and claim gifts from - no sign-up required for them.
           </p>
           <Link href="/auth" className="bg-emerald-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-emerald-700 inline-block">
@@ -42,40 +42,40 @@ export default function Home() {
             <div className="w-12 h-12 bg-emerald-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
               <span className="text-emerald-600 font-bold">1</span>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Dead Simple Setup</h3>
-            <p className="text-gray-600">Just your email and a verification code. No lengthy forms or complex profiles.</p>
+            <h3 className="text-xl font-semibold mb-2 text-gray-900">Dead Simple Setup</h3>
+            <p className="text-gray-700">Just your email and a verification code. No lengthy forms or complex profiles.</p>
           </div>
           <div className="text-center">
             <div className="w-12 h-12 bg-emerald-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
               <span className="text-emerald-600 font-bold">2</span>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Share Instantly</h3>
-            <p className="text-gray-600">Get a private link to share with family and friends. No accounts needed for them.</p>
+            <h3 className="text-xl font-semibold mb-2 text-gray-900">Share Instantly</h3>
+            <p className="text-gray-700">Get a private link to share with family and friends. No accounts needed for them.</p>
           </div>
           <div className="text-center">
             <div className="w-12 h-12 bg-emerald-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
               <span className="text-emerald-600 font-bold">3</span>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Clean & Private</h3>
-            <p className="text-gray-600">Beautifully minimal design. Others can claim items anonymously without seeing what's been taken.</p>
+            <h3 className="text-xl font-semibold mb-2 text-gray-900">Clean & Private</h3>
+            <p className="text-gray-700">Beautifully minimal design. Others can claim items anonymously without seeing what's been taken.</p>
           </div>
         </section>
 
         <section className="py-16 bg-gray-50 rounded-2xl mb-16">
           <div className="px-8">
-            <h2 className="text-3xl font-bold text-center mb-12">Gift Guides</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">Gift Guides</h2>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h3 className="font-semibold mb-2">Top Gifts for Toddlers 2025</h3>
-                <p className="text-gray-600 text-sm">10 perfect picks that'll keep the little ones happy and engaged.</p>
+                <h3 className="font-semibold mb-2 text-gray-900">Top Gifts for Toddlers 2025</h3>
+                <p className="text-gray-700 text-sm">10 perfect picks that'll keep the little ones happy and engaged.</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h3 className="font-semibold mb-2">Best Tech Gifts Under $100</h3>
-                <p className="text-gray-600 text-sm">Gadgets and accessories that won't break the bank.</p>
+                <h3 className="font-semibold mb-2 text-gray-900">Best Tech Gifts Under $100</h3>
+                <p className="text-gray-700 text-sm">Gadgets and accessories that won't break the bank.</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h3 className="font-semibold mb-2">Gifts for Coffee Lovers</h3>
-                <p className="text-gray-600 text-sm">From beans to brewers, everything for the caffeine connoisseur.</p>
+                <h3 className="font-semibold mb-2 text-gray-900">Gifts for Coffee Lovers</h3>
+                <p className="text-gray-700 text-sm">From beans to brewers, everything for the caffeine connoisseur.</p>
               </div>
             </div>
             <div className="text-center mt-8">
@@ -88,8 +88,11 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-gray-100 py-8">
-        <div className="max-w-6xl mx-auto px-4 text-center text-gray-600">
-          <p>&copy; 2025 clearly.gift. Share your wishlist, keep the surprise.</p>
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <p className="text-gray-700 mb-4">&copy; 2025 clearly.gift. Share your wishlist, keep the surprise.</p>
+          <p className="text-xs text-gray-500">
+            This site contains affiliate links. We may earn a commission when you purchase through these links at no additional cost to you.
+          </p>
         </div>
       </footer>
     </div>

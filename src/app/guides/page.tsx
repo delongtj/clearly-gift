@@ -1,17 +1,36 @@
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Gift Guides',
+  description: 'Discover curated gift guides for every person and occasion. Find the perfect gifts for coffee lovers, tech enthusiasts, runners, toddlers, and more.',
+  keywords: ['gift guides', 'gift ideas', 'present ideas', 'holiday gifts', 'birthday gifts', 'coffee gifts', 'tech gifts', 'running gifts'],
+  openGraph: {
+    title: 'Gift Guides | clearly.gift',
+    description: 'Discover curated gift guides for every person and occasion. Find the perfect gifts for coffee lovers, tech enthusiasts, runners, toddlers, and more.',
+    url: '/guides',
+    type: 'website',
+  },
+  twitter: {
+    title: 'Gift Guides | clearly.gift',
+    description: 'Discover curated gift guides for every person and occasion. Find the perfect gifts for coffee lovers, tech enthusiasts, runners, toddlers, and more.',
+    card: 'summary_large_image',
+  },
+}
+
 export default function GuidesPage() {
   return (
     <div className="min-h-screen bg-white">
       <header className="border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+            <a href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
               <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">C</span>
               </div>
               <span className="text-2xl font-bold text-gray-900">clearly.gift</span>
-            </div>
+            </a>
             <div className="flex items-center space-x-4">
-              <a href="/" className="text-gray-600 hover:text-gray-900">
+              <a href="/" className="text-gray-700 hover:text-gray-900">
                 Home
               </a>
               <a href="/auth" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
@@ -25,7 +44,7 @@ export default function GuidesPage() {
       <main className="max-w-6xl mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Gift Guides</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-700 max-w-2xl mx-auto">
             Curated collections of the best gifts for every person and occasion
           </p>
         </div>
@@ -36,8 +55,8 @@ export default function GuidesPage() {
               <span className="text-4xl">🧸</span>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">Top Gifts for Toddlers 2025</h3>
-              <p className="text-gray-600 text-sm mb-4">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top Gifts for Toddlers 2025</h3>
+              <p className="text-gray-700 text-sm mb-4">
                 10 perfect picks that'll keep the little ones happy and engaged, from educational toys to creative activities.
               </p>
               <a href="/guides/toddlers-2025" className="text-emerald-600 hover:text-emerald-700 font-medium">
@@ -51,8 +70,8 @@ export default function GuidesPage() {
               <span className="text-4xl">💻</span>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">Best Tech Gifts Under $100</h3>
-              <p className="text-gray-600 text-sm mb-4">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">Best Tech Gifts Under $100</h3>
+              <p className="text-gray-700 text-sm mb-4">
                 Gadgets and accessories that won't break the bank but will definitely impress tech enthusiasts.
               </p>
               <a href="/guides/tech-under-100" className="text-emerald-600 hover:text-emerald-700 font-medium">
@@ -66,8 +85,8 @@ export default function GuidesPage() {
               <span className="text-4xl">☕</span>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">Gifts for Coffee Lovers</h3>
-              <p className="text-gray-600 text-sm mb-4">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">Gifts for Coffee Lovers</h3>
+              <p className="text-gray-700 text-sm mb-4">
                 From beans to brewers, everything the caffeine connoisseur needs for the perfect cup.
               </p>
               <a href="/guides/coffee-lovers" className="text-emerald-600 hover:text-emerald-700 font-medium">
@@ -81,8 +100,8 @@ export default function GuidesPage() {
               <span className="text-4xl">🏃‍♀️</span>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">Top Gifts for Runners</h3>
-              <p className="text-gray-600 text-sm mb-4">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top Gifts for Runners</h3>
+              <p className="text-gray-700 text-sm mb-4">
                 Essential gear and accessories that will help runners achieve their personal best.
               </p>
               <a href="/guides/runners" className="text-emerald-600 hover:text-emerald-700 font-medium">
@@ -96,8 +115,8 @@ export default function GuidesPage() {
               <span className="text-4xl">🍳</span>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">Kitchen Essentials for Food Lovers</h3>
-              <p className="text-gray-600 text-sm mb-4">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">Kitchen Essentials for Food Lovers</h3>
+              <p className="text-gray-700 text-sm mb-4">
                 Must-have tools and gadgets for anyone who loves to cook or bake at home.
               </p>
               <a href="/guides/kitchen-essentials" className="text-emerald-600 hover:text-emerald-700 font-medium">
@@ -111,8 +130,8 @@ export default function GuidesPage() {
               <span className="text-4xl">🎮</span>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">Best Gaming Gifts 2025</h3>
-              <p className="text-gray-600 text-sm mb-4">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">Best Gaming Gifts 2025</h3>
+              <p className="text-gray-700 text-sm mb-4">
                 From accessories to games, perfect gifts for gamers across all platforms and skill levels.
               </p>
               <a href="/guides/gaming-gifts" className="text-emerald-600 hover:text-emerald-700 font-medium">
@@ -123,15 +142,18 @@ export default function GuidesPage() {
         </div>
 
         <div className="text-center mt-12">
-          <p className="text-gray-600">
+          <p className="text-gray-700">
             More guides coming soon! Check back regularly for new gift ideas.
           </p>
         </div>
       </main>
 
       <footer className="border-t border-gray-100 py-8 mt-16">
-        <div className="max-w-6xl mx-auto px-4 text-center text-gray-600">
+        <div className="max-w-6xl mx-auto px-4 text-center text-gray-700">
           <p>&copy; 2025 clearly.gift. Share your wishlist, keep the surprise.</p>
+          <p className="text-xs text-gray-500 mt-4">
+            This site contains affiliate links. We may earn a commission when you purchase through these links at no additional cost to you.
+          </p>
         </div>
       </footer>
     </div>

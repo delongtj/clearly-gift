@@ -1,0 +1,17 @@
+# robots.txt for clearly.gift
+
+User-agent: *
+Allow: /
+Allow: /guides/
+Allow: /guides/*
+
+# Disallow private/sensitive areas
+Disallow: /dashboard
+Disallow: /dashboard/*
+Disallow: /auth
+Disallow: /list/
+Disallow: /list/*
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://clearly.gift/sitemap.xml

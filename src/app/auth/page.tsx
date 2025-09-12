@@ -1,11 +1,29 @@
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Sign In',
+  description: 'Sign in to clearly.gift to create and manage your wish lists. Enter your email to get started - no complex registration required.',
+  openGraph: {
+    title: 'Sign In | clearly.gift',
+    description: 'Sign in to clearly.gift to create and manage your wish lists. Enter your email to get started - no complex registration required.',
+    url: '/auth',
+  },
+  twitter: {
+    title: 'Sign In | clearly.gift',
+    description: 'Sign in to clearly.gift to create and manage your wish lists. Enter your email to get started - no complex registration required.',
+  },
+}
+
 export default function AuthPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       <div className="max-w-md w-full bg-white rounded-lg shadow-sm p-8">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 bg-emerald-600 rounded-lg mx-auto mb-4 flex items-center justify-center">
-            <span className="text-white font-bold">C</span>
-          </div>
+          <a href="/" className="inline-block">
+            <div className="w-12 h-12 bg-emerald-600 rounded-lg mx-auto mb-4 flex items-center justify-center hover:bg-emerald-700 transition-colors">
+              <span className="text-white font-bold">C</span>
+            </div>
+          </a>
           <h1 className="text-2xl font-bold text-gray-900">Welcome to clearly.gift</h1>
           <p className="text-gray-600 mt-2">Share your wishlist, keep the surprise</p>
         </div>
@@ -39,6 +57,14 @@ export default function AuthPage() {
           </p>
         </div>
       </div>
+      
+      <footer className="absolute bottom-0 w-full py-4">
+        <div className="max-w-md mx-auto px-4 text-center">
+          <p className="text-xs text-gray-500">
+            This site contains affiliate links. We may earn a commission when you purchase through these links at no additional cost to you.
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }
