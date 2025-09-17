@@ -55,11 +55,11 @@ export default function GuidesPage() {
               <span className="text-4xl">🧸</span>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gifts for Toddlers</h3>
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Toddlers</h3>
               <p className="text-gray-700 text-sm mb-4">
                 10 perfect picks that'll keep the little ones happy and engaged, from educational toys to creative activities.
               </p>
-              <a href="/guides/top-10-gifts-for-toddlers" className="text-emerald-600 hover:text-emerald-700 font-medium">
+              <a href="/guides/top-10-gift-ideas-for-toddlers" className="text-emerald-600 hover:text-emerald-700 font-medium">
                 Read Guide →
               </a>
             </div>
@@ -70,11 +70,11 @@ export default function GuidesPage() {
               <span className="text-4xl">💻</span>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gifts for Tech Lovers</h3>
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Tech Lovers</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Gadgets and accessories that won't break the bank but will definitely impress tech enthusiasts.
               </p>
-              <a href="/guides/top-10-gifts-for-tech-lovers" className="text-emerald-600 hover:text-emerald-700 font-medium">
+              <a href="/guides/top-10-gift-ideas-for-tech-lovers" className="text-emerald-600 hover:text-emerald-700 font-medium">
                 Read Guide →
               </a>
             </div>
@@ -85,11 +85,11 @@ export default function GuidesPage() {
               <span className="text-4xl">☕</span>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gifts for Coffee Lovers</h3>
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Coffee Lovers</h3>
               <p className="text-gray-700 text-sm mb-4">
                 From beans to brewers, everything the caffeine connoisseur needs for the perfect cup.
               </p>
-              <a href="/guides/top-10-gifts-for-coffee-lovers" className="text-emerald-600 hover:text-emerald-700 font-medium">
+              <a href="/guides/top-10-gift-ideas-for-coffee-lovers" className="text-emerald-600 hover:text-emerald-700 font-medium">
                 Read Guide →
               </a>
             </div>
@@ -100,11 +100,11 @@ export default function GuidesPage() {
               <span className="text-4xl">🏃‍♀️</span>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gifts for Runners</h3>
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Runners</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Essential gear and accessories that will help runners achieve their personal best.
               </p>
-              <a href="/guides/top-10-gifts-for-runners" className="text-emerald-600 hover:text-emerald-700 font-medium">
+              <a href="/guides/top-10-gift-ideas-for-runners" className="text-emerald-600 hover:text-emerald-700 font-medium">
                 Read Guide →
               </a>
             </div>
@@ -115,11 +115,11 @@ export default function GuidesPage() {
               <span className="text-4xl">🍳</span>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gifts for Food Lovers</h3>
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Food Lovers</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Must-have tools and gadgets for anyone who loves to cook or bake at home.
               </p>
-              <a href="/guides/top-10-gifts-for-food-lovers" className="text-emerald-600 hover:text-emerald-700 font-medium">
+              <a href="/guides/top-10-gift-ideas-for-food-lovers" className="text-emerald-600 hover:text-emerald-700 font-medium">
                 Read Guide →
               </a>
             </div>
@@ -130,11 +130,11 @@ export default function GuidesPage() {
               <span className="text-4xl">🎮</span>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gifts for Gamers</h3>
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Gamers</h3>
               <p className="text-gray-700 text-sm mb-4">
                 From accessories to games, perfect gifts for gamers across all platforms and skill levels.
               </p>
-              <a href="/guides/top-10-gifts-for-gamers" className="text-emerald-600 hover:text-emerald-700 font-medium">
+              <a href="/guides/top-10-gift-ideas-for-gamers" className="text-emerald-600 hover:text-emerald-700 font-medium">
                 Read Guide →
               </a>
             </div>
