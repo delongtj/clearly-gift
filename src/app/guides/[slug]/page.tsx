@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import ReactMarkdown from 'react-markdown'
 
 interface GuidePageProps {
   params: {
@@ -105,8 +106,28 @@ export default async function GuidePage({ params }: GuidePageProps) {
     notFound()
   }
 
-  // Import and render the MDX content dynamically
-  const MDXContent = (await import(`../../../../content/guides/${slug}.mdx`)).default
+  // Create a component to render the processed content
+  const MDXContent = () => {
+    return (
+      <ReactMarkdown
+        components={{
+          h1: ({children}) => <h1 className="text-3xl font-bold text-gray-900 mb-6">{children}</h1>,
+          h2: ({children}) => <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{children}</h2>,
+          h3: ({children}) => <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">{children}</h3>,
+          p: ({children}) => <p className="text-gray-700 mb-4 leading-relaxed">{children}</p>,
+          strong: ({children}) => <strong className="font-semibold text-gray-900">{children}</strong>,
+          a: ({href, children}) => <a href={href} className="text-emerald-600 hover:text-emerald-700 font-medium" target="_blank" rel="noopener noreferrer">{children}</a>,
+          ul: ({children}) => <ul className="list-disc pl-6 mb-4 text-gray-700">{children}</ul>,
+          ol: ({children}) => <ol className="list-decimal pl-6 mb-4 text-gray-700">{children}</ol>,
+          li: ({children}) => <li className="mb-2">{children}</li>,
+          hr: () => <hr className="my-8 border-gray-200" />,
+          em: ({children}) => <em className="italic text-gray-700">{children}</em>
+        }}
+      >
+        {guide.content}
+      </ReactMarkdown>
+    )
+  }
 
   const relatedGuides = [
     { title: "Top Gifts for Toddlers 2025", slug: "toddlers-2025", emoji: "🧸" },
