@@ -140,7 +140,7 @@ export default function GuidesPage() {
             </div>
           </div>
           {/* High Priority - Coming Next */}
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
             <div className="h-48 bg-gradient-to-br from-yellow-100 to-amber-100 flex items-center justify-center">
               <span className="text-4xl">📚</span>
             </div>
@@ -149,11 +149,13 @@ export default function GuidesPage() {
               <p className="text-gray-700 text-sm mb-4">
                 Literary treasures and reading accessories for bibliophiles, from cozy reading nooks to rare editions.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-book-lovers" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
             <div className="h-48 bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center">
               <span className="text-4xl">💪</span>
             </div>
@@ -162,7 +164,9 @@ export default function GuidesPage() {
               <p className="text-gray-700 text-sm mb-4">
                 Workout gear and wellness accessories to help fitness lovers reach their goals and recover better.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-fitness-enthusiasts" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
@@ -407,7 +411,7 @@ export default function GuidesPage() {
 
         <div className="text-center mt-12">
           <p className="text-gray-700 mb-4">
-            <strong>21 comprehensive gift guides coming soon!</strong> We're working hard to bring you expert recommendations across every category.
+            <strong>19 more comprehensive gift guides coming soon!</strong> We're working hard to bring you expert recommendations across every category.
           </p>
           <p className="text-gray-600 text-sm">
             Check back regularly for new guides, or follow us for updates when your favorite categories go live.
