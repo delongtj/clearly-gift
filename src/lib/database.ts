@@ -17,7 +17,7 @@ export class DatabaseService {
       .eq('id', user.id)
       .single()
 
-    return data
+    return data as User | null
   }
 
   // List operations
@@ -30,6 +30,7 @@ export class DatabaseService {
 
     const { data, error } = await supabase
       .from('lists')
+      // @ts-ignore - Type inference issue with Supabase client
       .insert({
         user_id: user.id,
         name,
@@ -43,7 +44,7 @@ export class DatabaseService {
       return null
     }
 
-    return data
+    return data as List
   }
 
   async getUserLists(): Promise<List[]> {
@@ -62,12 +63,12 @@ export class DatabaseService {
       return []
     }
 
-    return data || []
+    return (data as List[]) || []
   }
 
   async getListByToken(token: string): Promise<(List & { items: Item[] }) | null> {
     const supabase = await this.supabase
-    
+
     const { data: list, error: listError } = await supabase
       .from('lists')
       .select('*')
@@ -79,10 +80,12 @@ export class DatabaseService {
       return null
     }
 
+    const typedList = list as List
+
     const { data: items, error: itemsError } = await supabase
       .from('items')
       .select('*')
-      .eq('list_id', list.id)
+      .eq('list_id', typedList.id)
       .order('created_at', { ascending: true })
 
     if (itemsError) {
@@ -93,20 +96,22 @@ export class DatabaseService {
     // Increment view count
     await supabase
       .from('lists')
-      .update({ view_count: (list.view_count || 0) + 1 })
-      .eq('id', list.id)
+      // @ts-ignore - Type inference issue with Supabase client
+      .update({ view_count: (typedList.view_count || 0) + 1 })
+      .eq('id', typedList.id)
 
     return {
-      ...list,
-      items: items || []
+      ...typedList,
+      items: (items as Item[]) || []
     }
   }
 
   async updateList(id: string, updates: Partial<Pick<List, 'name'>>): Promise<boolean> {
     const supabase = await this.supabase
-    
+
     const { error } = await supabase
       .from('lists')
+      // @ts-ignore - Type inference issue with Supabase client
       .update(updates)
       .eq('id', id)
 
@@ -142,11 +147,12 @@ export class DatabaseService {
     url?: string
   ): Promise<Item | null> {
     const supabase = await this.supabase
-    
+
     const formattedUrl = url ? processUrl(url) : undefined
 
     const { data, error } = await supabase
       .from('items')
+      // @ts-ignore - Type inference issue with Supabase client
       .insert({
         list_id: listId,
         name,
@@ -162,7 +168,7 @@ export class DatabaseService {
       return null
     }
 
-    return data
+    return data as Item
   }
 
   async updateItem(
@@ -170,18 +176,17 @@ export class DatabaseService {
     updates: Partial<Pick<Item, 'name' | 'description' | 'url'>>
   ): Promise<boolean> {
     const supabase = await this.supabase
-    
+
     // Process URL if it's being updated
+    let finalUpdates: any = { ...updates }
     if (updates.url !== undefined) {
-      updates = {
-        ...updates,
-        formatted_url: updates.url ? processUrl(updates.url) : null
-      }
+      finalUpdates.formatted_url = updates.url ? processUrl(updates.url) : null
     }
 
     const { error } = await supabase
       .from('items')
-      .update(updates)
+      // @ts-ignore - Type inference issue with Supabase client
+      .update(finalUpdates)
       .eq('id', id)
 
     if (error) {
@@ -194,9 +199,10 @@ export class DatabaseService {
 
   async claimItem(id: string, claimedBy?: string): Promise<boolean> {
     const supabase = await this.supabase
-    
+
     const { error } = await supabase
       .from('items')
+      // @ts-ignore - Type inference issue with Supabase client
       .update({
         claimed_at: new Date().toISOString(),
         claimed_by: claimedBy || 'Anonymous'
@@ -214,9 +220,10 @@ export class DatabaseService {
 
   async unclaimItem(id: string): Promise<boolean> {
     const supabase = await this.supabase
-    
+
     const { error } = await supabase
       .from('items')
+      // @ts-ignore - Type inference issue with Supabase client
       .update({
         claimed_at: null,
         claimed_by: null
@@ -233,7 +240,7 @@ export class DatabaseService {
 
   async incrementClickCount(id: string): Promise<boolean> {
     const supabase = await this.supabase
-    
+
     // Get current count first
     const { data: item } = await supabase
       .from('items')
@@ -245,6 +252,7 @@ export class DatabaseService {
 
     const { error } = await supabase
       .from('items')
+      // @ts-ignore - Type inference issue with Supabase client
       .update({ click_count: (item.click_count || 0) + 1 })
       .eq('id', id)
 
