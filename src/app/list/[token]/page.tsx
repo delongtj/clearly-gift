@@ -17,6 +17,7 @@ export default function PublicListPage() {
   const [items, setItems] = useState<Item[]>([])
   const [loading, setLoading] = useState(true)
   const [claimingId, setClaimingId] = useState<string | null>(null)
+  const [isOwnList, setIsOwnList] = useState(false)
 
   // Dialog states
   const [showNameInput, setShowNameInput] = useState(false)
@@ -34,6 +35,9 @@ export default function PublicListPage() {
   const loadList = async () => {
     setLoading(true)
 
+    // Check if user is logged in
+    const { data: { user } } = await supabase.auth.getUser()
+
     // Load list
     const { data: listData, error: listError } = await supabase
       .from('lists')
@@ -49,6 +53,13 @@ export default function PublicListPage() {
 
     const list = listData as List
     setList(list)
+
+    // Check if this is the user's own list
+    if (user && list.user_id === user.id) {
+      setIsOwnList(true)
+      setLoading(false)
+      return
+    }
 
     // Load items
     const { data: itemsData, error: itemsError } = await supabase
@@ -167,6 +178,26 @@ export default function PublicListPage() {
           <p className="text-gray-600 mb-6">This list doesn't exist or has been deleted.</p>
           <Link href="/" className="text-emerald-600 hover:text-emerald-700 font-medium">
             Go to homepage
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  if (isOwnList) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto px-4">
+          <div className="text-6xl mb-4">👀</div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-3">No peeking!</h1>
+          <p className="text-gray-600 mb-6">
+            You can't view your own list because it shows which gifts have been claimed. That would ruin the surprise! 🎁
+          </p>
+          <Link
+            href="/dashboard"
+            className="inline-block px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-medium"
+          >
+            Go to Dashboard
           </Link>
         </div>
       </div>

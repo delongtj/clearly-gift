@@ -319,15 +319,9 @@ export default function Dashboard() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2 ml-4">
-                      <Link
-                        href={`/list/${list.token}`}
-                        className="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
-                      >
-                        View List
-                      </Link>
                       <button
                         onClick={() => copyShareLink(list.token)}
-                        className="px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors"
+                        className="px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors"
                       >
                         Share
                       </button>
