@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { processUrl } from '@/utils/url-processor'
 import type { List, Item } from '@/types/database'
+import ConfirmDialog from '@/components/ConfirmDialog'
+import Toast from '@/components/Toast'
 
 export default function EditListPage() {
   const router = useRouter()
@@ -29,6 +31,13 @@ export default function EditListPage() {
   const [editItemName, setEditItemName] = useState('')
   const [editItemDescription, setEditItemDescription] = useState('')
   const [editItemUrl, setEditItemUrl] = useState('')
+
+  // Dialog states
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [itemToDelete, setItemToDelete] = useState<Item | null>(null)
+  const [showToast, setShowToast] = useState(false)
+  const [toastMessage, setToastMessage] = useState('')
+  const [toastType, setToastType] = useState<'success' | 'error' | 'info'>('success')
 
   useEffect(() => {
     checkAuth()
@@ -103,7 +112,9 @@ export default function EditListPage() {
 
     if (error) {
       console.error('Error creating item:', error)
-      alert('Failed to create item. Please try again.')
+      setToastMessage('Failed to create item. Please try again.')
+      setToastType('error')
+      setShowToast(true)
     } else {
       setItems([...items, data as Item])
       setNewItemName('')
@@ -138,37 +149,45 @@ export default function EditListPage() {
 
     if (error) {
       console.error('Error updating item:', error)
-      alert('Failed to update item. Please try again.')
+      setToastMessage('Failed to update item. Please try again.')
+      setToastType('error')
+      setShowToast(true)
     } else {
       setItems(items.map(i => i.id === itemId ? {
         ...i,
         name: editItemName.trim(),
-        description: editItemDescription.trim() || null,
-        url: normalizedUrl || null,
+        description: editItemDescription.trim() || undefined,
+        url: normalizedUrl || undefined,
         formatted_url: formattedUrl
-      } : i))
+      } as Item : i))
       cancelEditing()
     }
     setSaving(false)
   }
 
-  const handleDeleteItem = async (item: Item) => {
-    if (!confirm(`Are you sure you want to delete "${item.name}"?`)) {
-      return
-    }
+  const handleDeleteItem = (item: Item) => {
+    setItemToDelete(item)
+    setShowDeleteConfirm(true)
+    setOpenDropdownId(null)
+  }
+
+  const confirmDeleteItem = async () => {
+    if (!itemToDelete) return
 
     const { error } = await supabase
       .from('items')
       .delete()
-      .eq('id', item.id)
+      .eq('id', itemToDelete.id)
 
     if (error) {
       console.error('Error deleting item:', error)
-      alert('Failed to delete item. Please try again.')
+      setToastMessage('Failed to delete item. Please try again.')
+      setToastType('error')
+      setShowToast(true)
     } else {
-      setItems(items.filter(i => i.id !== item.id))
+      setItems(items.filter(i => i.id !== itemToDelete.id))
     }
-    setOpenDropdownId(null)
+    setItemToDelete(null)
   }
 
   const toggleDropdown = (itemId: string) => {
@@ -193,7 +212,9 @@ export default function EditListPage() {
     if (!list) return
     const url = `${window.location.origin}/list/${list.token}`
     navigator.clipboard.writeText(url)
-    alert('Share link copied to clipboard!')
+    setToastMessage('Share link copied to clipboard!')
+    setToastType('success')
+    setShowToast(true)
   }
 
   if (loading) {
@@ -422,7 +443,7 @@ export default function EditListPage() {
                           href={item.formatted_url || item.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-700 text-sm inline-flex items-center gap-1"
+                          className="text-blue-900 hover:text-blue-950 text-sm inline-flex items-center gap-1"
                         >
                           View item
                           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -480,6 +501,23 @@ export default function EditListPage() {
           </div>
         )}
       </main>
+
+      {/* Dialogs */}
+      <ConfirmDialog
+        isOpen={showDeleteConfirm}
+        onClose={() => setShowDeleteConfirm(false)}
+        onConfirm={confirmDeleteItem}
+        title="Delete Item"
+        message={`Are you sure you want to delete "${itemToDelete?.name}"?`}
+        confirmText="Delete"
+        isDangerous={true}
+      />
+      <Toast
+        isOpen={showToast}
+        onClose={() => setShowToast(false)}
+        message={toastMessage}
+        type={toastType}
+      />
     </div>
   )
 }

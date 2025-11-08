@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { generateListToken } from '@/utils/url-processor'
 import type { List } from '@/types/database'
+import ConfirmDialog from '@/components/ConfirmDialog'
+import Toast from '@/components/Toast'
 
 export default function Dashboard() {
   const router = useRouter()
@@ -17,6 +19,13 @@ export default function Dashboard() {
   const [newListName, setNewListName] = useState('')
   const [editListName, setEditListName] = useState('')
   const [saving, setSaving] = useState(false)
+
+  // Dialog states
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [listToDelete, setListToDelete] = useState<List | null>(null)
+  const [showToast, setShowToast] = useState(false)
+  const [toastMessage, setToastMessage] = useState('')
+  const [toastType, setToastType] = useState<'success' | 'error' | 'info'>('success')
 
   // Check auth and load lists
   useEffect(() => {
@@ -123,22 +132,28 @@ export default function Dashboard() {
     setSaving(false)
   }
 
-  const handleDeleteList = async (list: List) => {
-    if (!confirm(`Are you sure you want to delete "${list.name}"? This will also delete all items in this list.`)) {
-      return
-    }
+  const handleDeleteList = (list: List) => {
+    setListToDelete(list)
+    setShowDeleteConfirm(true)
+  }
+
+  const confirmDeleteList = async () => {
+    if (!listToDelete) return
 
     const { error } = await supabase
       .from('lists')
       .delete()
-      .eq('id', list.id)
+      .eq('id', listToDelete.id)
 
     if (error) {
       console.error('Error deleting list:', error)
-      alert('Failed to delete list. Please try again.')
+      setToastMessage('Failed to delete list. Please try again.')
+      setToastType('error')
+      setShowToast(true)
     } else {
-      setLists(lists.filter(l => l.id !== list.id))
+      setLists(lists.filter(l => l.id !== listToDelete.id))
     }
+    setListToDelete(null)
   }
 
   const startEditing = (list: List) => {
@@ -154,7 +169,9 @@ export default function Dashboard() {
   const copyShareLink = (token: string) => {
     const url = `${window.location.origin}/list/${token}`
     navigator.clipboard.writeText(url)
-    alert('Share link copied to clipboard!')
+    setToastMessage('Share link copied to clipboard!')
+    setToastType('success')
+    setShowToast(true)
     setOpenDropdownId(null)
   }
 
@@ -378,6 +395,23 @@ export default function Dashboard() {
           </div>
         )}
       </main>
+
+      {/* Dialogs */}
+      <ConfirmDialog
+        isOpen={showDeleteConfirm}
+        onClose={() => setShowDeleteConfirm(false)}
+        onConfirm={confirmDeleteList}
+        title="Delete List"
+        message={`Are you sure you want to delete "${listToDelete?.name}"? This will also delete all items in this list.`}
+        confirmText="Delete"
+        isDangerous={true}
+      />
+      <Toast
+        isOpen={showToast}
+        onClose={() => setShowToast(false)}
+        message={toastMessage}
+        type={toastType}
+      />
     </div>
   )
 }
