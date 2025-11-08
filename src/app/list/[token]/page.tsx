@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import type { List, Item } from '@/types/database'
+import ConfirmDialog from '@/components/ConfirmDialog'
 import InputDialog from '@/components/InputDialog'
 import Toast from '@/components/Toast'
 
@@ -20,6 +21,8 @@ export default function PublicListPage() {
   // Dialog states
   const [showNameInput, setShowNameInput] = useState(false)
   const [itemToClaim, setItemToClaim] = useState<Item | null>(null)
+  const [showUnclaimConfirm, setShowUnclaimConfirm] = useState(false)
+  const [itemToUnclaim, setItemToUnclaim] = useState<Item | null>(null)
   const [showToast, setShowToast] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
   const [toastType, setToastType] = useState<'success' | 'error' | 'info'>('success')
@@ -72,31 +75,39 @@ export default function PublicListPage() {
 
   const handleClaimItem = async (item: Item) => {
     if (item.claimed_at) {
-      // Unclaim
-      setClaimingId(item.id)
-      const { error } = await supabase
-        .from('items')
-        // @ts-expect-error - Type inference issue with Supabase client
-        .update({
-          claimed_at: null,
-          claimed_by: null
-        })
-        .eq('id', item.id)
-
-      if (error) {
-        console.error('Error unclaiming item:', error)
-        setToastMessage('Failed to unclaim item. Please try again.')
-        setToastType('error')
-        setShowToast(true)
-      } else {
-        setItems(items.map(i => i.id === item.id ? { ...i, claimed_at: undefined, claimed_by: undefined } as Item : i))
-      }
-      setClaimingId(null)
+      // Show unclaim confirmation
+      setItemToUnclaim(item)
+      setShowUnclaimConfirm(true)
     } else {
       // Show name input dialog
       setItemToClaim(item)
       setShowNameInput(true)
     }
+  }
+
+  const confirmUnclaim = async () => {
+    if (!itemToUnclaim) return
+
+    setClaimingId(itemToUnclaim.id)
+    const { error } = await supabase
+      .from('items')
+      // @ts-expect-error - Type inference issue with Supabase client
+      .update({
+        claimed_at: null,
+        claimed_by: null
+      })
+      .eq('id', itemToUnclaim.id)
+
+    if (error) {
+      console.error('Error unclaiming item:', error)
+      setToastMessage('Failed to unclaim item. Please try again.')
+      setToastType('error')
+      setShowToast(true)
+    } else {
+      setItems(items.map(i => i.id === itemToUnclaim.id ? { ...i, claimed_at: undefined, claimed_by: undefined } as Item : i))
+    }
+    setClaimingId(null)
+    setItemToUnclaim(null)
   }
 
   const confirmClaim = async (claimerName: string) => {
@@ -259,6 +270,18 @@ export default function PublicListPage() {
       </main>
 
       {/* Dialogs */}
+      <ConfirmDialog
+        isOpen={showUnclaimConfirm}
+        onClose={() => {
+          setShowUnclaimConfirm(false)
+          setItemToUnclaim(null)
+        }}
+        onConfirm={confirmUnclaim}
+        title="Unclaim Gift"
+        message="Are you sure you want to unclaim this gift? If you weren't the one who claimed it, unclaiming could result in duplicate gifts being purchased."
+        confirmText="Unclaim"
+        isDangerous={true}
+      />
       <InputDialog
         isOpen={showNameInput}
         onClose={() => {
