@@ -127,23 +127,6 @@ export default function PublicListPage({ params }: { params: { token: string } }
           </div>
         </div>
       </main>
-
-      <footer className="mt-16 border-t border-gray-200 py-8">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <p className="text-gray-500 text-sm mb-2">
-            This list was created with
-          </p>
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-6 h-6 bg-emerald-600 rounded flex items-center justify-center">
-              <span className="text-white font-bold text-xs">C</span>
-            </div>
-            <span className="text-lg font-bold text-gray-900">clearly.gift</span>
-          </div>
-          <p className="text-xs text-gray-500">
-            This site contains affiliate links. We may earn a commission when you purchase through these links at no additional cost to you.
-          </p>
-        </div>
-      </footer>
     </div>
   )
 }

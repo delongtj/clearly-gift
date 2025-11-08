@@ -86,15 +86,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-
-      <footer className="border-t border-gray-100 py-8">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <p className="text-gray-700 mb-4">&copy; 2025 clearly.gift. Share your wishlist, keep the surprise.</p>
-          <p className="text-xs text-gray-500">
-            This site contains affiliate links. We may earn a commission when you purchase through these links at no additional cost to you.
-          </p>
-        </div>
-      </footer>
     </div>
   )
 }

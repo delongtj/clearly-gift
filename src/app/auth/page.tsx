@@ -97,14 +97,6 @@ export default function AuthPage() {
           </p>
         </div>
       </div>
-
-      <footer className="absolute bottom-0 w-full py-4">
-        <div className="max-w-md mx-auto px-4 text-center">
-          <p className="text-xs text-gray-500">
-            This site contains affiliate links. We may earn a commission when you purchase through these links at no additional cost to you.
-          </p>
-        </div>
-      </footer>
     </div>
   )
 }
