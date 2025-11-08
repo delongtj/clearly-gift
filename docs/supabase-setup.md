@@ -11,9 +11,6 @@
 Run this SQL in the Supabase SQL editor:
 
 ```sql
--- Enable RLS (Row Level Security)
-ALTER DATABASE postgres SET "app.jwt_secret" TO 'your-jwt-secret';
-
 -- Users table (extends Supabase auth.users)
 CREATE TABLE public.users (
   id UUID REFERENCES auth.users ON DELETE CASCADE PRIMARY KEY,
@@ -88,12 +85,12 @@ CREATE POLICY "Users can view own lists" ON public.lists
 CREATE POLICY "Public can view lists by token" ON public.lists
   FOR SELECT USING (true);
 
--- Items policies  
+-- Items policies
 CREATE POLICY "Users can manage items in own lists" ON public.items
   FOR ALL USING (
     EXISTS (
-      SELECT 1 FROM public.lists 
-      WHERE lists.id = items.list_id 
+      SELECT 1 FROM public.lists
+      WHERE lists.id = items.list_id
       AND lists.user_id = auth.uid()
     )
   );
@@ -103,12 +100,7 @@ CREATE POLICY "Public can view items" ON public.items
   FOR SELECT USING (true);
 
 CREATE POLICY "Public can claim items" ON public.items
-  FOR UPDATE USING (true)
-  WITH CHECK (
-    claimed_at IS NOT NULL AND 
-    claimed_by IS NOT NULL AND
-    OLD.claimed_at IS NULL
-  );
+  FOR UPDATE USING (true);
 
 -- Function to automatically create user profile
 CREATE OR REPLACE FUNCTION public.handle_new_user()
@@ -131,7 +123,7 @@ CREATE TRIGGER on_auth_user_created
 Update your `.env.local`:
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_URL=https://clearly-gift.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
