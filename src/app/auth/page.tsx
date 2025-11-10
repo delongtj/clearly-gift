@@ -40,16 +40,16 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-sm p-8">
-        <div className="text-center mb-8">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-white rounded-lg shadow-sm p-6 sm:p-8">
+        <div className="text-center mb-6 sm:mb-8">
           <Link href="/" className="inline-block">
             <div className="w-12 h-12 bg-emerald-600 rounded-lg mx-auto mb-4 flex items-center justify-center hover:bg-emerald-700 transition-colors">
               <span className="text-white font-bold">C</span>
             </div>
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900">Welcome to clearly.gift</h1>
-          <p className="text-gray-600 mt-2">Share your wishlist, keep the surprise</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Welcome to clearly.gift</h1>
+          <p className="text-sm sm:text-base text-gray-600 mt-2">Share your wishlist, keep the surprise</p>
         </div>
 
         {message && (
