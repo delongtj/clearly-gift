@@ -205,12 +205,12 @@ export default function PublicListClient({ token }: PublicListClientProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-40 bg-white/80 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto px-4 py-4">
           <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">C</span>
+            <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-lg flex items-center justify-center shadow-sm">
+              <span className="text-white font-bold text-sm">♥</span>
             </div>
             <span className="text-xl font-bold text-gray-900">clearly.gift</span>
           </Link>
@@ -218,80 +218,94 @@ export default function PublicListClient({ token }: PublicListClientProps) {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
+        <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-8 shadow-sm">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-bold text-gray-900">{list.name}</h1>
-            <div className="text-sm text-gray-500">
-              <span>{list.view_count || 0} views</span>
+            <h1 className="text-3xl font-bold text-gray-900">{list.name}</h1>
+            <div className="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+              {list.view_count || 0} view{(list.view_count || 0) !== 1 ? 's' : ''}
             </div>
           </div>
-          <p className="text-gray-600 text-sm">
-            Click "Claim Gift" to let others know you're getting this item
+          <p className="text-gray-600 text-sm leading-relaxed">
+            Click "Claim Gift" to let others know you're getting this item. 🎁
           </p>
         </div>
 
         {items.length === 0 ? (
-          <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-            <p className="text-gray-600">No items in this list yet.</p>
+          <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center shadow-sm">
+            <div className="text-5xl mb-4">📝</div>
+            <p className="text-gray-600 text-lg">This list is empty right now.</p>
           </div>
         ) : (
           <div className="space-y-4">
             {items.map((item) => (
               <div
                 key={item.id}
-                className={`bg-white rounded-lg border border-gray-200 p-6 transition-opacity ${
-                  item.claimed_at ? 'opacity-60' : ''
+                className={`bg-white rounded-2xl border transition-all duration-300 ${
+                  item.claimed_at 
+                    ? 'border-gray-200 bg-gray-50 shadow-sm' 
+                    : 'border-gray-200 shadow-sm hover:shadow-md hover:border-emerald-200'
                 }`}
               >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h3 className={`text-lg font-medium mb-2 ${
-                      item.claimed_at ? 'text-gray-500 line-through' : 'text-gray-900'
-                    }`}>
-                      {item.name}
-                    </h3>
-                    {item.description && (
-                      <p className={`text-sm mb-3 ${
-                        item.claimed_at ? 'text-gray-500' : 'text-gray-600'
-                      }`}>
-                        {item.description}
-                      </p>
-                    )}
-                    <div className="flex items-center space-x-4 text-sm text-gray-500">
+                <div className="p-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
                       {item.claimed_at && (
-                        <span>Claimed by {item.claimed_by}</span>
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="flex-shrink-0 w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center animate-checkmark">
+                            <svg className="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          </div>
+                          <span className="text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded-full">
+                            Claimed by {item.claimed_by}
+                          </span>
+                        </div>
                       )}
-                      {item.click_count ? (
-                        <span>{item.click_count} click{item.click_count !== 1 ? 's' : ''}</span>
-                      ) : null}
+                      <h3 className={`text-lg font-semibold mb-2 transition-colors ${
+                        item.claimed_at ? 'text-gray-500' : 'text-gray-900'
+                      }`}>
+                        {item.name}
+                      </h3>
+                      {item.description && (
+                        <p className={`text-sm mb-3 leading-relaxed ${
+                          item.claimed_at ? 'text-gray-500' : 'text-gray-600'
+                        }`}>
+                          {item.description}
+                        </p>
+                      )}
+                      {item.click_count && !item.claimed_at && (
+                        <div className="text-xs text-gray-500">
+                          {item.click_count} click{item.click_count !== 1 ? 's' : ''}
+                        </div>
+                      )}
                     </div>
-                  </div>
-                  <div className="ml-4 flex flex-col space-y-2">
-                    {item.url && !item.claimed_at && (
-                      <button
-                        onClick={() => handleItemClick(item)}
-                        className="bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-950 text-center text-sm font-medium whitespace-nowrap"
-                      >
-                        View Item
-                      </button>
-                    )}
-                    {item.claimed_at ? (
-                      <button
-                        onClick={() => handleClaimItem(item)}
-                        disabled={claimingId === item.id}
-                        className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 text-sm font-medium disabled:opacity-50 whitespace-nowrap"
-                      >
-                        {claimingId === item.id ? 'Updating...' : 'Unclaim'}
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => handleClaimItem(item)}
-                        disabled={claimingId === item.id}
-                        className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 text-sm font-medium disabled:opacity-50 whitespace-nowrap"
-                      >
-                        {claimingId === item.id ? 'Claiming...' : 'Claim Gift'}
-                      </button>
-                    )}
+                    <div className="ml-4 flex flex-col gap-2 flex-shrink-0">
+                      {item.url && !item.claimed_at && (
+                        <button
+                          onClick={() => handleItemClick(item)}
+                          className="bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-950 text-sm font-medium whitespace-nowrap transition-all active:scale-95 shadow-sm hover:shadow-md"
+                        >
+                          View Item
+                        </button>
+                      )}
+                      {item.claimed_at ? (
+                        <button
+                          onClick={() => handleClaimItem(item)}
+                          disabled={claimingId === item.id}
+                          className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 text-sm font-medium disabled:opacity-50 whitespace-nowrap transition-all disabled:cursor-not-allowed"
+                        >
+                          {claimingId === item.id ? 'Updating...' : 'Unclaim'}
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleClaimItem(item)}
+                          disabled={claimingId === item.id}
+                          className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 text-sm font-medium disabled:opacity-50 whitespace-nowrap transition-all active:scale-95 shadow-sm hover:shadow-md disabled:cursor-not-allowed"
+                        >
+                          {claimingId === item.id ? 'Claiming...' : 'Claim Gift'}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

@@ -3,20 +3,20 @@ import Link from "next/link"
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
-      <header className="border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-4 py-6">
+      <header className="border-b border-gray-200 sticky top-0 z-40 bg-white/80 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">C</span>
+              <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-lg flex items-center justify-center shadow-sm">
+                <span className="text-white font-bold text-sm">♥</span>
               </div>
               <span className="text-2xl font-bold text-gray-900">clearly.gift</span>
             </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/auth" className="text-gray-600 hover:text-gray-900">
+            <div className="flex items-center space-x-3">
+              <Link href="/auth" className="text-gray-600 hover:text-gray-900 font-medium transition-colors">
                 Sign In
               </Link>
-              <Link href="/auth" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+              <Link href="/auth" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 font-medium shadow-sm hover:shadow-md transition-all active:scale-95">
                 Get Started
               </Link>
             </div>
@@ -25,64 +25,78 @@ export default function Home() {
       </header>
 
       <main className="max-w-6xl mx-auto px-4">
-        <section className="py-20 text-center">
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            The simplest way to share your wish list
-          </h1>
-          <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
-            Create beautiful, clutter-free wish lists that friends and family can view and claim gifts from - no sign-up required for them.
-          </p>
-          <Link href="/auth" className="bg-emerald-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-emerald-700 inline-block">
-            Create Your First List
-          </Link>
-        </section>
-
-        <section className="py-16 grid md:grid-cols-3 gap-8">
-          <div className="text-center">
-            <div className="w-12 h-12 bg-emerald-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
-              <span className="text-emerald-600 font-bold">1</span>
-            </div>
-            <h3 className="text-xl font-semibold mb-2 text-gray-900">Dead Simple Setup</h3>
-            <p className="text-gray-700">Just your email and a verification code. No lengthy forms or complex profiles.</p>
-          </div>
-          <div className="text-center">
-            <div className="w-12 h-12 bg-emerald-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
-              <span className="text-emerald-600 font-bold">2</span>
-            </div>
-            <h3 className="text-xl font-semibold mb-2 text-gray-900">Share Instantly</h3>
-            <p className="text-gray-700">Get a private link to share with family and friends. No accounts needed for them.</p>
-          </div>
-          <div className="text-center">
-            <div className="w-12 h-12 bg-emerald-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
-              <span className="text-emerald-600 font-bold">3</span>
-            </div>
-            <h3 className="text-xl font-semibold mb-2 text-gray-900">Clean & Private</h3>
-            <p className="text-gray-700">Beautifully minimal design. Others can claim items anonymously without seeing what's been taken.</p>
+        {/* Hero Section */}
+        <section className="py-24 text-center">
+          <div className="animate-fade-in">
+            <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              The simplest way<br />to share your wish list
+            </h1>
+            <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+              Create beautiful, clutter-free wish lists that friends and family can view and claim gifts from — no sign-up required.
+            </p>
+            <Link href="/auth" className="inline-block bg-emerald-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-emerald-700 shadow-lg hover:shadow-xl transition-all active:scale-95">
+              Create Your First List
+            </Link>
           </div>
         </section>
 
-        <section className="py-16 bg-gray-50 rounded-2xl mb-16">
-          <div className="px-8">
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">Gift Guides</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h3 className="font-semibold mb-2 text-gray-900">Top Gifts for Toddlers 2025</h3>
-                <p className="text-gray-700 text-sm">10 perfect picks that'll keep the little ones happy and engaged.</p>
+        {/* Features Section */}
+        <section className="py-20 grid md:grid-cols-3 gap-8">
+          {[
+            { 
+              num: "1", 
+              title: "Dead Simple Setup", 
+              desc: "Just your email and a verification code. No lengthy forms or profiles." 
+            },
+            { 
+              num: "2", 
+              title: "Share Instantly", 
+              desc: "Get a private link to share with family and friends. No accounts needed." 
+            },
+            { 
+              num: "3", 
+              title: "Clean & Private", 
+              desc: "Beautifully minimal design with anonymous claiming to keep the surprise alive." 
+            },
+          ].map((feature, i) => (
+            <div 
+              key={i} 
+              className="text-center p-8 rounded-2xl bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-200 hover:border-gray-300"
+            >
+              <div className="w-12 h-12 bg-emerald-100 rounded-full mx-auto mb-6 flex items-center justify-center text-emerald-600 font-bold text-lg">
+                {feature.num}
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h3 className="font-semibold mb-2 text-gray-900">Best Tech Gifts Under $100</h3>
-                <p className="text-gray-700 text-sm">Gadgets and accessories that won't break the bank.</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h3 className="font-semibold mb-2 text-gray-900">Gifts for Coffee Lovers</h3>
-                <p className="text-gray-700 text-sm">From beans to brewers, everything for the caffeine connoisseur.</p>
-              </div>
+              <h3 className="text-lg font-semibold mb-3 text-gray-900">{feature.title}</h3>
+              <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
             </div>
-            <div className="text-center mt-8">
-              <Link href="/guides" className="text-emerald-600 hover:text-emerald-700 font-medium">
-                View All Guides →
-              </Link>
-            </div>
+          ))}
+        </section>
+
+        {/* Gift Guides Section */}
+        <section className="py-20 bg-gradient-to-b from-gray-50 to-white rounded-3xl border border-gray-200 px-8 mb-16">
+          <h2 className="text-4xl font-bold text-center mb-16 text-gray-900">Gift Guides</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { title: "Top Gifts for Toddlers 2025", desc: "10 perfect picks that'll keep the little ones happy and engaged." },
+              { title: "Best Tech Gifts Under $100", desc: "Gadgets and accessories that won't break the bank." },
+              { title: "Gifts for Coffee Lovers", desc: "From beans to brewers, everything for the caffeine connoisseur." },
+            ].map((guide, i) => (
+              <div 
+                key={i} 
+                className="bg-white p-8 rounded-xl border border-gray-200 hover:border-emerald-200 hover:shadow-lg transition-all hover:scale-105"
+              >
+                <h3 className="font-semibold mb-3 text-gray-900">{guide.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{guide.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <Link href="/guides" className="text-emerald-600 hover:text-emerald-700 font-semibold inline-flex items-center gap-2 transition-colors">
+              View All Guides
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
           </div>
         </section>
       </main>

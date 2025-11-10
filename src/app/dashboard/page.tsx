@@ -180,20 +180,20 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-40 bg-white/80 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-              <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">C</span>
+              <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-lg flex items-center justify-center shadow-sm">
+                <span className="text-white font-bold text-sm">♥</span>
               </div>
               <span className="text-xl font-bold text-gray-900">clearly.gift</span>
             </Link>
             <div className="flex items-center space-x-4">
               <button
                 onClick={handleSignOut}
-                className="text-gray-600 hover:text-gray-900"
+                className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
               >
                 Sign Out
               </button>
@@ -204,8 +204,11 @@ export default function Dashboard() {
 
       <main className="max-w-6xl mx-auto px-4 py-8">
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-bold text-gray-900">Your Lists</h1>
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h1 className="text-4xl font-bold text-gray-900">Your Lists</h1>
+              <p className="text-gray-600 mt-1">Manage and share your wish lists</p>
+            </div>
             {lists.length > 0 && !showCreateForm && (
               <button
                 onClick={() => setShowCreateForm(true)}
@@ -218,21 +221,22 @@ export default function Dashboard() {
 
           {/* Inline Create Form */}
           {showCreateForm && (
-            <form onSubmit={handleCreateList} className="bg-white rounded-lg border border-gray-200 p-4 mb-4">
+            <form onSubmit={handleCreateList} className="bg-white rounded-2xl border border-gray-200 p-6 mb-6 shadow-sm animate-slide-in">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Create a New List</h3>
               <div className="flex items-center gap-3">
                 <input
                   type="text"
                   value={newListName}
                   onChange={(e) => setNewListName(e.target.value)}
                   placeholder="List name (e.g., Birthday Wishlist 2025)"
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900"
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900 bg-white transition-all"
                   autoFocus
                   disabled={saving}
                 />
                 <button
                   type="submit"
                   disabled={saving || !newListName.trim()}
-                  className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-all active:scale-95 shadow-sm"
                 >
                   {saving ? 'Creating...' : 'Create'}
                 </button>
@@ -243,7 +247,7 @@ export default function Dashboard() {
                     setNewListName('')
                   }}
                   disabled={saving}
-                  className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                  className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 font-medium transition-colors"
                 >
                   Cancel
                 </button>
@@ -253,18 +257,25 @@ export default function Dashboard() {
         </div>
 
         {loading ? (
-          <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-            <p className="text-gray-600">Loading your lists...</p>
+          <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center shadow-sm">
+            <div className="inline-block animate-spin">
+              <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" className="opacity-25" />
+                <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+            </div>
+            <p className="text-gray-600 mt-4">Loading your lists...</p>
           </div>
         ) : lists.length === 0 && !showCreateForm ? (
-          <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Create your first list</h2>
-            <p className="text-gray-600 mb-6">
+          <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center shadow-sm">
+            <div className="text-5xl mb-4">🎁</div>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-3">Create your first list</h2>
+            <p className="text-gray-600 mb-8 text-lg">
               Share your wishlist, keep the surprise
             </p>
             <button
               onClick={() => setShowCreateForm(true)}
-              className="bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700"
+              className="bg-emerald-600 text-white px-8 py-3 rounded-lg hover:bg-emerald-700 font-semibold shadow-lg hover:shadow-xl transition-all active:scale-95"
             >
               Create Your First List
             </button>
@@ -272,7 +283,7 @@ export default function Dashboard() {
         ) : (
           <div className="grid gap-4">
             {lists.map(list => (
-              <div key={list.id} className="bg-white rounded-lg border border-gray-200 p-6">
+              <div key={list.id} className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all hover:border-emerald-200">
                 {editingListId === list.id ? (
                   // Inline Edit Mode
                   <div className="flex items-center gap-3">
@@ -309,19 +320,29 @@ export default function Dashboard() {
                   </div>
                 ) : (
                   // Normal Display Mode
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h2 className="text-xl font-semibold text-gray-900 mb-2">{list.name}</h2>
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h2 className="text-lg font-semibold text-gray-900 mb-3">{list.name}</h2>
                       <div className="flex items-center space-x-4 text-sm text-gray-500">
-                        <span>{list.view_count || 0} views</span>
-                        <span>•</span>
-                        <span>Created {new Date(list.created_at).toLocaleDateString()}</span>
+                        <span className="flex items-center gap-1">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                          </svg>
+                          {list.view_count || 0}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          {new Date(list.created_at).toLocaleDateString()}
+                        </span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 ml-4">
+                    <div className="flex items-center gap-2 ml-4 flex-shrink-0">
                       <button
                         onClick={() => copyShareLink(list.token)}
-                        className="px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors"
+                        className="px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all active:scale-95 shadow-sm hover:shadow-md"
                       >
                         Share
                       </button>

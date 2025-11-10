@@ -230,50 +230,53 @@ export default function EditListPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-40 bg-white/80 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link href="/dashboard" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-              <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">C</span>
+              <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-lg flex items-center justify-center shadow-sm">
+                <span className="text-white font-bold text-sm">♥</span>
               </div>
               <span className="text-xl font-bold text-gray-900">clearly.gift</span>
             </Link>
             <Link
               href="/dashboard"
-              className="text-gray-600 hover:text-gray-900 text-sm font-medium"
+              className="text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors flex items-center gap-1"
             >
-              ← Back to Lists
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to Lists
             </Link>
           </div>
         </div>
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-2">
-            <h1 className="text-3xl font-bold text-gray-900">{list.name}</h1>
+        <div className="mb-10">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <h1 className="text-4xl font-bold text-gray-900">{list.name}</h1>
+              <p className="text-gray-600 mt-1">Add and manage items for this list</p>
+            </div>
             <button
               onClick={copyShareLink}
-              className="px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-2"
+              className="px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all active:scale-95 shadow-sm hover:shadow-md flex items-center gap-2"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
               </svg>
-              Copy Share Link
+              Share
             </button>
           </div>
-          <p className="text-gray-600 text-sm">
-            Add and manage items for this list
-          </p>
         </div>
 
         {/* Add Item Button */}
         {!showAddForm && items.length > 0 && (
           <button
             onClick={() => setShowAddForm(true)}
-            className="mb-6 px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700"
+            className="mb-6 px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all active:scale-95 shadow-sm"
           >
             + Add Item
           </button>
@@ -281,8 +284,8 @@ export default function EditListPage() {
 
         {/* Inline Add Form */}
         {showAddForm && (
-          <form onSubmit={handleAddItem} className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Add New Item</h3>
+          <form onSubmit={handleAddItem} className="bg-white rounded-2xl border border-gray-200 p-6 mb-6 shadow-sm animate-slide-in">
+            <h3 className="text-lg font-semibold text-gray-900 mb-5">Add New Item</h3>
             <div className="space-y-4">
               <div>
                 <label htmlFor="itemName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -356,14 +359,15 @@ export default function EditListPage() {
 
         {/* Items List */}
         {items.length === 0 && !showAddForm ? (
-          <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">No items yet</h2>
-            <p className="text-gray-600 mb-4">
+          <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center shadow-sm">
+            <div className="text-5xl mb-4">✏️</div>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-3">No items yet</h2>
+            <p className="text-gray-600 mb-8">
               Add your first item to get started
             </p>
             <button
               onClick={() => setShowAddForm(true)}
-              className="px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+              className="px-8 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold shadow-lg hover:shadow-xl transition-all active:scale-95"
             >
               Add Your First Item
             </button>
@@ -371,7 +375,7 @@ export default function EditListPage() {
         ) : (
           <div className="space-y-4">
             {items.map((item) => (
-              <div key={item.id} className="bg-white rounded-lg border border-gray-200 p-6">
+              <div key={item.id} className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm hover:shadow-md hover:border-emerald-200 transition-all">
                 {editingItemId === item.id ? (
                   // Inline Edit Mode
                   <div className="space-y-4">
