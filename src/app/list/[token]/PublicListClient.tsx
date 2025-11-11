@@ -75,11 +75,11 @@ export default function PublicListClient({ token }: PublicListClientProps) {
     }
 
     // Increment view count
-    await supabase
-      .from('lists')
-      // @ts-expect-error - Type inference issue with Supabase client
-      .update({ view_count: (list.view_count || 0) + 1 })
-      .eq('id', list.id)
+    try {
+      await supabase.rpc('increment_list_view_count', { list_id: list.id })
+    } catch (error) {
+      console.error('Error incrementing view count:', error)
+    }
 
     setLoading(false)
   }
@@ -152,11 +152,11 @@ export default function PublicListClient({ token }: PublicListClientProps) {
 
   const handleItemClick = async (item: Item) => {
     // Increment click count
-    await supabase
-      .from('items')
-      // @ts-expect-error - Type inference issue with Supabase client
-      .update({ click_count: (item.click_count || 0) + 1 })
-      .eq('id', item.id)
+    try {
+      await supabase.rpc('increment_item_click_count', { item_id: item.id })
+    } catch (error) {
+      console.error('Error incrementing click count:', error)
+    }
 
     // Open link
     window.open(item.formatted_url || item.url || '#', '_blank')
