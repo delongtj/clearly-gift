@@ -1,6 +1,20 @@
+'use client'
+
 import Link from "next/link"
+import { useEffect, useState } from "react"
+import { supabase } from "@/lib/supabase"
 
 export default function Home() {
+  const [user, setUser] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data } = await supabase.auth.getUser()
+      setUser(!!data.user)
+    }
+    checkAuth()
+  }, [])
+
   return (
     <div className="min-h-screen bg-white">
       <header className="border-b border-gray-200 sticky top-0 z-40 bg-white/80 backdrop-blur-sm">
@@ -13,12 +27,14 @@ export default function Home() {
               <span className="text-2xl font-bold text-gray-900">clearly.gift</span>
             </div>
             <div className="flex items-center space-x-3">
-              <Link href="/auth" className="text-gray-600 hover:text-gray-900 font-medium transition-colors">
-                Sign In
+              <Link href={user ? "/dashboard" : "/auth"} className="text-gray-600 hover:text-gray-900 font-medium transition-colors">
+                {user ? "Dashboard" : "Sign In"}
               </Link>
-              <Link href="/auth" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 font-medium shadow-sm hover:shadow-md transition-all active:scale-95">
-                Get Started
-              </Link>
+              {!user && (
+                <Link href="/auth" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 font-medium shadow-sm hover:shadow-md transition-all active:scale-95">
+                  Get Started
+                </Link>
+              )}
             </div>
           </div>
         </div>
