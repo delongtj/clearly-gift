@@ -289,7 +289,7 @@ export default function EditListPage() {
             <div className="space-y-4">
               <div>
                 <label htmlFor="itemName" className="block text-sm font-medium text-gray-700 mb-1">
-                  Item Name *
+                  Item Name
                 </label>
                 <input
                   type="text"
@@ -381,7 +381,7 @@ export default function EditListPage() {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Item Name *
+                        Item Name
                       </label>
                       <input
                         type="text"

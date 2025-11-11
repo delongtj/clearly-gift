@@ -275,7 +275,7 @@ export default function PublicListClient({ token }: PublicListClientProps) {
                           {item.description}
                         </p>
                       )}
-                      {item.click_count && !item.claimed_at && (
+                      {item.url && item.click_count && !item.claimed_at && (
                         <div className="text-xs text-gray-500">
                           {item.click_count} click{item.click_count !== 1 ? 's' : ''}
                         </div>
