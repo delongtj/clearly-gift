@@ -65,6 +65,20 @@ export default function PublicListClient({ token }: PublicListClientProps) {
           }
         }
       )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'lists',
+          filter: `id=eq.${list.id}`
+        },
+        (payload) => {
+          console.log('List change received:', payload)
+          // Update list data (view count, name, etc.)
+          setList(payload.new as List)
+        }
+      )
       .subscribe((status, err) => {
         if (status === 'SUBSCRIBED') {
           console.log('Connected to realtime updates')
