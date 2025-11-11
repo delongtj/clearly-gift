@@ -32,6 +32,57 @@ export default function PublicListClient({ token }: PublicListClientProps) {
     loadList()
   }, [token])
 
+  // Subscribe to real-time changes
+  useEffect(() => {
+    // Only subscribe if we have a list ID and it's not the user's own list
+    if (!list?.id || isOwnList) return
+
+    // Subscribe to realtime changes on items for this list
+    const channel = supabase
+      .channel(`list-${list.id}-changes`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*', // Listen to INSERT, UPDATE, DELETE
+          schema: 'public',
+          table: 'items',
+          filter: `list_id=eq.${list.id}`
+        },
+        (payload) => {
+          console.log('Item change received:', payload)
+
+          if (payload.eventType === 'INSERT') {
+            // New item added
+            setItems(prev => [...prev, payload.new as Item])
+          } else if (payload.eventType === 'UPDATE') {
+            // Item updated (claimed/unclaimed or edited)
+            setItems(prev => prev.map(item =>
+              item.id === payload.new.id ? payload.new as Item : item
+            ))
+          } else if (payload.eventType === 'DELETE') {
+            // Item removed
+            setItems(prev => prev.filter(item => item.id !== payload.old.id))
+          }
+        }
+      )
+      .subscribe((status, err) => {
+        if (status === 'SUBSCRIBED') {
+          console.log('Connected to realtime updates')
+        }
+        if (status === 'CHANNEL_ERROR') {
+          console.error('Realtime connection error:', err)
+        }
+        if (status === 'TIMED_OUT') {
+          console.warn('Realtime connection timed out')
+        }
+      })
+
+    // Cleanup subscription on unmount
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [list?.id, isOwnList])
+
   const loadList = async () => {
     setLoading(true)
 
