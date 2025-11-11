@@ -131,7 +131,7 @@ export default function PublicListClient({ token }: PublicListClientProps) {
       .from('items')
       .select('*')
       .eq('list_id', list.id)
-      .order('created_at', { ascending: true })
+      .order('position', { ascending: true })
 
     if (itemsError) {
       console.error('Error loading items:', itemsError)
