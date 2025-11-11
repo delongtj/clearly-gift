@@ -53,12 +53,12 @@ export default function PublicListClient({ token }: PublicListClientProps) {
 
           if (payload.eventType === 'INSERT') {
             // New item added
-            setItems(prev => [...prev, payload.new as Item])
+            setItems(prev => [...prev, payload.new as Item].sort((a, b) => a.position - b.position))
           } else if (payload.eventType === 'UPDATE') {
-            // Item updated (claimed/unclaimed or edited)
+            // Item updated (claimed/unclaimed, edited, or reordered)
             setItems(prev => prev.map(item =>
               item.id === payload.new.id ? payload.new as Item : item
-            ))
+            ).sort((a, b) => a.position - b.position))
           } else if (payload.eventType === 'DELETE') {
             // Item removed
             setItems(prev => prev.filter(item => item.id !== payload.old.id))
