@@ -24,6 +24,7 @@ export interface Item {
   formatted_url?: string
   claimed_at?: string
   claimed_by?: string
+  position: number
   created_at: string
   updated_at: string
   click_count?: number
@@ -44,8 +45,8 @@ export interface Database {
       }
       items: {
         Row: Item
-        Insert: Omit<Item, 'id' | 'created_at' | 'updated_at' | 'click_count'>
-        Update: Partial<Omit<Item, 'id' | 'created_at' | 'list_id'>>
+        Insert: Omit<Item, 'id' | 'created_at' | 'updated_at' | 'click_count' | 'position'> & { position?: number }
+        Update: Partial<Omit<Item, 'id' | 'created_at' | 'list_id' | 'position'>> & { position?: number }
       }
     }
   }

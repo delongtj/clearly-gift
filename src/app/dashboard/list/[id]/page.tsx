@@ -38,6 +38,7 @@ export default function EditListPage() {
   const [showToast, setShowToast] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
   const [toastType, setToastType] = useState<'success' | 'error' | 'info'>('success')
+  const [draggedItem, setDraggedItem] = useState<string | null>(null)
 
   useEffect(() => {
     checkAuth()
@@ -74,7 +75,7 @@ export default function EditListPage() {
       .from('items')
       .select('*')
       .eq('list_id', listId)
-      .order('created_at', { ascending: true })
+      .order('position', { ascending: true })
 
     if (itemsError) {
       console.error('Error loading items:', itemsError)
@@ -105,7 +106,8 @@ export default function EditListPage() {
         name: newItemName.trim(),
         description: newItemDescription.trim() || null,
         url: normalizedUrl || null,
-        formatted_url: formattedUrl
+        formatted_url: formattedUrl,
+        position: items.length
       })
       .select()
       .single()
@@ -206,6 +208,64 @@ export default function EditListPage() {
     setEditItemName('')
     setEditItemDescription('')
     setEditItemUrl('')
+  }
+
+  const handleDragStart = (itemId: string) => {
+    setDraggedItem(itemId)
+  }
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+  }
+
+  const handleDrop = async (targetItemId: string) => {
+    if (!draggedItem || draggedItem === targetItemId) {
+      setDraggedItem(null)
+      return
+    }
+
+    const draggedIndex = items.findIndex(i => i.id === draggedItem)
+    const targetIndex = items.findIndex(i => i.id === targetItemId)
+    
+    if (draggedIndex === -1 || targetIndex === -1) {
+      setDraggedItem(null)
+      return
+    }
+
+    // Reorder items locally
+    const newItems = [...items]
+    const [movedItem] = newItems.splice(draggedIndex, 1)
+    newItems.splice(targetIndex, 0, movedItem)
+
+    // Update positions
+    const updatedItems = newItems.map((item, idx) => ({
+      ...item,
+      position: idx
+    }))
+
+    setItems(updatedItems)
+    setDraggedItem(null)
+
+    // Persist to database
+    const updates = updatedItems.map(item => ({
+      id: item.id,
+      position: item.position
+    }))
+
+    for (const update of updates) {
+      const { error } = await supabase
+        .from('items')
+        // @ts-expect-error - Type inference issue with Supabase client
+        .update({ position: update.position })
+        .eq('id', update.id)
+
+      if (error) {
+        console.error('Error updating item position:', error)
+        // Reload items on error
+        loadListAndItems()
+        return
+      }
+    }
   }
 
   const copyShareLink = () => {
@@ -375,7 +435,18 @@ export default function EditListPage() {
         ) : (
           <div className="space-y-4">
             {items.map((item) => (
-              <div key={item.id} className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm hover:shadow-md hover:border-emerald-200 transition-all">
+              <div 
+                key={item.id} 
+                draggable
+                onDragStart={() => handleDragStart(item.id)}
+                onDragOver={handleDragOver}
+                onDrop={() => handleDrop(item.id)}
+                className={`bg-white rounded-2xl border border-gray-200 p-6 shadow-sm transition-all cursor-move ${
+                  draggedItem === item.id 
+                    ? 'opacity-50 border-emerald-400 bg-emerald-50' 
+                    : 'hover:shadow-md hover:border-emerald-200'
+                }`}
+              >
                 {editingItemId === item.id ? (
                   // Inline Edit Mode
                   <div className="space-y-4">
