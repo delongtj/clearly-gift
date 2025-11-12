@@ -12,6 +12,7 @@ import Toast from '@/components/Toast'
 export default function Dashboard() {
   const router = useRouter()
   const [lists, setLists] = useState<List[]>([])
+  const [listClickCounts, setListClickCounts] = useState<Record<string, number>>({})
   const [loading, setLoading] = useState(true)
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [editingListId, setEditingListId] = useState<string | null>(null)
@@ -67,7 +68,22 @@ export default function Dashboard() {
       console.error('Error loading lists:', error)
       setLists([])
     } else {
-      setLists((data as List[]) || [])
+      const loadedLists = (data as List[]) || []
+      setLists(loadedLists)
+      
+      // Load click counts for all lists
+      const clickCounts: Record<string, number> = {}
+      for (const list of loadedLists) {
+        const { data: itemsData } = await supabase
+          .from('items')
+          .select('click_count')
+          .eq('list_id', list.id)
+        
+        if (itemsData) {
+          clickCounts[list.id] = itemsData.reduce((sum, item) => sum + (item.click_count || 0), 0)
+        }
+      }
+      setListClickCounts(clickCounts)
     }
     setLoading(false)
   }
@@ -105,6 +121,7 @@ export default function Dashboard() {
       alert('Failed to create list. Please try again.')
     } else {
       setLists([data as List, ...lists])
+      setListClickCounts(prev => ({ ...prev, [(data as List).id]: 0 }))
       setNewListName('')
       setShowCreateForm(false)
     }
@@ -152,6 +169,11 @@ export default function Dashboard() {
       setShowToast(true)
     } else {
       setLists(lists.filter(l => l.id !== listToDelete.id))
+      setListClickCounts(prev => {
+        const newCounts = { ...prev }
+        delete newCounts[listToDelete.id]
+        return newCounts
+      })
     }
     setListToDelete(null)
   }
@@ -326,13 +348,8 @@ export default function Dashboard() {
                          <h2 className="text-lg font-semibold text-gray-900 mb-3 hover:text-emerald-600 hover:underline cursor-pointer transition-colors">{list.name}</h2>
                        </Link>
                       <div className="flex items-center space-x-4 text-sm text-gray-500">
-                      <span className="flex items-center gap-1">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                      </svg>
-                      {list.view_count || 0}
-                      </span>
+                      <span>{list.view_count || 0} views</span>
+                      <span>{listClickCounts[list.id] || 0} link clicks</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 ml-4 flex-shrink-0">
