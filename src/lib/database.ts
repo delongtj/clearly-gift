@@ -175,9 +175,10 @@ export class DatabaseService {
     }
 
     // Track subscription event
-    await trackItemAdded(listId, data.id, name)
+    const typedData = data as Item
+    await trackItemAdded(listId, typedData.id, name)
 
-    return data as Item
+    return typedData
   }
 
   async updateItem(
@@ -232,8 +233,9 @@ export class DatabaseService {
     }
 
     // Track subscription event if item wasn't already claimed
-    if (item && !item.claimed_at) {
-      await trackItemClaimed(item.list_id, id, item.name, claimedBy || 'Anonymous')
+    const typedItem = item as { list_id: string; name: string; claimed_at: string | null } | null
+    if (typedItem && !typedItem.claimed_at) {
+      await trackItemClaimed(typedItem.list_id, id, typedItem.name, claimedBy || 'Anonymous')
     }
 
     return true
@@ -264,8 +266,9 @@ export class DatabaseService {
     }
 
     // Track subscription event if item was claimed
-    if (item && item.claimed_at) {
-      await trackItemUnclaimed(item.list_id, id, item.name)
+    const typedItem = item as { list_id: string; name: string; claimed_at: string | null } | null
+    if (typedItem && typedItem.claimed_at) {
+      await trackItemUnclaimed(typedItem.list_id, id, typedItem.name)
     }
 
     return true
@@ -318,8 +321,9 @@ export class DatabaseService {
     }
 
     // Track subscription event
-    if (item) {
-      await trackItemRemoved(item.list_id, id, item.name)
+    const typedItem = item as { list_id: string; name: string } | null
+    if (typedItem) {
+      await trackItemRemoved(typedItem.list_id, id, typedItem.name)
     }
 
     return true

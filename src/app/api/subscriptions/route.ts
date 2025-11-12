@@ -7,7 +7,13 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
-const resend = new Resend(process.env.RESEND_API_KEY!)
+function getResend() {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY is not set')
+  }
+  return new Resend(apiKey)
+}
 
 function generateToken(): string {
   return Math.random().toString(36).substring(2, 15) + 
@@ -121,6 +127,7 @@ export async function POST(request: NextRequest) {
 async function sendVerificationEmail(email: string, listName: string, token: string) {
   const verifyUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-subscription?token=${token}`
 
+  const resend = getResend()
   await resend.emails.send({
     from: 'Clearly Gift <noreply@mail.clearly.gift>',
     to: email,
