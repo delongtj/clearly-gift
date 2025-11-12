@@ -235,18 +235,20 @@ export default function GuidesPage() {
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-emerald-100 to-green-100 flex items-center justify-center">
-              <span className="text-4xl">🐕</span>
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Pet Owners</h3>
-              <p className="text-gray-700 text-sm mb-4">
-                Thoughtful accessories and convenience items for devoted pet parents and their furry friends.
-              </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+          <div className="h-48 bg-gradient-to-br from-emerald-100 to-green-100 flex items-center justify-center">
+          <span className="text-4xl">🐕</span>
           </div>
+          <div className="p-6">
+          <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Pet Owners</h3>
+          <p className="text-gray-700 text-sm mb-4">
+          Thoughtful accessories and convenience items for devoted pet parents and their furry friends.
+          </p>
+          <a href="/guides/top-10-gift-ideas-for-pet-owners" className="text-emerald-600 hover:text-emerald-700 font-medium">
+              Read Guide →
+              </a>
+             </div>
+           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
             <div className="h-48 bg-gradient-to-br from-slate-100 to-gray-100 flex items-center justify-center">
