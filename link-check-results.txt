@@ -1,0 +1,22 @@
+[36m
+🔗 Checking all links in gift guides...
+[0m
+[0mFound 277 links across 8 guides.
+[0m
+/Users/tydelong-olomon/Code/clearly-gift/scripts/check-guide-links.js:57
+    const request = protocol.head(linkData.url, { 
+                             ^
+
+TypeError: protocol.head is not a function
+    at /Users/tydelong-olomon/Code/clearly-gift/scripts/check-guide-links.js:57:30
+    at new Promise (<anonymous>)
+    at checkUrl (/Users/tydelong-olomon/Code/clearly-gift/scripts/check-guide-links.js:50:10)
+    at processQueue (/Users/tydelong-olomon/Code/clearly-gift/scripts/check-guide-links.js:105:5)
+    at /Users/tydelong-olomon/Code/clearly-gift/scripts/check-guide-links.js:172:5
+    at new Promise (<anonymous>)
+    at main (/Users/tydelong-olomon/Code/clearly-gift/scripts/check-guide-links.js:162:10)
+    at Object.<anonymous> (/Users/tydelong-olomon/Code/clearly-gift/scripts/check-guide-links.js:176:1)
+    at Module._compile (node:internal/modules/cjs/loader:1692:14)
+    at Object..js (node:internal/modules/cjs/loader:1824:10)
+
+Node.js v24.3.0
