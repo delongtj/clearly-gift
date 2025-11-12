@@ -73,6 +73,14 @@ An intentionally simple gift wish list sharing app with content marketing throug
 - Replace existing affiliate IDs (we are ultimate traffic source)
 - Target partners: Amazon (primary), Target, Walmart, Etsy
 
+## Product Metadata Fetching (Experimental)
+- When users add a product link and blur the URL field, attempt to fetch OG metadata
+- API endpoint `/api/fetch-metadata` parses Open Graph tags from the page
+- Extracts: og:title, og:description, og:image, plus fallback to regular meta tags
+- Results logged to browser console for inspection
+- **Known Limitation**: Major retailers (Amazon, Walmart, Target) likely block requests from cloud provider IPs, even with User-Agent spoofing
+- Purpose: Validate whether free metadata fetching is feasible before committing to UI features
+
 ## User Limits & Guardrails
 - Basic limits on lists/items per user as guardrails
 - No strict business restrictions

@@ -127,6 +127,25 @@ export default function EditListPage() {
     setSaving(false)
   }
 
+  const handleUrlBlur = async () => {
+    if (!newItemUrl.trim()) return
+
+    try {
+      let url = newItemUrl.trim()
+      if (!url.match(/^https?:\/\//i)) {
+        url = `https://${url}`
+      }
+
+      const response = await fetch(
+        `/api/fetch-metadata?url=${encodeURIComponent(url)}`
+      )
+      const data = await response.json()
+      console.log('Fetched metadata:', data)
+    } catch (error) {
+      console.error('Error fetching metadata:', error)
+    }
+  }
+
   const handleEditItem = async (itemId: string) => {
     if (!editItemName.trim() || saving) return
 
@@ -378,18 +397,20 @@ export default function EditListPage() {
                 />
               </div>
               <div>
-                <label htmlFor="itemUrl" className="block text-sm font-medium text-gray-700 mb-1">
-                  Link (optional)
-                </label>
-                <input
-                  type="text"
-                  id="itemUrl"
-                  value={newItemUrl}
-                  onChange={(e) => setNewItemUrl(e.target.value)}
-                  placeholder="amazon.com/product or https://..."
+              <label htmlFor="itemUrl" className="block text-sm font-medium text-gray-700 mb-1">
+              Link (optional)
+              </label>
+              <input
+              type="text"
+              id="itemUrl"
+              value={newItemUrl}
+              onChange={(e) => setNewItemUrl(e.target.value)}
+              onBlur={handleUrlBlur}
+                placeholder="amazon.com/product or https://..."
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900"
                   disabled={saving}
-                />
+              />
+              <p className="text-xs text-gray-500 mt-1">Check browser console for fetched metadata</p>
               </div>
               <div className="flex gap-3 pt-2">
                 <button

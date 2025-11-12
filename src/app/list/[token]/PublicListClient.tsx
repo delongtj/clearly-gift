@@ -304,18 +304,18 @@ export default function PublicListClient({ token }: PublicListClientProps) {
           </div>
         ) : (
           <div className="space-y-4">
-            {items.map((item) => (
-              <div
-                key={item.id}
-                className={`bg-white rounded-2xl border transition-all duration-300 ${
-                  item.claimed_at 
-                    ? 'border-gray-200 bg-gray-50 shadow-sm' 
-                    : 'border-gray-200 shadow-sm hover:shadow-md hover:border-emerald-200'
-                }`}
-              >
-                <div className="p-6">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
+          {items.map((item) => (
+          <div
+          key={item.id}
+          className={`bg-white rounded-2xl border transition-all duration-300 ${
+          item.claimed_at 
+          ? 'border-gray-200 bg-gray-50 shadow-sm' 
+          : 'border-gray-200 shadow-sm hover:shadow-md hover:border-emerald-200'
+          }`}
+          >
+          <div className="p-6">
+          <div className="flex items-start justify-between gap-4">
+          <div className="flex-1 min-w-0">
                       {item.claimed_at && (
                         <div className="flex items-center gap-2 mb-3">
                           <div className="flex-shrink-0 w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center animate-checkmark">
