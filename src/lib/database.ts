@@ -1,5 +1,11 @@
 import { createClient } from '@/lib/auth'
 import { processUrl, generateListToken } from '@/utils/url-processor'
+import { 
+  trackItemAdded, 
+  trackItemRemoved, 
+  trackItemClaimed, 
+  trackItemUnclaimed 
+} from '@/lib/subscriptions'
 import type { List, Item, User } from '@/types/database'
 
 export class DatabaseService {
@@ -168,6 +174,9 @@ export class DatabaseService {
       return null
     }
 
+    // Track subscription event
+    await trackItemAdded(listId, data.id, name)
+
     return data as Item
   }
 
@@ -200,6 +209,13 @@ export class DatabaseService {
   async claimItem(id: string, claimedBy?: string): Promise<boolean> {
     const supabase = await this.supabase
 
+    // Get item info before updating (for tracking)
+    const { data: item } = await supabase
+      .from('items')
+      .select('list_id, name, claimed_at')
+      .eq('id', id)
+      .single()
+
     const { error } = await supabase
       .from('items')
       // @ts-ignore - Type inference issue with Supabase client
@@ -215,11 +231,23 @@ export class DatabaseService {
       return false
     }
 
+    // Track subscription event if item wasn't already claimed
+    if (item && !item.claimed_at) {
+      await trackItemClaimed(item.list_id, id, item.name, claimedBy || 'Anonymous')
+    }
+
     return true
   }
 
   async unclaimItem(id: string): Promise<boolean> {
     const supabase = await this.supabase
+
+    // Get item info before updating (for tracking)
+    const { data: item } = await supabase
+      .from('items')
+      .select('list_id, name, claimed_at')
+      .eq('id', id)
+      .single()
 
     const { error } = await supabase
       .from('items')
@@ -233,6 +261,11 @@ export class DatabaseService {
     if (error) {
       console.error('Error unclaiming item:', error)
       return false
+    }
+
+    // Track subscription event if item was claimed
+    if (item && item.claimed_at) {
+      await trackItemUnclaimed(item.list_id, id, item.name)
     }
 
     return true
@@ -267,6 +300,13 @@ export class DatabaseService {
   async deleteItem(id: string): Promise<boolean> {
     const supabase = await this.supabase
     
+    // Get item info before deleting (for tracking)
+    const { data: item } = await supabase
+      .from('items')
+      .select('list_id, name')
+      .eq('id', id)
+      .single()
+    
     const { error } = await supabase
       .from('items')
       .delete()
@@ -275,6 +315,11 @@ export class DatabaseService {
     if (error) {
       console.error('Error deleting item:', error)
       return false
+    }
+
+    // Track subscription event
+    if (item) {
+      await trackItemRemoved(item.list_id, id, item.name)
     }
 
     return true
