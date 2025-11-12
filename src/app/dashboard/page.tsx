@@ -74,14 +74,14 @@ export default function Dashboard() {
       // Load click counts for all lists
       const clickCounts: Record<string, number> = {}
       for (const list of loadedLists) {
-        const { data: itemsData } = await supabase
-          .from('items')
-          .select('click_count')
-          .eq('list_id', list.id)
-        
-        if (itemsData) {
-          clickCounts[list.id] = itemsData.reduce((sum, item) => sum + (item.click_count || 0), 0)
-        }
+      const { data: itemsData } = await supabase
+      .from('items')
+      .select('click_count')
+      .eq('list_id', list.id)
+      
+      if (itemsData) {
+      clickCounts[list.id] = (itemsData as { click_count: number }[]).reduce((sum, item) => sum + (item.click_count || 0), 0)
+      }
       }
       setListClickCounts(clickCounts)
     }
