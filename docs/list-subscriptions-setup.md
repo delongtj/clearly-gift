@@ -40,13 +40,26 @@ Upstash provides free serverless Redis and scheduled tasks. This will trigger th
 
 1. Sign up for Upstash at https://upstash.com
 2. Create a new Redis database (free tier available)
-3. Go to QStash tab and create a new scheduled task:
+3. Generate a strong secret token. You can use:
+   ```bash
+   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+   ```
+4. Add the secret to your environment:
+   - In `.env.local`:
+     ```
+     BATCH_JOB_SECRET=your-generated-secret-here
+     ```
+   - In Netlify dashboard:
+     ```
+     BATCH_JOB_SECRET=your-generated-secret-here
+     ```
+5. Go to Upstash QStash and create a new scheduled task:
    - **Destination**: `https://your-domain.netlify.app/.netlify/functions/batch-send-notifications`
    - **Schedule**: `*/30 * * * *` (every 30 minutes)
    - **Method**: POST
    - Headers:
      ```
-     Authorization: Bearer YOUR_SECRET_TOKEN
+     Authorization: Bearer your-generated-secret-here
      ```
 
 ### Option B: Using External Cron Service
@@ -64,6 +77,7 @@ In your Netlify dashboard (or via CLI):
 ```bash
 netlify env:set SUPABASE_SERVICE_ROLE_KEY "your-key"
 netlify env:set RESEND_API_KEY "your-key"
+netlify env:set BATCH_JOB_SECRET "your-generated-secret"
 netlify env:set NEXT_PUBLIC_APP_URL "https://your-domain.com"
 netlify env:set NEXT_PUBLIC_SUPABASE_URL "your-supabase-url"
 ```
@@ -197,9 +211,10 @@ export default function UnsubscribeError() {
 1. Subscribe to a list with your email
 2. Verify the subscription via the email link
 3. Make changes to items (add, claim, etc.)
-4. Wait up to 30 minutes or manually trigger the batch job:
+4. Wait up to 30 minutes or manually trigger the batch job with your secret:
    ```bash
-   curl -X POST https://your-domain.netlify.app/.netlify/functions/batch-send-notifications
+   curl -X POST https://your-domain.netlify.app/.netlify/functions/batch-send-notifications \
+     -H "Authorization: Bearer your-generated-secret"
    ```
 5. Check your email for the notification
 
