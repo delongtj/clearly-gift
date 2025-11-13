@@ -1,45 +1,27 @@
 import { Metadata } from 'next'
+import GuidesHeader from '@/components/GuidesHeader'
 
 export const metadata: Metadata = {
-  title: 'Gift Guides',
-  description: 'Discover curated gift guides for every person and occasion. Find the perfect gifts for coffee lovers, tech enthusiasts, runners, toddlers, and more.',
-  keywords: ['gift guides', 'gift ideas', 'present ideas', 'holiday gifts', 'birthday gifts', 'coffee gifts', 'tech gifts', 'running gifts'],
-  openGraph: {
-    title: 'Gift Guides | clearly.gift',
-    description: 'Discover curated gift guides for every person and occasion. Find the perfect gifts for coffee lovers, tech enthusiasts, runners, toddlers, and more.',
-    url: '/guides',
-    type: 'website',
-  },
-  twitter: {
-    title: 'Gift Guides | clearly.gift',
-    description: 'Discover curated gift guides for every person and occasion. Find the perfect gifts for coffee lovers, tech enthusiasts, runners, toddlers, and more.',
-    card: 'summary_large_image',
-  },
+title: 'Gift Guides',
+description: 'Discover curated gift guides for every person and occasion. Find the perfect gifts for coffee lovers, tech enthusiasts, runners, toddlers, and more.',
+keywords: ['gift guides', 'gift ideas', 'present ideas', 'holiday gifts', 'birthday gifts', 'coffee gifts', 'tech gifts', 'running gifts'],
+openGraph: {
+title: 'Gift Guides | clearly.gift',
+description: 'Discover curated gift guides for every person and occasion. Find the perfect gifts for coffee lovers, tech enthusiasts, runners, toddlers, and more.',
+url: '/guides',
+  type: 'website',
+},
+twitter: {
+title: 'Gift Guides | clearly.gift',
+description: 'Discover curated gift guides for every person and occasion. Find the perfect gifts for coffee lovers, tech enthusiasts, runners, toddlers, and more.',
+  card: 'summary_large_image',
+   },
 }
 
 export default function GuidesPage() {
-  return (
-    <div className="min-h-screen bg-white">
-      <header className="border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <a href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-              <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">C</span>
-              </div>
-              <span className="text-2xl font-bold text-gray-900">clearly.gift</span>
-            </a>
-            <div className="flex items-center space-x-4">
-              <a href="/" className="text-gray-700 hover:text-gray-900">
-                Home
-              </a>
-              <a href="/auth" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
-                Get Started
-              </a>
-            </div>
-          </div>
-        </div>
-      </header>
+return (
+<div className="min-h-screen bg-white">
+<GuidesHeader />
 
       <main className="max-w-6xl mx-auto px-4 py-12">
         <div className="text-center mb-12">

@@ -27,9 +27,15 @@ export default function Home() {
               <span className="text-2xl font-bold text-gray-900">clearly.gift</span>
             </div>
             <div className="flex items-center space-x-3">
-              <Link href={user ? "/dashboard" : "/auth"} className="text-gray-600 hover:text-gray-900 font-medium transition-colors">
-                {user ? "Dashboard" : "Sign In"}
-              </Link>
+              {user ? (
+                <Link href="/dashboard" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 font-medium shadow-sm hover:shadow-md transition-all active:scale-95">
+                  Dashboard
+                </Link>
+              ) : (
+                <Link href="/auth" className="text-gray-600 hover:text-gray-900 font-medium transition-colors">
+                  Sign In
+                </Link>
+              )}
               {!user && (
                 <Link href="/auth" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 font-medium shadow-sm hover:shadow-md transition-all active:scale-95">
                   Get Started

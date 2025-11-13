@@ -3,6 +3,7 @@ import path from 'path'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import ReactMarkdown from 'react-markdown'
+import GuideDetailHeader from '@/components/GuideDetailHeader'
 
 interface GuidePageProps {
   params: {
@@ -136,31 +137,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <a href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-              <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">C</span>
-              </div>
-              <span className="text-xl font-bold text-gray-900">clearly.gift</span>
-            </a>
-            <div className="flex items-center space-x-4">
-              <a href="/guides" className="text-gray-600 hover:text-gray-900 font-medium">
-                All Guides
-              </a>
-              <a href="/" className="text-gray-600 hover:text-gray-900 font-medium">
-                Home
-              </a>
-              <a href="/auth" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 font-medium">
-                Get Started
-              </a>
-            </div>
-          </div>
-        </div>
-      </header>
+  <div className="min-h-screen bg-gray-50">
+  <GuideDetailHeader />
 
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-amber-50 to-orange-100 py-16">
