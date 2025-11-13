@@ -43,6 +43,70 @@ export default function Dashboard() {
     return () => subscription.unsubscribe()
   }, [router])
 
+  // Subscribe to real-time changes for all user's lists
+  useEffect(() => {
+    if (lists.length === 0) return
+
+    const channels = lists.map(list => {
+      const channel = supabase
+        .channel(`list-${list.id}-dashboard`)
+        .on(
+          'postgres_changes',
+          {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'lists',
+            filter: `id=eq.${list.id}`
+          },
+          (payload) => {
+            console.log('List update received:', payload)
+            // Update list data (view count, name, etc.)
+            setLists(prev => prev.map(l => 
+              l.id === list.id ? payload.new as List : l
+            ))
+          }
+        )
+        .on(
+          'postgres_changes',
+          {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'items',
+            filter: `list_id=eq.${list.id}`
+          },
+          async (payload) => {
+            console.log('Item update received:', payload)
+            // Recalculate click counts when items are updated
+            if (payload.new.click_count !== undefined) {
+              const { data: itemsData } = await supabase
+                .from('items')
+                .select('click_count')
+                .eq('list_id', list.id)
+
+              if (itemsData) {
+                setListClickCounts(prev => ({
+                  ...prev,
+                  [list.id]: itemsData.reduce((sum, item) => sum + (item.click_count || 0), 0)
+                }))
+              }
+            }
+          }
+        )
+        .subscribe((status) => {
+          if (status === 'SUBSCRIBED') {
+            console.log(`Connected to real-time updates for list ${list.id}`)
+          }
+        })
+
+      return channel
+    })
+
+    // Cleanup subscriptions on unmount
+    return () => {
+      channels.forEach(channel => supabase.removeChannel(channel))
+    }
+  }, [lists])
+
   const checkAuth = async () => {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
