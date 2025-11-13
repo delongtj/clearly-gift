@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase'
 import type { List, Item } from '@/types/database'
 import ConfirmDialog from '@/components/ConfirmDialog'
 import InputDialog from '@/components/InputDialog'
+import SubscriptionDialog from '@/components/SubscriptionDialog'
 import Toast from '@/components/Toast'
 
 interface PublicListClientProps {
@@ -24,6 +25,7 @@ export default function PublicListClient({ token }: PublicListClientProps) {
   const [itemToClaim, setItemToClaim] = useState<Item | null>(null)
   const [showUnclaimConfirm, setShowUnclaimConfirm] = useState(false)
   const [itemToUnclaim, setItemToUnclaim] = useState<Item | null>(null)
+  const [showSubscriptionDialog, setShowSubscriptionDialog] = useState(false)
   const [showToast, setShowToast] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
   const [toastType, setToastType] = useState<'success' | 'error' | 'info'>('success')
@@ -288,8 +290,16 @@ export default function PublicListClient({ token }: PublicListClientProps) {
         <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-8 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-3xl font-bold text-gray-900">{list.name}</h1>
-            <div className="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-              {list.view_count || 0} view{(list.view_count || 0) !== 1 ? 's' : ''}
+            <div className="flex items-center gap-3">
+              <div className="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                {list.view_count || 0} view{(list.view_count || 0) !== 1 ? 's' : ''}
+              </div>
+              <button
+                onClick={() => setShowSubscriptionDialog(true)}
+                className="text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-1.5 rounded-full transition-colors"
+              >
+                Subscribe to Changes
+              </button>
             </div>
           </div>
           <p className="text-gray-600 text-sm leading-relaxed">
@@ -405,6 +415,11 @@ export default function PublicListClient({ token }: PublicListClientProps) {
         message="Enter your name so others know you're getting this gift:"
         placeholder="Your name (optional)"
         submitText="Claim Gift"
+      />
+      <SubscriptionDialog
+        isOpen={showSubscriptionDialog}
+        onClose={() => setShowSubscriptionDialog(false)}
+        listId={list?.id || ''}
       />
       <Toast
         isOpen={showToast}
