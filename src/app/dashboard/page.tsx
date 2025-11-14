@@ -83,10 +83,10 @@ export default function Dashboard() {
                 .select('click_count')
                 .eq('list_id', list.id)
 
-              if (itemsData) {
+              if (itemsData && Array.isArray(itemsData)) {
                 setListClickCounts(prev => ({
                   ...prev,
-                  [list.id]: itemsData.reduce((sum, item) => sum + (item.click_count || 0), 0)
+                  [list.id]: itemsData.reduce((sum: number, item: any) => sum + (item.click_count || 0), 0)
                 }))
               }
             }
