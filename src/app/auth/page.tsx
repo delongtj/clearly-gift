@@ -71,13 +71,6 @@ export default function AuthPage() {
     if (digits.length > 0) {
       const newCode = digits.split('').concat(Array(6 - digits.length).fill(''))
       setCode(newCode)
-      
-      // Focus the next empty input or the last input
-      const nextIndex = Math.min(digits.length, 5)
-      setTimeout(() => {
-        const input = document.getElementById(`code-${nextIndex}`)
-        input?.focus()
-      }, 0)
     }
   }
 
@@ -199,6 +192,7 @@ export default function AuthPage() {
                     onPaste={handleCodePaste}
                     disabled={loading}
                     autoFocus={index === 0}
+                    autoComplete="off"
                     className="w-12 h-14 text-center text-2xl font-bold border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900 transition-all"
                     placeholder="0"
                   />
