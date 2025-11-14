@@ -6,7 +6,9 @@ import Link from 'next/link'
 
 export default function AuthPage() {
   const [email, setEmail] = useState('')
+  const [code, setCode] = useState(['', '', '', '', '', ''])
   const [loading, setLoading] = useState(false)
+  const [stage, setStage] = useState<'email' | 'code'>('email')
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -18,21 +20,79 @@ export default function AuthPage() {
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
+          shouldCreateUser: true,
         },
       })
 
       if (error) throw error
 
+      setStage('code')
       setMessage({
         type: 'success',
-        text: 'Check your email for the magic link!'
+        text: 'Check your email for the 6-digit code',
       })
-      setEmail('')
     } catch (error: any) {
       setMessage({
         type: 'error',
-        text: error.message || 'Something went wrong. Please try again.'
+        text: error.message || 'Something went wrong. Please try again.',
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleCodeChange = (index: number, value: string) => {
+    // Only allow digits
+    if (!/^\d*$/.test(value)) return
+    
+    const newCode = [...code]
+    newCode[index] = value.slice(-1) // Take only the last character
+    setCode(newCode)
+
+    // Auto-focus next input
+    if (value && index < 5) {
+      const nextInput = document.getElementById(`code-${index + 1}`)
+      nextInput?.focus()
+    }
+  }
+
+  const handleCodeKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && !code[index] && index > 0) {
+      const prevInput = document.getElementById(`code-${index - 1}`)
+      prevInput?.focus()
+    }
+  }
+
+  const handleVerifyCode = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const fullCode = code.join('')
+    
+    if (fullCode.length !== 6) {
+      setMessage({
+        type: 'error',
+        text: 'Please enter all 6 digits',
+      })
+      return
+    }
+
+    setLoading(true)
+    setMessage(null)
+
+    try {
+      const { error } = await supabase.auth.verifyOtp({
+        email,
+        token: fullCode,
+        type: 'email',
+      })
+
+      if (error) throw error
+
+      // Auto-redirect after verification
+      window.location.href = '/dashboard'
+    } catch (error: any) {
+      setMessage({
+        type: 'error',
+        text: error.message || 'Invalid code. Please try again.',
       })
     } finally {
       setLoading(false)
@@ -73,39 +133,92 @@ export default function AuthPage() {
           </div>
         )}
 
-        <form onSubmit={handleSignIn} className="space-y-5">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              Email address
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={loading}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900 transition-all placeholder:text-gray-500"
-              placeholder="you@example.com"
-              autoComplete="email"
-            />
-          </div>
+        {stage === 'email' ? (
+          <form onSubmit={handleSignIn} className="space-y-5">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                Email address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900 transition-all placeholder:text-gray-500"
+                placeholder="you@example.com"
+                autoComplete="email"
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-emerald-600 text-white py-2.5 px-4 rounded-lg hover:bg-emerald-700 font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95 shadow-md hover:shadow-lg"
-          >
-            {loading ? 'Sending...' : 'Continue'}
-          </button>
-        </form>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-emerald-600 text-white py-2.5 px-4 rounded-lg hover:bg-emerald-700 font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95 shadow-md hover:shadow-lg"
+            >
+              {loading ? 'Sending...' : 'Continue'}
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleVerifyCode} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-4">
+                Enter verification code
+              </label>
+              <div className="flex gap-2 justify-center">
+                {code.map((digit, index) => (
+                  <input
+                    key={index}
+                    id={`code-${index}`}
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e) => handleCodeChange(index, e.target.value)}
+                    onKeyDown={(e) => handleCodeKeyDown(index, e)}
+                    disabled={loading}
+                    autoFocus={index === 0}
+                    className="w-12 h-14 text-center text-2xl font-bold border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900 transition-all"
+                    placeholder="0"
+                  />
+                ))}
+              </div>
+              <p className="text-xs text-gray-500 mt-3 text-center">
+                Check your email for the 6-digit code
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading || code.join('').length !== 6}
+              className="w-full bg-emerald-600 text-white py-2.5 px-4 rounded-lg hover:bg-emerald-700 font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95 shadow-md hover:shadow-lg"
+            >
+              {loading ? 'Verifying...' : 'Verify code'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setStage('email')
+                setCode(['', '', '', '', '', ''])
+                setEmail('')
+                setMessage(null)
+              }}
+              disabled={loading}
+              className="w-full text-emerald-600 hover:text-emerald-700 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Change email
+            </button>
+          </form>
+        )}
 
         <div className="mt-8 text-center">
           <p className="text-sm text-gray-500">
-            {message?.type === 'success'
-              ? '✓ Check your email for the magic link'
-              : "We'll send you a magic link to sign in"}
+            {stage === 'email'
+              ? "We'll send you a 6-digit code to sign in"
+              : 'Enter the code sent to your email'}
           </p>
         </div>
       </div>
