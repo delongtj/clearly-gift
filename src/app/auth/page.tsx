@@ -63,6 +63,24 @@ export default function AuthPage() {
     }
   }
 
+  const handleCodePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const pastedData = e.clipboardData.getData('text')
+    const digits = pastedData.replace(/\D/g, '').slice(0, 6)
+    
+    if (digits.length > 0) {
+      const newCode = digits.split('').concat(Array(6 - digits.length).fill(''))
+      setCode(newCode)
+      
+      // Focus the next empty input or the last input
+      const nextIndex = Math.min(digits.length, 5)
+      setTimeout(() => {
+        const input = document.getElementById(`code-${nextIndex}`)
+        input?.focus()
+      }, 0)
+    }
+  }
+
   const handleVerifyCode = async (e: React.FormEvent) => {
     e.preventDefault()
     const fullCode = code.join('')
@@ -178,6 +196,7 @@ export default function AuthPage() {
                     value={digit}
                     onChange={(e) => handleCodeChange(index, e.target.value)}
                     onKeyDown={(e) => handleCodeKeyDown(index, e)}
+                    onPaste={handleCodePaste}
                     disabled={loading}
                     autoFocus={index === 0}
                     className="w-12 h-14 text-center text-2xl font-bold border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900 transition-all"
@@ -209,7 +228,7 @@ export default function AuthPage() {
               disabled={loading}
               className="w-full text-emerald-600 hover:text-emerald-700 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Change email
+              Start over
             </button>
           </form>
         )}
