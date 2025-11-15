@@ -69,7 +69,7 @@ Visit [http://localhost:3000](http://localhost:3000) to see the app.
 
 2. **Configure domains**
    - Set up your custom domain (clearly.gift)
-   - Update `NEXT_PUBLIC_SITE_URL` in your environment variables
+   - Update `NEXT_PUBLIC_APP_URL` in your environment variables
 
 ## Project Structure
 

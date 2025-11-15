@@ -129,7 +129,7 @@ async function sendVerificationEmail(email: string, listName: string, token: str
 
   const resend = getResend()
   await resend.emails.send({
-    from: 'Clearly Gift <noreply@clearly.gift>',
+    from: 'clearly.gift <noreply@clearly.gift>',
     to: email,
     subject: `Verify your subscription to ${listName}`,
     html: `
@@ -138,7 +138,7 @@ async function sendVerificationEmail(email: string, listName: string, token: str
       <p><a href="${verifyUrl}" style="background-color: #069668; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block;">Verify Your Email</a></p>
       <p>Or copy this link: ${verifyUrl}</p>
       <p>This link expires in 24 hours.</p>
-      <p>Clearly Gift</p>
+      <p>clearly.gift</p>
     `
   })
 }
