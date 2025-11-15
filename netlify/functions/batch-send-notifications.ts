@@ -442,7 +442,7 @@ async function sendNotificationEmail(
 
   try {
     await resend.emails.send({
-      from: 'Clearly Gift <noreply@mail.clearly.gift>',
+      from: 'Clearly Gift <noreply@clearly.gift>',
       to: email,
       subject: `[${listName}] Updates on your wishlist`,
       html

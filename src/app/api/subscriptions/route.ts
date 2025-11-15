@@ -16,7 +16,7 @@ function getResend() {
 }
 
 function generateToken(): string {
-  return Math.random().toString(36).substring(2, 15) + 
+  return Math.random().toString(36).substring(2, 15) +
          Math.random().toString(36).substring(2, 15)
 }
 
@@ -129,7 +129,7 @@ async function sendVerificationEmail(email: string, listName: string, token: str
 
   const resend = getResend()
   await resend.emails.send({
-    from: 'Clearly Gift <noreply@mail.clearly.gift>',
+    from: 'Clearly Gift <noreply@clearly.gift>',
     to: email,
     subject: `Verify your subscription to ${listName}`,
     html: `
