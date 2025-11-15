@@ -288,20 +288,20 @@ export default function PublicListClient({ token }: PublicListClientProps) {
 
       <main className="max-w-4xl mx-auto px-4 py-8">
         <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-8 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-3xl font-bold text-gray-900">{list.name}</h1>
-            <div className="flex items-center gap-3">
-              <div className="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                {list.view_count || 0} view{(list.view_count || 0) !== 1 ? 's' : ''}
-              </div>
-              <button
-                onClick={() => setShowSubscriptionDialog(true)}
-                className="text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-1.5 rounded-full transition-colors"
-              >
-                Subscribe to Changes
-              </button>
-            </div>
-          </div>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+        <h1 className="text-3xl font-bold text-gray-900">{list.name}</h1>
+        <div className="flex items-center gap-3 flex-shrink-0">
+        <div className="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full whitespace-nowrap">
+        {list.view_count || 0} view{(list.view_count || 0) !== 1 ? 's' : ''}
+        </div>
+        <button
+        onClick={() => setShowSubscriptionDialog(true)}
+        className="text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-1.5 rounded-full transition-colors whitespace-nowrap"
+        >
+        Subscribe to Changes
+        </button>
+        </div>
+        </div>
           <p className="text-gray-600 text-sm leading-relaxed">
             Click "Claim Gift" to let others know you're getting this item. 🎁
           </p>
