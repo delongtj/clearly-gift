@@ -52,8 +52,7 @@ export async function PUT(request: NextRequest) {
     const { error } = await supabase
       .from('list_subscriptions')
       .update({
-        verified_at: new Date().toISOString(),
-        verification_token: null // Clear token after use
+        verified_at: new Date().toISOString()
       })
       .eq('id', subscription.id)
 
@@ -118,8 +117,7 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase
       .from('list_subscriptions')
       .update({
-        verified_at: new Date().toISOString(),
-        verification_token: null
+        verified_at: new Date().toISOString()
       })
       .eq('id', subscription.id)
 
