@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function VerifySubscriptionPage() {
+function VerifySubscriptionContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -37,5 +37,13 @@ export default function VerifySubscriptionPage() {
     <div className="min-h-screen flex items-center justify-center">
       <p>Verifying your subscription...</p>
     </div>
+  );
+}
+
+export default function VerifySubscriptionPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><p>Loading...</p></div>}>
+      <VerifySubscriptionContent />
+    </Suspense>
   );
 }

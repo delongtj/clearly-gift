@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function UnsubscribePage() {
+function UnsubscribeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -39,5 +39,13 @@ export default function UnsubscribePage() {
     <div className="min-h-screen flex items-center justify-center">
       <p>Unsubscribing...</p>
     </div>
+  );
+}
+
+export default function UnsubscribePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><p>Loading...</p></div>}>
+      <UnsubscribeContent />
+    </Suspense>
   );
 }
