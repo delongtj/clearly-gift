@@ -65,12 +65,21 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       console.error('Error unsubscribing:', error)
-      return NextResponse.redirect(new URL('/unsubscribe-error', request.url))
+      return NextResponse.json(
+        { success: false, error: 'Failed to unsubscribe' },
+        { status: 500 }
+      )
     }
 
-    return NextResponse.redirect(new URL('/unsubscribe-success', request.url))
+    return NextResponse.json({
+      success: true,
+      message: 'You\'ve been unsubscribed. You won\'t receive any more updates.'
+    })
   } catch (error) {
     console.error('Unsubscribe error:', error)
-    return NextResponse.redirect(new URL('/unsubscribe-error', request.url))
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
   }
 }

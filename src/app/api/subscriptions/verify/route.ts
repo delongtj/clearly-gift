@@ -125,12 +125,21 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       console.error('Error verifying subscription:', error)
-      return NextResponse.redirect(new URL('/verify-subscription-error', request.url))
+      return NextResponse.json(
+        { success: false, error: 'Failed to verify subscription' },
+        { status: 500 }
+      )
     }
 
-    return NextResponse.redirect(new URL('/verify-subscription-success', request.url))
+    return NextResponse.json({
+      success: true,
+      message: 'Email verified! You\'ll start receiving updates.'
+    })
   } catch (error) {
     console.error('Verification error:', error)
-    return NextResponse.redirect(new URL('/verify-subscription-error', request.url))
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
   }
 }
