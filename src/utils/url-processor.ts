@@ -1,9 +1,11 @@
+import { nanoid } from 'nanoid'
+
 export interface AffiliateConfig {
-  amazon?: string
-  target?: string
+amazon?: string
+target?: string
   walmart?: string
-  etsy?: string
-}
+   etsy?: string
+ }
 
 const AFFILIATE_CONFIG: AffiliateConfig = {
   amazon: process.env.AMAZON_AFFILIATE_TAG,
@@ -60,10 +62,5 @@ export function processUrl(originalUrl: string): string {
 }
 
 export function generateListToken(): string {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  let result = ''
-  for (let i = 0; i < 64; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length))
-  }
-  return result
+  return nanoid()
 }
