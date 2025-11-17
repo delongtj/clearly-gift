@@ -222,17 +222,13 @@ export default function PublicListClient({ token }: PublicListClientProps) {
     setItemToClaim(null)
   }
 
-  const handleItemClick = async (item: Item) => {
-    // Increment click count
-    try {
-      // @ts-expect-error - Supabase RPC type definitions
-      await supabase.rpc('increment_item_click_count', { item_id: item.id })
-    } catch (error) {
-      console.error('Error incrementing click count:', error)
-    }
-
-    // Open link
+  const handleItemClick = (item: Item) => {
+    // Open link immediately
     window.open(item.formatted_url || item.url || '#', '_blank')
+
+    // Increment click count in background (fire and forget)
+    supabase.rpc('increment_item_click_count', { item_id: item.id })
+      .catch((error) => console.error('Error incrementing click count:', error))
   }
 
   if (loading) {
