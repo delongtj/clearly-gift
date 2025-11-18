@@ -36,7 +36,7 @@ function UnsubscribeContent() {
   }, [searchParams, router]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="flex items-center justify-center flex-1">
       <p>Unsubscribing...</p>
     </div>
   );
@@ -44,7 +44,7 @@ function UnsubscribeContent() {
 
 export default function UnsubscribePage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><p>Loading...</p></div>}>
+    <Suspense fallback={<div className="flex items-center justify-center flex-1"><p>Loading...</p></div>}>
       <UnsubscribeContent />
     </Suspense>
   );

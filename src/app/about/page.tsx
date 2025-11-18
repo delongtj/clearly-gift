@@ -6,7 +6,7 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white">
       <PublicHeader />
       <main className="max-w-2xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold mb-6">About clearly.gift</h1>

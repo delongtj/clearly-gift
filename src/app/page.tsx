@@ -17,7 +17,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white">
       <header className="border-b border-gray-200 sticky top-0 z-40 bg-white/80 backdrop-blur-sm">
       <div className="max-w-6xl mx-auto px-4 py-4">
       <div className="flex items-center justify-between">
@@ -112,33 +112,7 @@ export default function Home() {
           ))}
         </section>
 
-        {/* Gift Guides Section */}
-        <section className="max-w-6xl mx-auto px-4 py-20 bg-gradient-to-b from-gray-50 to-white rounded-3xl border border-gray-200 px-8 mb-16">
-          <h2 className="text-4xl font-bold text-center mb-16 text-gray-900">Gift Guides</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { title: "Top Gifts for Toddlers 2025", desc: "10 perfect picks that'll keep the little ones happy and engaged." },
-              { title: "Best Tech Gifts Under $100", desc: "Gadgets and accessories that won't break the bank." },
-              { title: "Gifts for Coffee Lovers", desc: "From beans to brewers, everything for the caffeine connoisseur." },
-            ].map((guide, i) => (
-              <div 
-                key={i} 
-                className="bg-white p-8 rounded-xl border border-gray-200 hover:border-emerald-200 hover:shadow-lg transition-all hover:scale-105"
-              >
-                <h3 className="font-semibold mb-3 text-gray-900">{guide.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{guide.desc}</p>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-12">
-            <Link href="/guides" className="text-emerald-600 hover:text-emerald-700 font-semibold inline-flex items-center gap-2 transition-colors">
-              View All Guides
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </Link>
-          </div>
-        </section>
+
       </main>
     </div>
   )

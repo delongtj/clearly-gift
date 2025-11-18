@@ -8,7 +8,7 @@ export default function TermsPage() {
   const lastUpdated = new Date('2024-01-01').toLocaleDateString();
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white">
       <PublicHeader />
       <main className="max-w-2xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold mb-2">Terms of Service</h1>

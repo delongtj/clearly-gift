@@ -6,7 +6,7 @@ export const metadata = {
 
 export default function VerifySubscriptionError() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
+    <div className="bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4 flex-1">
       <div className="bg-white rounded-2xl border border-gray-200 p-8 max-w-md w-full text-center shadow-sm">
         <div className="text-5xl mb-4">✗</div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Verification Failed</h1>

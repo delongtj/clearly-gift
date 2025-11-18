@@ -112,7 +112,7 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
+    <div className="bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4 flex-1">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-8 animate-fade-in">
         <div className="text-center mb-8">
         <Link href="/" className="inline-block">

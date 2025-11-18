@@ -20,7 +20,7 @@ description: 'Discover curated gift guides for every person and occasion. Find t
 
 export default function GuidesPage() {
 return (
-<div className="min-h-screen bg-white">
+<div className="bg-white">
 <GuidesHeader />
 
       <main className="max-w-6xl mx-auto px-4 py-12">

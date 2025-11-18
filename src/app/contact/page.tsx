@@ -6,9 +6,9 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white flex flex-col">
       <PublicHeader />
-      <main className="flex items-center flex-1">
+      <main className="flex-1 flex items-center">
         <div className="max-w-2xl mx-auto px-4 py-12 text-center w-full">
         <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
         

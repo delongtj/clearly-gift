@@ -34,7 +34,7 @@ function VerifySubscriptionContent() {
   }, [searchParams, router]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="flex items-center justify-center flex-1">
       <p>Verifying your subscription...</p>
     </div>
   );
@@ -42,7 +42,7 @@ function VerifySubscriptionContent() {
 
 export default function VerifySubscriptionPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><p>Loading...</p></div>}>
+    <Suspense fallback={<div className="flex items-center justify-center flex-1"><p>Loading...</p></div>}>
       <VerifySubscriptionContent />
     </Suspense>
   );

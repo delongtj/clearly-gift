@@ -232,7 +232,7 @@ export default function PublicListClient({ token }: PublicListClientProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="bg-gray-50 flex items-center justify-center flex-1">
         <p className="text-gray-600">Loading...</p>
       </div>
     )
@@ -240,7 +240,7 @@ export default function PublicListClient({ token }: PublicListClientProps) {
 
   if (!list) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="bg-gray-50 flex items-center justify-center flex-1">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">List not found</h1>
           <p className="text-gray-600 mb-6">This list doesn't exist or has been deleted.</p>
@@ -254,7 +254,7 @@ export default function PublicListClient({ token }: PublicListClientProps) {
 
   if (isOwnList) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="bg-gray-50 flex items-center justify-center flex-1">
         <div className="text-center max-w-md mx-auto px-4">
           <div className="text-6xl mb-4">👀</div>
           <h1 className="text-3xl font-bold text-gray-900 mb-3">No peeking!</h1>
@@ -273,7 +273,7 @@ export default function PublicListClient({ token }: PublicListClientProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="bg-gradient-to-br from-gray-50 to-gray-100">
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40 bg-white/80 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
