@@ -405,7 +405,7 @@ return (
 
       <footer className="border-t border-gray-100 py-8 mt-16">
         <div className="max-w-6xl mx-auto px-4 text-center text-gray-700">
-          <p>&copy; 2025 clearly.gift. Share your wishlist. Keep the surprise..</p>
+          <p>&copy; 2025 clearly.gift. Share your wishlist. Keep the surprise</p>
           <p className="text-xs text-gray-500 mt-4">
             This site contains affiliate links. We may earn a commission when you purchase through these links at no additional cost to you.
           </p>

@@ -30,7 +30,7 @@ export default function Footer() {
         {/* Copyright & Branding */}
         <div className="text-center mb-3">
           <p className="text-sm text-gray-600">
-            &copy; {currentYear} clearly.gift. Share your wishlist. Keep the surprise..
+            &copy; {currentYear} clearly.gift. Share your wishlist. Keep the surprise
           </p>
         </div>
 
