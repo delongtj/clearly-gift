@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import PublicHeader from '@/components/PublicHeader'
 
 export default function AuthPage() {
   const [email, setEmail] = useState('')
@@ -112,7 +113,9 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4 flex-1">
+    <div className="flex flex-col min-h-screen">
+      <PublicHeader />
+      <div className="bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4 flex-1">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-8 animate-fade-in">
         <div className="text-center mb-8">
         <Link href="/" className="inline-block">
@@ -239,6 +242,7 @@ export default function AuthPage() {
               : 'Enter the code sent to your email'}
           </p>
         </div>
+      </div>
       </div>
     </div>
   )
