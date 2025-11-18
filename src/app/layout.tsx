@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: '%s | clearly.gift - Share your wishlist. Keep the surprise.',
     default: 'clearly.gift - Share your wishlist. Keep the surprise.',
   },
-  description: "Create beautiful, clutter-free wish lists that friends and family can view and claim gifts from - no sign-up required for them.",
+  description: "Create beautiful, clutter-free wish lists where friends and family can view and claim gifts - no sign-up required.",
   keywords: ["wishlist", "gift list", "gift sharing", "presents", "birthday", "holidays", "wedding registry"],
   authors: [{ name: "clearly.gift" }],
   creator: "clearly.gift",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: '/',
     title: 'clearly.gift - Share your wishlist. Keep the surprise.',
-    description: "Create beautiful, clutter-free wish lists that friends and family can view and claim gifts from - no sign-up required for them.",
+    description: "Create beautiful, clutter-free wish lists where friends and family can view and claim gifts - no sign-up required.",
     siteName: 'clearly.gift',
     images: [
       {
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'clearly.gift - Share your wishlist. Keep the surprise.',
-    description: "Create beautiful, clutter-free wish lists that friends and family can view and claim gifts from - no sign-up required for them.",
+    description: "Create beautiful, clutter-free wish lists where friends and family can view and claim gifts - no sign-up required.",
     images: ['/og-image.png'],
   },
   robots: {
