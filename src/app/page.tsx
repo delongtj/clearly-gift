@@ -51,24 +51,37 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4">
-        {/* Hero Section */}
-        <section className="py-16 md:py-24 text-center">
-          <div className="animate-fade-in">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight">
-              The simplest way<br />to share your wish list
-            </h1>
-            <p className="text-base md:text-lg lg:text-xl text-gray-600 mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-2">
-              Create beautiful, clutter-free wish lists that friends and family can view and claim gifts from — no sign-up required.
-            </p>
-            <Link href="/auth" className="inline-block bg-emerald-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-emerald-700 shadow-lg hover:shadow-xl transition-all active:scale-95">
-              Create Your List
-            </Link>
-          </div>
-        </section>
+      <main className="w-full">
+        {/* Hero Section with Background Image */}
+        <section className="relative w-full py-16 md:py-24 text-center overflow-hidden">
+          {/* Background Image */}
+          <Image
+            src="/hero-image.jpg"
+            alt="Gift wrapping"
+            fill
+            priority
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/30"></div>
+        
+      {/* Content */}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 animate-fade-in">
+      <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 md:mb-6 leading-tight drop-shadow-lg">
+      The simplest way<br />to share your wish list
+      </h1>
+      <p className="text-base md:text-lg lg:text-xl text-white mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-2 drop-shadow-md">
+      Create beautiful, clutter-free wish lists that friends and family can view and claim gifts from — no sign-up required.
+      </p>
+      <Link href="/auth" className="inline-block bg-emerald-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-emerald-700 shadow-lg hover:shadow-xl transition-all active:scale-95">
+      Create Your List
+      </Link>
+      </div>
+      </section>
 
-        {/* Features Section */}
-        <section className="py-20 grid md:grid-cols-3 gap-8">
+      {/* Features Section */}
+      <section className="max-w-6xl mx-auto px-4 py-20 grid md:grid-cols-3 gap-8">
           {[
             { 
               num: "1", 
@@ -100,7 +113,7 @@ export default function Home() {
         </section>
 
         {/* Gift Guides Section */}
-        <section className="py-20 bg-gradient-to-b from-gray-50 to-white rounded-3xl border border-gray-200 px-8 mb-16">
+        <section className="max-w-6xl mx-auto px-4 py-20 bg-gradient-to-b from-gray-50 to-white rounded-3xl border border-gray-200 px-8 mb-16">
           <h2 className="text-4xl font-bold text-center mb-16 text-gray-900">Gift Guides</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {[
