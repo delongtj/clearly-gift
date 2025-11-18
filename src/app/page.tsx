@@ -76,7 +76,7 @@ export default function Home() {
       The simplest way<br />to share your wish list
       </h1>
       <p className="text-base md:text-lg lg:text-xl text-white mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-2 drop-shadow-md">
-      Create beautiful, clutter-free wish lists that friends and family can view and claim gifts from — no sign-up required.
+      Create beautiful, clutter-free wish lists where friends and family can view and claim gifts - no sign-up required.
       </p>
       <Link href="/auth" className="inline-block bg-emerald-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-emerald-700 shadow-lg hover:shadow-xl transition-all active:scale-95">
       Create Your List
@@ -85,36 +85,43 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="max-w-6xl mx-auto px-4 py-20 grid md:grid-cols-3 gap-8">
-          {[
-            { 
-              num: "1", 
-              title: "Seamless Setup", 
-              desc: "Just your email and a verification code. No lengthy forms or profiles." 
-            },
-            { 
-              num: "2", 
-              title: "Share Instantly", 
-              desc: "Get a private link to share with family and friends. No accounts needed." 
-            },
-            { 
-              num: "3", 
-              title: "Clean & Private", 
-              desc: "Beautifully minimal design with anonymous claiming to keep the surprise alive." 
-            },
-          ].map((feature, i) => (
-            <div 
-              key={i} 
-              className="text-center p-8 rounded-2xl bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-200 hover:border-gray-300"
-            >
-              <div className="w-12 h-12 bg-emerald-100 rounded-full mx-auto mb-6 flex items-center justify-center text-emerald-600 font-bold text-lg">
-                {feature.num}
-              </div>
-              <h3 className="text-lg font-semibold mb-3 text-gray-900">{feature.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
-            </div>
-          ))}
-        </section>
+      <section className="max-w-6xl mx-auto px-4 py-20">
+      <div className="grid md:grid-cols-3 gap-8 mb-12">
+      {[
+      { 
+      num: "1", 
+      title: "Seamless Setup", 
+        desc: "Just your email and a verification code. No lengthy forms or profiles." 
+      },
+      { 
+      num: "2", 
+      title: "Share Instantly", 
+        desc: "Get a private link to share with family and friends. No accounts needed." 
+      },
+      { 
+      num: "3", 
+      title: "Clean & Private", 
+        desc: "Beautifully minimal design with anonymous claiming to keep the surprise alive." 
+        },
+      ].map((feature, i) => (
+      <div 
+      key={i} 
+        className="text-center p-8 rounded-2xl bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-200 hover:border-gray-300"
+      >
+      <div className="w-12 h-12 bg-emerald-100 rounded-full mx-auto mb-6 flex items-center justify-center text-emerald-600 font-bold text-lg">
+        {feature.num}
+      </div>
+      <h3 className="text-lg font-semibold mb-3 text-gray-900">{feature.title}</h3>
+        <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
+        </div>
+        ))}
+         </div>
+         <div className="text-center">
+           <Link href="/auth" className="inline-block bg-emerald-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-emerald-700 shadow-md hover:shadow-lg transition-all active:scale-95">
+             Get Started
+           </Link>
+         </div>
+       </section>
 
 
       </main>
