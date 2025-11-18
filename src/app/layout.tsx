@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | clearly.gift - Share your wishlist, keep the surprise',
-    default: 'clearly.gift - Share your wishlist, keep the surprise',
+    template: '%s | clearly.gift - Share your wishlist. Keep the surprise.',
+    default: 'clearly.gift - Share your wishlist. Keep the surprise.',
   },
   description: "Create beautiful, clutter-free wish lists that friends and family can view and claim gifts from - no sign-up required for them.",
   keywords: ["wishlist", "gift list", "gift sharing", "presents", "birthday", "holidays", "wedding registry"],
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    title: 'clearly.gift - Share your wishlist, keep the surprise',
+    title: 'clearly.gift - Share your wishlist. Keep the surprise.',
     description: "Create beautiful, clutter-free wish lists that friends and family can view and claim gifts from - no sign-up required for them.",
     siteName: 'clearly.gift',
     images: [
@@ -47,13 +47,13 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'clearly.gift - Share your wishlist, keep the surprise',
+        alt: 'clearly.gift - Share your wishlist. Keep the surprise.',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'clearly.gift - Share your wishlist, keep the surprise',
+    title: 'clearly.gift - Share your wishlist. Keep the surprise.',
     description: "Create beautiful, clutter-free wish lists that friends and family can view and claim gifts from - no sign-up required for them.",
     images: ['/og-image.png'],
   },

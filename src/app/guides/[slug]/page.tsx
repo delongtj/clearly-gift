@@ -14,7 +14,7 @@ interface GuidePageProps {
 export async function generateMetadata({ params }: GuidePageProps): Promise<Metadata> {
   const { slug } = await params
   const guide = await getGuide(slug)
-  
+
   if (!guide) {
     return {
       title: 'Guide Not Found - clearly.gift',
@@ -43,13 +43,13 @@ export async function generateMetadata({ params }: GuidePageProps): Promise<Meta
 
 export async function generateStaticParams() {
   const guidesDirectory = path.join(process.cwd(), 'content/guides')
-  
+
   if (!fs.existsSync(guidesDirectory)) {
     return []
   }
 
   const filenames = fs.readdirSync(guidesDirectory)
-  
+
   return filenames
     .filter(name => name.endsWith('.mdx'))
     .map(name => ({
@@ -60,17 +60,17 @@ export async function generateStaticParams() {
 async function getGuide(slug: string) {
   try {
     const filePath = path.join(process.cwd(), 'content/guides', `${slug}.mdx`)
-    
+
     if (!fs.existsSync(filePath)) {
       return null
     }
 
     const fileContent = fs.readFileSync(filePath, 'utf-8')
-    
+
     // Extract frontmatter
     const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/
     const match = frontmatterRegex.exec(fileContent)
-    
+
     if (!match) {
       return null
     }
@@ -102,7 +102,7 @@ async function getGuide(slug: string) {
 export default async function GuidePage({ params }: GuidePageProps) {
   const { slug } = await params
   const guide = await getGuide(slug)
-  
+
   if (!guide) {
     notFound()
   }
@@ -155,10 +155,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
               {guide.frontmatter.category}
             </span>
             <span className="bg-white bg-opacity-80 px-4 py-2 rounded-full">
-              {new Date(guide.frontmatter.date).toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+              {new Date(guide.frontmatter.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
               })}
             </span>
             <span className="bg-white bg-opacity-80 px-4 py-2 rounded-full">
@@ -194,11 +194,11 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors">
                   {relatedGuide.title}
                 </h3>
-                <a 
-                  href={`/guides/${relatedGuide.slug}`} 
+                <a
+                  href={`/guides/${relatedGuide.slug}`}
                   className="text-emerald-600 hover:text-emerald-700 font-medium inline-flex items-center"
                 >
-                  Read Guide 
+                  Read Guide
                   <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
@@ -214,8 +214,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
           <p className="text-emerald-100 mb-6 max-w-2xl mx-auto">
             Share your wishlist with friends and family using clearly.gift's simple, clutter-free platform.
           </p>
-          <a 
-            href="/auth" 
+          <a
+            href="/auth"
             className="inline-block bg-white text-emerald-600 px-8 py-3 rounded-lg hover:bg-gray-50 font-semibold transition-colors"
           >
             Get Started for Free
@@ -234,7 +234,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
               <span className="text-2xl font-bold text-gray-900">clearly.gift</span>
             </div>
             <p className="text-gray-600 mb-6">
-              Share your wishlist, keep the surprise.
+              Share your wishlist. Keep the surprise..
             </p>
             <div className="flex justify-center space-x-6 text-sm text-gray-600">
               <a href="/guides" className="hover:text-gray-900">All Guides</a>
@@ -242,7 +242,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
               <a href="/auth" className="hover:text-gray-900">Sign Up</a>
             </div>
           </div>
-          
+
           {/* Affiliate Disclaimer */}
           <div className="border-t border-gray-200 pt-8 text-center">
             <p className="text-xs text-gray-500">

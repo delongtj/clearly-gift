@@ -6,7 +6,7 @@ The metadata for public list pages references `/og-image.png` which doesn't exis
 
 Create a simple 1200x630 PNG image with:
 - clearly.gift branding
-- Tagline: "Share your wishlist, keep the surprise"
+- Tagline: "Share your wishlist. Keep the surprise."
 - Emerald green brand color (#059669)
 - White background
 

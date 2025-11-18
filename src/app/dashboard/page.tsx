@@ -62,7 +62,7 @@ export default function Dashboard() {
           (payload) => {
             console.log('List update received:', payload)
             // Update list data (view count, name, etc.)
-            setLists(prev => prev.map(l => 
+            setLists(prev => prev.map(l =>
               l.id === list.id ? payload.new as List : l
             ))
           }
@@ -135,7 +135,7 @@ export default function Dashboard() {
     } else {
       const loadedLists = (data as List[]) || []
       setLists(loadedLists)
-      
+
       // Load click counts for all lists
       const clickCounts: Record<string, number> = {}
       for (const list of loadedLists) {
@@ -143,7 +143,7 @@ export default function Dashboard() {
       .from('items')
       .select('click_count')
       .eq('list_id', list.id)
-      
+
       if (itemsData) {
       clickCounts[list.id] = (itemsData as { click_count: number }[]).reduce((sum, item) => sum + (item.click_count || 0), 0)
       }
@@ -362,7 +362,7 @@ export default function Dashboard() {
             <div className="text-5xl mb-4">🎁</div>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">Create your first list</h2>
             <p className="text-gray-600 mb-8 text-lg">
-              Share your wishlist, keep the surprise
+              Share your wishlist. Keep the surprise.
             </p>
             <button
               onClick={() => setShowCreateForm(true)}
