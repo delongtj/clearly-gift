@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
@@ -114,14 +115,18 @@ export default function AuthPage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-8 animate-fade-in">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-block">
-            <div className="w-14 h-14 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-lg mx-auto mb-6 flex items-center justify-center hover:shadow-lg transition-all shadow-md">
-              <span className="text-white font-bold text-xl">♥</span>
-            </div>
-          </Link>
-          <h1 className="text-3xl font-bold text-gray-900">Welcome back</h1>
-          <p className="text-gray-600 mt-2 text-sm">Sign in to manage your wish lists</p>
-        </div>
+        <Link href="/" className="inline-block">
+        <Image
+        src="/clearly-gift-logo.png"
+          alt="clearly.gift"
+            width={56}
+            height={56}
+            className="w-14 h-14 mx-auto mb-6"
+            />
+           </Link>
+           <h1 className="text-3xl font-bold text-gray-900">Welcome back</h1>
+           <p className="text-gray-600 mt-2 text-sm">Sign in to manage your wish lists</p>
+         </div>
 
         {message && (
           <div className={`mb-6 p-4 rounded-xl flex items-start gap-3 ${

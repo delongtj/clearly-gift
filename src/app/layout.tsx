@@ -28,6 +28,9 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
+  icons: {
+    icon: '/favicon.png',
+  },
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://clearly.gift'),
   alternates: {
     canonical: '/',

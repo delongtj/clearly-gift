@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
@@ -20,11 +21,15 @@ export default function GuidesHeader() {
       <div className="max-w-6xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           <a href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">C</span>
-            </div>
-            <span className="text-2xl font-bold text-gray-900">clearly.gift</span>
-          </a>
+          <Image
+          src="/clearly-gift-logo.png"
+            alt="clearly.gift"
+            width={32}
+              height={32}
+               className="w-8 h-8"
+             />
+             <span className="text-2xl font-bold text-gray-900">clearly.gift</span>
+           </a>
           <div className="flex items-center space-x-4">
             <a href="/" className="text-gray-700 hover:text-gray-900">
               Home

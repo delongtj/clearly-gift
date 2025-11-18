@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import { generateListToken } from '@/utils/url-processor'
 import type { List } from '@/types/database'
@@ -268,14 +269,18 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40 bg-white/80 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-              <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-lg flex items-center justify-center shadow-sm">
-                <span className="text-white font-bold text-sm">♥</span>
-              </div>
-              <span className="text-xl font-bold text-gray-900">clearly.gift</span>
-            </Link>
+      <div className="max-w-6xl mx-auto px-4 py-4">
+      <div className="flex items-center justify-between">
+      <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+      <Image
+      src="/clearly-gift-logo.png"
+        alt="clearly.gift"
+        width={32}
+          height={32}
+                 className="w-8 h-8"
+               />
+               <span className="text-xl font-bold text-gray-900">clearly.gift</span>
+             </Link>
             <div className="flex items-center space-x-4">
               <button
                 onClick={handleSignOut}
