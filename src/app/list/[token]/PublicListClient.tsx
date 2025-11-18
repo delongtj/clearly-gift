@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import type { List, Item } from '@/types/database'
@@ -23,6 +24,7 @@ export default function PublicListClient({ token }: PublicListClientProps) {
   const [loading, setLoading] = useState(true)
   const [claimingId, setClaimingId] = useState<string | null>(null)
   const [isOwnList, setIsOwnList] = useState(false)
+  const [user, setUser] = useState<boolean | null>(null)
 
   // Dialog states
   const [showNameInput, setShowNameInput] = useState(false)
@@ -37,6 +39,14 @@ export default function PublicListClient({ token }: PublicListClientProps) {
   useEffect(() => {
     loadList()
   }, [token])
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data } = await supabase.auth.getUser()
+      setUser(!!data.user)
+    }
+    checkAuth()
+  }, [])
 
   // Subscribe to real-time changes
   useEffect(() => {
@@ -381,9 +391,23 @@ export default function PublicListClient({ token }: PublicListClientProps) {
             ))}
           </div>
         )}
-      </main>
+        </main>
 
-      {/* Dialogs */}
+        {!user && (
+         <section className="max-w-4xl mx-auto px-4 py-12">
+           <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center shadow-sm">
+             <h2 className="text-2xl font-bold text-gray-900 mb-3">Create your own wish list</h2>
+             <p className="text-gray-600 mb-6 max-w-md mx-auto">
+               Share your own wish list with family and friends. It's free and takes just a minute to get started.
+             </p>
+             <Link href="/auth" className="inline-block bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 font-medium shadow-sm hover:shadow-md transition-all active:scale-95">
+               Create Your List
+             </Link>
+           </div>
+         </section>
+       )}
+
+       {/* Dialogs */}
       <ConfirmDialog
         isOpen={showUnclaimConfirm}
         onClose={() => {
