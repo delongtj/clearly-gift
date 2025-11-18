@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: '/favicon.png',
+    icon: '/favicon.ico',
   },
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://clearly.gift'),
   alternates: {
