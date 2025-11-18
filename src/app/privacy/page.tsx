@@ -1,3 +1,5 @@
+import PublicHeader from '@/components/PublicHeader'
+
 export const metadata = {
   title: 'Privacy Policy',
 };
@@ -6,8 +8,9 @@ export default function PrivacyPage() {
   const lastUpdated = new Date('2024-01-01').toLocaleDateString();
 
   return (
-    <main className="min-h-screen bg-white">
-      <div className="max-w-2xl mx-auto px-4 py-12">
+    <div className="min-h-screen bg-white">
+      <PublicHeader />
+      <main className="max-w-2xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
         <p className="text-gray-600 mb-8">Last updated: {lastUpdated}</p>
 
@@ -77,7 +80,7 @@ export default function PrivacyPage() {
             </p>
           </section>
         </div>
-      </div>
-    </main>
-  );
+        </main>
+        </div>
+        );
 }

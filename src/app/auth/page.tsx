@@ -124,8 +124,8 @@ export default function AuthPage() {
             className="w-14 h-14 mx-auto mb-6"
             />
            </Link>
-           <h1 className="text-3xl font-bold text-gray-900">Welcome back</h1>
-           <p className="text-gray-600 mt-2 text-sm">Sign in to manage your wish lists</p>
+           <h1 className="text-3xl font-bold text-gray-900">Sign in</h1>
+           <p className="text-gray-600 mt-2 text-sm">Create or manage your wish lists</p>
          </div>
 
         {message && (

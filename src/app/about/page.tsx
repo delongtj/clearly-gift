@@ -1,11 +1,14 @@
+import PublicHeader from '@/components/PublicHeader'
+
 export const metadata = {
   title: 'About clearly.gift',
 };
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-white">
-      <div className="max-w-2xl mx-auto px-4 py-12">
+    <div className="min-h-screen bg-white">
+      <PublicHeader />
+      <main className="max-w-2xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold mb-6">About clearly.gift</h1>
 
         <div className="prose prose-sm max-w-none space-y-6">
@@ -54,7 +57,7 @@ export default function AboutPage() {
             </p>
           </section>
         </div>
-      </div>
-    </main>
-  );
+        </main>
+        </div>
+        );
 }
