@@ -1,11 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import type { List, Item } from '@/types/database'
+import PublicHeader from '@/components/PublicHeader'
 import ConfirmDialog from '@/components/ConfirmDialog'
 import InputDialog from '@/components/InputDialog'
 import SubscriptionDialog from '@/components/SubscriptionDialog'
@@ -274,21 +273,8 @@ export default function PublicListClient({ token }: PublicListClientProps) {
   }
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 to-gray-100">
-      <header className="border-b border-gray-200 sticky top-0 z-40 bg-white/80 backdrop-blur-sm">
-      <div className="max-w-6xl mx-auto px-4 py-4">
-      <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-      <Image
-      src="/clearly-gift-logo.png"
-        alt="clearly.gift"
-        width={32}
-          height={32}
-            className="w-8 h-8"
-            />
-             <span className="text-2xl font-bold text-gray-900">clearly.gift</span>
-           </Link>
-         </div>
-       </header>
+   <div className="bg-gradient-to-br from-gray-50 to-gray-100">
+     <PublicHeader />
 
       <main className="max-w-4xl mx-auto px-4 py-8">
         <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-8 shadow-sm">
