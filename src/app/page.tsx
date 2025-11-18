@@ -53,15 +53,19 @@ export default function Home() {
 
       <main className="w-full">
         {/* Hero Section with Background Image */}
-        <section className="relative w-full py-16 md:py-24 text-center overflow-hidden">
-          {/* Background Image */}
-          <Image
-            src="/hero-image.jpg"
-            alt="Gift wrapping"
-            fill
-            priority
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+        <section className="relative w-full py-16 md:py-24 text-center overflow-hidden bg-gradient-to-br from-emerald-50 to-emerald-100">
+        {/* Background Image */}
+        <Image
+        src="/hero-image.jpg"
+        alt="Gift wrapping"
+        fill
+        priority
+        sizes="100vw"
+          quality={85}
+             placeholder="blur"
+             blurDataURL="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23059669;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%2310b981;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g)' width='1200' height='600'/%3E%3C/svg%3E"
+             className="absolute inset-0 w-full h-full object-cover"
+           />
           
           {/* Dark overlay for text readability */}
           <div className="absolute inset-0 bg-black/30"></div>
