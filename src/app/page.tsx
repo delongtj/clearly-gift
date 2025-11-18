@@ -85,7 +85,7 @@ export default function Home() {
           {[
             { 
               num: "1", 
-              title: "Dead Simple Setup", 
+              title: "Seamless Setup", 
               desc: "Just your email and a verification code. No lengthy forms or profiles." 
             },
             { 
