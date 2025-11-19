@@ -313,6 +313,10 @@ function generateNotificationEmail(
 </html>`
 }
 
+export const config = {
+  schedule: '@hourly'
+}
+
 export default async (req: any, context: any) => {
   // Simple authentication check
   let authHeader = ''
@@ -357,7 +361,7 @@ export default async (req: any, context: any) => {
     }
 
     let emailsSent = 0
-    const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString()
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString()
 
     for (const subscription of subscriptions) {
       // Get the last batch sent time for this subscription
@@ -370,7 +374,7 @@ export default async (req: any, context: any) => {
         .limit(1)
         .single()
 
-      const sinceTime = lastBatch?.last_event_at || thirtyMinutesAgo
+      const sinceTime = lastBatch?.last_event_at || oneHourAgo
 
       // Get events for this subscription since last batch
       const { data: events, error: eventsError } = await supabase
