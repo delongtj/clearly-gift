@@ -155,20 +155,21 @@ function generateNotificationEmail(
       font-style: italic;
     }
     .cta-button {
-      display: inline-block;
-      background-color: #069668;
-      color: white;
-      text-decoration: none;
-      padding: 12px 24px;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 14px;
-      margin: 24px 0;
-      transition: background-color 0.2s;
+    display: inline-block;
+    background-color: #069668;
+    color: white !important;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 24px 0;
+    transition: background-color 0.2s;
     }
     .cta-button:hover {
-      background-color: #047857;
-    }
+    background-color: #047857;
+      color: white !important;
+     }
     .footer {
       background-color: #f9fafb;
       padding: 24px 32px;
@@ -210,11 +211,11 @@ function generateNotificationEmail(
   <div class="container">
     <div class="header">
       <h1>${escapeHtml(listName)}</h1>
-      <p>Your wishlist has been updated</p>
+      <p>List has been updated</p>
     </div>
     <div class="content">
       <div class="summary">
-        <p><strong>${totalChanges} change${totalChanges === 1 ? '' : 's'}</strong> in the last 30 minutes</p>
+        <p><strong>${totalChanges} change${totalChanges === 1 ? '' : 's'}</strong></p>
       </div>
       ${
         summary.item_added.length > 0
@@ -300,7 +301,7 @@ function generateNotificationEmail(
            : ''
        }
        <div style="text-align: center;">
-         <a href="${listUrl}" class="cta-button">View the full list</a>
+       <a href="${listUrl}" class="cta-button" style="color: white !important;">View the full list</a>
        </div>
     </div>
     <div class="footer">
@@ -322,7 +323,7 @@ export default async (req: any, context: any) => {
     // Might be a Web Request object
     authHeader = req.headers?.get?.('authorization') || ''
   }
-  
+
   const expectedToken = process.env.BATCH_JOB_SECRET
 
   if (!expectedToken) {
@@ -475,7 +476,7 @@ async function sendNotificationEmail(
     await resend.emails.send({
       from: 'clearly.gift <noreply@clearly.gift>',
       to: email,
-      subject: `[${listName}] Updates on your wishlist`,
+      subject: `Updates to ${listName}`,
       html
     })
     return true
