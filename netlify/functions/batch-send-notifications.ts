@@ -314,11 +314,21 @@ function generateNotificationEmail(
 
 export default async (req: any, context: any) => {
   // Simple authentication check
-  console.log('[AUTH] All headers:', JSON.stringify(req.headers))
-  const authHeader = req.headers.authorization || req.headers['Authorization'] || ''
+  console.log('[AUTH] req type:', typeof req)
+  console.log('[AUTH] req keys:', req ? Object.keys(req) : 'req is null')
+  console.log('[AUTH] context keys:', context ? Object.keys(context) : 'context is null')
+  
+  let authHeader = ''
+  if (req?.headers) {
+    authHeader = req.headers.authorization || req.headers['Authorization'] || ''
+  }
+  if (!authHeader && typeof req === 'object' && req?.url) {
+    // Might be a Web Request object
+    authHeader = req.headers?.get?.('authorization') || ''
+  }
+  
   const expectedToken = process.env.BATCH_JOB_SECRET
 
-  console.log('[AUTH] Expected token exists:', !!expectedToken)
   console.log('[AUTH] Auth header:', authHeader)
   console.log('[AUTH] Expected token:', expectedToken)
 
