@@ -162,13 +162,14 @@ export class DatabaseService {
       .single()
 
     if (error) {
-      console.error('Error creating item:', error)
+      console.error('[DATABASE] Error creating item:', error)
       return null
     }
 
     // Track subscription event
     const typedData = data as Item
-    console.log('[DATABASE] Item created, tracking event:', { listId, itemId: typedData.id, name })
+    console.log('[DATABASE] Item created successfully:', { id: typedData.id, name, listId })
+    console.log('[DATABASE] About to track event for item:', typedData.id)
     await trackItemAdded(listId, typedData.id, name)
 
     return typedData
@@ -292,6 +293,12 @@ export class DatabaseService {
       .select('list_id, name')
       .eq('id', id)
       .single()
+
+    // Track subscription event BEFORE deleting so item_id exists
+    const typedItem = item as { list_id: string; name: string } | null
+    if (typedItem) {
+      await trackItemRemoved(typedItem.list_id, id, typedItem.name)
+    }
     
     const { error } = await this.supabase
       .from('items')
@@ -299,14 +306,8 @@ export class DatabaseService {
       .eq('id', id)
 
     if (error) {
-      console.error('Error deleting item:', error)
+      console.error('[DATABASE] Error deleting item:', error)
       return false
-    }
-
-    // Track subscription event
-    const typedItem = item as { list_id: string; name: string } | null
-    if (typedItem) {
-      await trackItemRemoved(typedItem.list_id, id, typedItem.name)
     }
 
     return true

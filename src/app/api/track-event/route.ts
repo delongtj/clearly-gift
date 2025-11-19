@@ -9,6 +9,8 @@ const supabase = createClient(
 export async function POST(request: NextRequest) {
   try {
     const { listId, eventType, itemId, itemName, metadata } = await request.json()
+    
+    console.log('[API] Received track-event request:', { listId, eventType, itemId, itemName })
 
     if (!listId || !eventType || !itemId || !itemName) {
       return NextResponse.json(
@@ -17,6 +19,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    console.log('[API] Inserting into list_subscription_events with itemId:', itemId)
     const { error } = await supabase.from('list_subscription_events').insert({
       list_id: listId,
       event_type: eventType,
@@ -27,8 +30,10 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error('[API] Error tracking subscription event:', error)
+      console.error('[API] Service role key exists:', !!process.env.SUPABASE_SERVICE_ROLE_KEY)
+      console.error('[API] Payload:', { listId, eventType, itemId, itemName })
       return NextResponse.json(
-        { error: 'Failed to track event' },
+        { error: 'Failed to track event', details: error },
         { status: 500 }
       )
     }
