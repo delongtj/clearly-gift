@@ -314,7 +314,8 @@ function generateNotificationEmail(
 
 export default async (req: any, context: any) => {
   // Simple authentication check
-  const authHeader = req.headers['authorization'] || ''
+  console.log('[AUTH] All headers:', JSON.stringify(req.headers))
+  const authHeader = req.headers.authorization || req.headers['Authorization'] || ''
   const expectedToken = process.env.BATCH_JOB_SECRET
 
   console.log('[AUTH] Expected token exists:', !!expectedToken)
