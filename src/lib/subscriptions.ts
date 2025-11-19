@@ -1,4 +1,4 @@
-export type EventType = 'item_added' | 'item_removed' | 'item_claimed' | 'item_unclaimed'
+export type EventType = 'item_added' | 'item_removed' | 'item_claimed' | 'item_unclaimed' | 'item_updated'
 
 /**
  * Track a subscription event in the database
@@ -84,4 +84,18 @@ export async function trackItemUnclaimed(
   itemName: string
 ): Promise<void> {
   await trackSubscriptionEvent(listId, 'item_unclaimed', itemId, itemName)
+}
+
+/**
+ * Track when an item is updated
+ */
+export async function trackItemUpdated(
+  listId: string,
+  itemId: string,
+  itemName: string,
+  changes?: Partial<{ name: string; description: string; url: string }>
+): Promise<void> {
+  await trackSubscriptionEvent(listId, 'item_updated', itemId, itemName, {
+    changes
+  })
 }

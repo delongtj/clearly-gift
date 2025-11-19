@@ -4,7 +4,8 @@ import {
   trackItemAdded, 
   trackItemRemoved, 
   trackItemClaimed, 
-  trackItemUnclaimed 
+  trackItemUnclaimed,
+  trackItemUpdated
 } from '@/lib/subscriptions'
 import type { List, Item, User } from '@/types/database'
 
@@ -179,6 +180,13 @@ export class DatabaseService {
     id: string,
     updates: Partial<Pick<Item, 'name' | 'description' | 'url'>>
   ): Promise<boolean> {
+    // Get item info before updating (for tracking)
+    const { data: item } = await this.supabase
+      .from('items')
+      .select('list_id, name')
+      .eq('id', id)
+      .single()
+
     // Process URL if it's being updated
     let finalUpdates: any = { ...updates }
     if (updates.url !== undefined) {
@@ -192,8 +200,14 @@ export class DatabaseService {
       .eq('id', id)
 
     if (error) {
-      console.error('Error updating item:', error)
+      console.error('[DATABASE] Error updating item:', error)
       return false
+    }
+
+    // Track subscription event
+    const typedItem = item as { list_id: string; name: string } | null
+    if (typedItem) {
+      await trackItemUpdated(typedItem.list_id, id, typedItem.name, updates)
     }
 
     return true
