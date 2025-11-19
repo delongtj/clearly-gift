@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { db } from '@/lib/database'
 import type { List, Item } from '@/types/database'
 import PublicHeader from '@/components/PublicHeader'
 import ConfirmDialog from '@/components/ConfirmDialog'
@@ -179,57 +180,43 @@ export default function PublicListClient({ token }: PublicListClientProps) {
   }
 
   const confirmUnclaim = async () => {
-    if (!itemToUnclaim) return
+  if (!itemToUnclaim) return
 
-    setClaimingId(itemToUnclaim.id)
-    const { error } = await supabase
-      .from('items')
-      // @ts-expect-error - Type inference issue with Supabase client
-      .update({
-        claimed_at: null,
-        claimed_by: null
-      })
-      .eq('id', itemToUnclaim.id)
+  setClaimingId(itemToUnclaim.id)
+  const success = await db.unclaimItem(itemToUnclaim.id)
 
-    if (error) {
-      console.error('Error unclaiming item:', error)
-      setToastMessage('Failed to unclaim item. Please try again.')
-      setToastType('error')
-      setShowToast(true)
-    } else {
-      setItems(items.map(i => i.id === itemToUnclaim.id ? { ...i, claimed_at: undefined, claimed_by: undefined } as Item : i))
-    }
-    setClaimingId(null)
-    setItemToUnclaim(null)
+  if (!success) {
+  console.error('Error unclaiming item')
+  setToastMessage('Failed to unclaim item. Please try again.')
+  setToastType('error')
+  setShowToast(true)
+  } else {
+       setItems(items.map(i => i.id === itemToUnclaim.id ? { ...i, claimed_at: undefined, claimed_by: undefined } as Item : i))
+  }
+  setClaimingId(null)
+  setItemToUnclaim(null)
   }
 
   const confirmClaim = async (claimerName: string) => {
-    if (!itemToClaim) return
+  if (!itemToClaim) return
 
-    setClaimingId(itemToClaim.id)
-    const { error } = await supabase
-      .from('items')
-      // @ts-expect-error - Type inference issue with Supabase client
-      .update({
-        claimed_at: new Date().toISOString(),
-        claimed_by: claimerName.trim() || 'Someone'
-      })
-      .eq('id', itemToClaim.id)
+  setClaimingId(itemToClaim.id)
+  const success = await db.claimItem(itemToClaim.id, claimerName.trim() || 'Someone')
 
-    if (error) {
-      console.error('Error claiming item:', error)
-      setToastMessage('Failed to claim item. Please try again.')
-      setToastType('error')
-      setShowToast(true)
-    } else {
-      setItems(items.map(i => i.id === itemToClaim.id ? {
-        ...i,
-        claimed_at: new Date().toISOString(),
-        claimed_by: claimerName.trim() || 'Someone'
-      } : i))
-    }
-    setClaimingId(null)
-    setItemToClaim(null)
+  if (!success) {
+  console.error('Error claiming item')
+  setToastMessage('Failed to claim item. Please try again.')
+  setToastType('error')
+  setShowToast(true)
+  } else {
+       setItems(items.map(i => i.id === itemToClaim.id ? {
+      ...i,
+    claimed_at: new Date().toISOString(),
+    claimed_by: claimerName.trim() || 'Someone'
+  } : i))
+  }
+  setClaimingId(null)
+  setItemToClaim(null)
   }
 
   const handleItemClick = (item: Item) => {

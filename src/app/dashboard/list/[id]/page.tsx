@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
+import { db } from '@/lib/database'
 import { processUrl } from '@/utils/url-processor'
 import type { List, Item } from '@/types/database'
 import ConfirmDialog from '@/components/ConfirmDialog'
@@ -87,86 +88,73 @@ export default function EditListPage() {
   }
 
   const handleAddItem = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!newItemName.trim() || saving) return
+  e.preventDefault()
+  if (!newItemName.trim() || saving) return
 
-    setSaving(true)
-    // Normalize URL by adding https:// if missing protocol
-    let normalizedUrl = newItemUrl.trim()
-    if (normalizedUrl && !normalizedUrl.match(/^https?:\/\//i)) {
-      normalizedUrl = `https://${normalizedUrl}`
-    }
-    const formattedUrl = normalizedUrl ? processUrl(normalizedUrl) : undefined
+  setSaving(true)
+  // Normalize URL by adding https:// if missing protocol
+  let normalizedUrl = newItemUrl.trim()
+  if (normalizedUrl && !normalizedUrl.match(/^https?:\/\//i)) {
+  normalizedUrl = `https://${normalizedUrl}`
+  }
 
-    const { data, error } = await supabase
-      .from('items')
-      // @ts-expect-error - Type inference issue with Supabase client
-      .insert({
-        list_id: listId,
-        name: newItemName.trim(),
-        description: newItemDescription.trim() || null,
-        url: normalizedUrl || null,
-        formatted_url: formattedUrl,
-        position: items.length
-      })
-      .select()
-      .single()
+     const item = await db.createItem(
+    listId,
+  newItemName.trim(),
+  newItemDescription.trim() || undefined,
+  normalizedUrl || undefined
+  )
 
-    if (error) {
-      console.error('Error creating item:', error)
-      setToastMessage('Failed to create item. Please try again.')
-      setToastType('error')
-      setShowToast(true)
-    } else {
-      setItems([...items, data as Item])
-      setNewItemName('')
-      setNewItemDescription('')
-      setNewItemUrl('')
-      setShowAddForm(false)
-    }
-    setSaving(false)
+  if (!item) {
+  console.error('Error creating item')
+  setToastMessage('Failed to create item. Please try again.')
+  setToastType('error')
+  setShowToast(true)
+  } else {
+  setItems([...items, item])
+       setNewItemName('')
+    setNewItemDescription('')
+  setNewItemUrl('')
+  setShowAddForm(false)
+  }
+  setSaving(false)
   }
 
 
 
   const handleEditItem = async (itemId: string) => {
-    if (!editItemName.trim() || saving) return
+  if (!editItemName.trim() || saving) return
 
-    setSaving(true)
-    // Normalize URL by adding https:// if missing protocol
-    let normalizedUrl = editItemUrl.trim()
-    if (normalizedUrl && !normalizedUrl.match(/^https?:\/\//i)) {
-      normalizedUrl = `https://${normalizedUrl}`
-    }
+  setSaving(true)
+  // Normalize URL by adding https:// if missing protocol
+  let normalizedUrl = editItemUrl.trim()
+  if (normalizedUrl && !normalizedUrl.match(/^https?:\/\//i)) {
+  normalizedUrl = `https://${normalizedUrl}`
+  }
+
+     const success = await db.updateItem(itemId, {
+    name: editItemName.trim(),
+  description: editItemDescription.trim() || undefined,
+  url: normalizedUrl || undefined
+  })
+
+  if (!success) {
+  console.error('Error updating item')
+  setToastMessage('Failed to update item. Please try again.')
+  setToastType('error')
+  setShowToast(true)
+     } else {
     const formattedUrl = normalizedUrl ? processUrl(normalizedUrl) : undefined
-
-    const { error } = await supabase
-      .from('items')
-      // @ts-expect-error - Type inference issue with Supabase client
-      .update({
-        name: editItemName.trim(),
-        description: editItemDescription.trim() || null,
-        url: normalizedUrl || null,
-        formatted_url: formattedUrl
-      })
-      .eq('id', itemId)
-
-    if (error) {
-      console.error('Error updating item:', error)
-      setToastMessage('Failed to update item. Please try again.')
-      setToastType('error')
-      setShowToast(true)
-    } else {
-      setItems(items.map(i => i.id === itemId ? {
-        ...i,
-        name: editItemName.trim(),
-        description: editItemDescription.trim() || undefined,
-        url: normalizedUrl || undefined,
-        formatted_url: formattedUrl
-      } as Item : i))
-      cancelEditing()
-    }
-    setSaving(false)
+  setItems(items.map(i => i.id === itemId ? {
+    ...i,
+    name: editItemName.trim(),
+    description: editItemDescription.trim() || undefined,
+      url: normalizedUrl || undefined,
+    formatted_url: formattedUrl
+  } as Item : i))
+  cancelEditing()
+  }
+  setSaving(false)
   }
 
   const handleDeleteItem = (item: Item) => {
@@ -176,22 +164,19 @@ export default function EditListPage() {
   }
 
   const confirmDeleteItem = async () => {
-    if (!itemToDelete) return
+  if (!itemToDelete) return
 
-    const { error } = await supabase
-      .from('items')
-      .delete()
-      .eq('id', itemToDelete.id)
+  const success = await db.deleteItem(itemToDelete.id)
 
-    if (error) {
-      console.error('Error deleting item:', error)
-      setToastMessage('Failed to delete item. Please try again.')
-      setToastType('error')
-      setShowToast(true)
-    } else {
-      setItems(items.filter(i => i.id !== itemToDelete.id))
-    }
-    setItemToDelete(null)
+  if (!success) {
+  console.error('Error deleting item')
+       setToastMessage('Failed to delete item. Please try again.')
+    setToastType('error')
+  setShowToast(true)
+  } else {
+  setItems(items.filter(i => i.id !== itemToDelete.id))
+  }
+  setItemToDelete(null)
   }
 
   const toggleDropdown = (itemId: string) => {
