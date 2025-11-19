@@ -314,10 +314,6 @@ function generateNotificationEmail(
 
 export default async (req: any, context: any) => {
   // Simple authentication check
-  console.log('[AUTH] req type:', typeof req)
-  console.log('[AUTH] req keys:', req ? Object.keys(req) : 'req is null')
-  console.log('[AUTH] context keys:', context ? Object.keys(context) : 'context is null')
-  
   let authHeader = ''
   if (req?.headers) {
     authHeader = req.headers.authorization || req.headers['Authorization'] || ''
@@ -329,19 +325,14 @@ export default async (req: any, context: any) => {
   
   const expectedToken = process.env.BATCH_JOB_SECRET
 
-  console.log('[AUTH] Auth header:', authHeader)
-  console.log('[AUTH] Expected token:', expectedToken)
-
   if (!expectedToken) {
     console.error('BATCH_JOB_SECRET not configured')
     return new Response('Server misconfiguration', { status: 500 })
   }
 
   const [scheme, token] = authHeader.split(' ')
-  console.log('[AUTH] Scheme:', scheme, 'Token:', token)
-  
   if (scheme !== 'Bearer' || token !== expectedToken) {
-    console.warn('[AUTH] Unauthorized - scheme match:', scheme === 'Bearer', 'token match:', token === expectedToken)
+    console.warn('Unauthorized batch job request')
     return new Response('Unauthorized', { status: 401 })
   }
 

@@ -12,7 +12,6 @@ export async function trackSubscriptionEvent(
   itemName: string,
   metadata?: Record<string, any>
 ): Promise<void> {
-  console.log(`[SUBSCRIPTION] Tracking event: ${eventType} for item ${itemId}`)
   try {
     const response = await fetch('/api/track-event', {
       method: 'POST',
@@ -27,14 +26,10 @@ export async function trackSubscriptionEvent(
     })
     
     if (!response.ok) {
-      const error = await response.json()
-      console.error('[SUBSCRIPTION] API error:', error)
-      return
+      console.error('Failed to track subscription event:', response.statusText)
     }
-    
-    console.log(`[SUBSCRIPTION] Event tracked successfully`)
   } catch (error) {
-    console.error('[SUBSCRIPTION] Error tracking subscription event:', error)
+    console.error('Error tracking subscription event:', error)
     // Don't throw - this shouldn't block the main operation
   }
 }

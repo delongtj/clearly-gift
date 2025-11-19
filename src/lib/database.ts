@@ -169,8 +169,6 @@ export class DatabaseService {
 
     // Track subscription event
     const typedData = data as Item
-    console.log('[DATABASE] Item created successfully:', { id: typedData.id, name, listId })
-    console.log('[DATABASE] About to track event for item:', typedData.id)
     await trackItemAdded(listId, typedData.id, name)
 
     return typedData
