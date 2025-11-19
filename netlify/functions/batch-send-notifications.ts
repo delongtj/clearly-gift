@@ -393,7 +393,7 @@ export default async (req: any, context: any) => {
       // Get list info for email
       const { data: list } = await supabase
         .from('lists')
-        .select('id, name')
+        .select('id, name, token')
         .eq('id', subscription.list_id)
         .single()
 
@@ -406,7 +406,7 @@ export default async (req: any, context: any) => {
       const sent = await sendNotificationEmail(
         subscription.email,
         list.name,
-        subscription.list_id,
+        list.token,
         summary,
         subscription.unsubscribe_token
       )
@@ -463,12 +463,12 @@ function groupEventsByType(events: SubscriptionEvent[]): EventSummary {
 async function sendNotificationEmail(
   email: string,
   listName: string,
-  listId: string,
+  listToken: string,
   summary: EventSummary,
   unsubscribeToken: string
 ): Promise<boolean> {
   const unsubscribeUrl = `${process.env.NEXT_PUBLIC_APP_URL}/unsubscribe?token=${unsubscribeToken}`
-  const listUrl = `${process.env.NEXT_PUBLIC_APP_URL}/list/${listId}`
+  const listUrl = `${process.env.NEXT_PUBLIC_APP_URL}/list/${listToken}`
 
   const html = generateNotificationEmail(listName, summary, listUrl, unsubscribeUrl)
 
