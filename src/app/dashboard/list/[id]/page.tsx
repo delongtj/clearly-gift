@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import { db } from '@/lib/database'
 import { processUrl } from '@/utils/url-processor'
@@ -282,9 +283,13 @@ export default function EditListPage() {
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link href="/dashboard" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-              <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-lg flex items-center justify-center shadow-sm">
-                <span className="text-white font-bold text-sm">♥</span>
-              </div>
+              <Image
+                src="/clearly-gift-logo.png"
+                alt="clearly.gift"
+                width={32}
+                height={32}
+                className="w-8 h-8"
+              />
               <span className="text-xl font-bold text-gray-900">clearly.gift</span>
             </Link>
             <Link

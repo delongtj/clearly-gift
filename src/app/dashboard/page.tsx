@@ -274,11 +274,11 @@ export default function Dashboard() {
       <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
       <Image
       src="/clearly-gift-logo.png"
-        alt="clearly.gift"
-        width={32}
-          height={32}
-                 className="w-8 h-8"
-               />
+      alt="clearly.gift"
+      width={32}
+      height={32}
+      className="w-8 h-8"
+      />
                <span className="text-xl font-bold text-gray-900">clearly.gift</span>
              </Link>
             <div className="flex items-center space-x-4">
