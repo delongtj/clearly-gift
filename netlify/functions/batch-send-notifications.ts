@@ -10,7 +10,7 @@ const resend = new Resend(process.env.RESEND_API_KEY!)
 
 interface SubscriptionEvent {
   id: string
-  event_type: 'item_added' | 'item_removed' | 'item_claimed' | 'item_unclaimed'
+  event_type: 'item_added' | 'item_removed' | 'item_claimed' | 'item_unclaimed' | 'item_updated'
   item_name: string
   metadata?: Record<string, any>
   created_at: string
@@ -21,6 +21,7 @@ interface EventSummary {
   item_removed: Array<{ item_name: string }>
   item_claimed: Array<{ item_name: string; claimed_by?: string }>
   item_unclaimed: Array<{ item_name: string }>
+  item_updated: Array<{ item_name: string; changes?: Partial<{ name: string; description: string; url: string }> }>
 }
 
 // Email template function
@@ -34,7 +35,8 @@ function generateNotificationEmail(
     summary.item_added.length +
     summary.item_removed.length +
     summary.item_claimed.length +
-    summary.item_unclaimed.length
+    summary.item_unclaimed.length +
+    summary.item_updated.length
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -268,23 +270,38 @@ function generateNotificationEmail(
           : ''
       }
       ${
-        summary.item_removed.length > 0
-          ? `
-        <div class="section">
-          <div class="section-title">
-            <span class="section-icon">🗑️</span>
-            Removed items (${summary.item_removed.length})
-          </div>
-          <ul class="item-list">
-            ${summary.item_removed.map(item => `<li class="item-removed">${escapeHtml(item.item_name)}</li>`).join('')}
-          </ul>
-        </div>
-      `
-          : ''
-      }
-      <div style="text-align: center;">
-        <a href="${listUrl}" class="cta-button">View the full list</a>
+      summary.item_removed.length > 0
+      ? `
+      <div class="section">
+      <div class="section-title">
+      <span class="section-icon">🗑️</span>
+      Removed items (${summary.item_removed.length})
       </div>
+      <ul class="item-list">
+      ${summary.item_removed.map(item => `<li class="item-removed">${escapeHtml(item.item_name)}</li>`).join('')}
+      </ul>
+      </div>
+      `
+      : ''
+      }
+      ${
+      summary.item_updated.length > 0
+          ? `
+         <div class="section">
+           <div class="section-title">
+             <span class="section-icon">📝</span>
+             Updated items (${summary.item_updated.length})
+           </div>
+           <ul class="item-list">
+             ${summary.item_updated.map(item => `<li>${escapeHtml(item.item_name)}</li>`).join('')}
+           </ul>
+         </div>
+       `
+           : ''
+       }
+       <div style="text-align: center;">
+         <a href="${listUrl}" class="cta-button">View the full list</a>
+       </div>
     </div>
     <div class="footer">
       <p>You're receiving this email because you subscribed to updates for this wishlist.</p>
@@ -424,7 +441,13 @@ function groupEventsByType(events: SubscriptionEvent[]): EventSummary {
       })),
     item_unclaimed: events
       .filter(e => e.event_type === 'item_unclaimed')
-      .map(e => ({ item_name: e.item_name }))
+      .map(e => ({ item_name: e.item_name })),
+    item_updated: events
+      .filter(e => e.event_type === 'item_updated')
+      .map(e => ({
+        item_name: e.item_name,
+        changes: e.metadata?.changes
+      }))
   }
 }
 
