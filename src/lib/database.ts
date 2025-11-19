@@ -168,6 +168,7 @@ export class DatabaseService {
 
     // Track subscription event
     const typedData = data as Item
+    console.log('[DATABASE] Item created, tracking event:', { listId, itemId: typedData.id, name })
     await trackItemAdded(listId, typedData.id, name)
 
     return typedData
