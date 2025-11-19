@@ -317,14 +317,20 @@ export default async (req: any, context: any) => {
   const authHeader = req.headers['authorization'] || ''
   const expectedToken = process.env.BATCH_JOB_SECRET
 
+  console.log('[AUTH] Expected token exists:', !!expectedToken)
+  console.log('[AUTH] Auth header:', authHeader)
+  console.log('[AUTH] Expected token:', expectedToken)
+
   if (!expectedToken) {
     console.error('BATCH_JOB_SECRET not configured')
     return new Response('Server misconfiguration', { status: 500 })
   }
 
   const [scheme, token] = authHeader.split(' ')
+  console.log('[AUTH] Scheme:', scheme, 'Token:', token)
+  
   if (scheme !== 'Bearer' || token !== expectedToken) {
-    console.warn('Unauthorized batch job request')
+    console.warn('[AUTH] Unauthorized - scheme match:', scheme === 'Bearer', 'token match:', token === expectedToken)
     return new Response('Unauthorized', { status: 401 })
   }
 
