@@ -319,13 +319,13 @@ export default async (req: any, context: any) => {
 
   if (!expectedToken) {
     console.error('BATCH_JOB_SECRET not configured')
-    return { statusCode: 500, body: 'Server misconfiguration' }
+    return new Response('Server misconfiguration', { status: 500 })
   }
 
   const [scheme, token] = authHeader.split(' ')
   if (scheme !== 'Bearer' || token !== expectedToken) {
     console.warn('Unauthorized batch job request')
-    return { statusCode: 401, body: 'Unauthorized' }
+    return new Response('Unauthorized', { status: 401 })
   }
 
   console.log('Starting batch notification job...')
@@ -339,12 +339,12 @@ export default async (req: any, context: any) => {
 
     if (subsError) {
       console.error('Error fetching subscriptions:', subsError)
-      return { statusCode: 500, body: 'Failed to fetch subscriptions' }
+      return new Response('Failed to fetch subscriptions', { status: 500 })
     }
 
     if (!subscriptions || subscriptions.length === 0) {
       console.log('No verified subscriptions found')
-      return { statusCode: 200, body: 'No subscriptions to process' }
+      return new Response('No subscriptions to process', { status: 200 })
     }
 
     let emailsSent = 0
@@ -418,10 +418,10 @@ export default async (req: any, context: any) => {
     }
 
     console.log(`Batch notification job completed. Sent ${emailsSent} emails.`)
-    return { statusCode: 200, body: `Sent ${emailsSent} notification emails` }
+    return new Response(`Sent ${emailsSent} notification emails`, { status: 200 })
   } catch (error) {
     console.error('Batch notification error:', error)
-    return { statusCode: 500, body: 'Internal server error' }
+    return new Response('Internal server error', { status: 500 })
   }
 }
 
