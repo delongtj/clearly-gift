@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { db } from '@/lib/database'
 import type { List, Item } from '@/types/database'
@@ -17,9 +16,6 @@ interface PublicListClientProps {
 }
 
 export default function PublicListClient({ token }: PublicListClientProps) {
-  const searchParams = useSearchParams()
-  const allowSubscribe = searchParams.get('allowSubscribe') === 'true'
-  
   const [list, setList] = useState<List | null>(null)
   const [items, setItems] = useState<Item[]>([])
   const [loading, setLoading] = useState(true)
@@ -281,14 +277,12 @@ export default function PublicListClient({ token }: PublicListClientProps) {
         <div className="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full whitespace-nowrap">
         {list.view_count || 0} view{(list.view_count || 0) !== 1 ? 's' : ''}
         </div>
-        {allowSubscribe && (
         <button
         onClick={() => setShowSubscriptionDialog(true)}
         className="text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-1.5 rounded-full transition-colors whitespace-nowrap"
         >
         Subscribe to Changes
         </button>
-        )}
         </div>
         </div>
           <p className="text-gray-600 text-sm leading-relaxed">
