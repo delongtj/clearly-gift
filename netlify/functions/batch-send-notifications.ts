@@ -318,27 +318,32 @@ export const config = {
 }
 
 export default async (req: any, context: any) => {
-  // Simple authentication check
-  let authHeader = ''
-  if (req?.headers) {
-    authHeader = req.headers.authorization || req.headers['Authorization'] || ''
-  }
-  if (!authHeader && typeof req === 'object' && req?.url) {
-    // Might be a Web Request object
-    authHeader = req.headers?.get?.('authorization') || ''
-  }
+  // Check if this is a scheduled invocation (no request body/headers) or HTTP call
+  const isScheduledInvocation = !req?.headers || (typeof req === 'object' && !req?.url)
 
-  const expectedToken = process.env.BATCH_JOB_SECRET
+  if (!isScheduledInvocation) {
+    // HTTP invocation - require authentication
+    let authHeader = ''
+    if (req?.headers) {
+      authHeader = req.headers.authorization || req.headers['Authorization'] || ''
+    }
+    if (!authHeader && typeof req === 'object' && req?.url) {
+      // Might be a Web Request object
+      authHeader = req.headers?.get?.('authorization') || ''
+    }
 
-  if (!expectedToken) {
-    console.error('BATCH_JOB_SECRET not configured')
-    return new Response('Server misconfiguration', { status: 500 })
-  }
+    const expectedToken = process.env.BATCH_JOB_SECRET
 
-  const [scheme, token] = authHeader.split(' ')
-  if (scheme !== 'Bearer' || token !== expectedToken) {
-    console.warn('Unauthorized batch job request')
-    return new Response('Unauthorized', { status: 401 })
+    if (!expectedToken) {
+      console.error('BATCH_JOB_SECRET not configured')
+      return new Response('Server misconfiguration', { status: 500 })
+    }
+
+    const [scheme, token] = authHeader.split(' ')
+    if (scheme !== 'Bearer' || token !== expectedToken) {
+      console.warn('Unauthorized batch job request')
+      return new Response('Unauthorized', { status: 401 })
+    }
   }
 
   console.log('Starting batch notification job...')
