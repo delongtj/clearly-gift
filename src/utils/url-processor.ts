@@ -24,6 +24,9 @@ async function expandShortUrl(url: string): Promise<string> {
         method: 'HEAD',
         redirect: 'manual',
         signal: controller.signal,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (compatible; ClearlyGift/1.0)'
+        }
       })
 
       clearTimeout(timeoutId)
@@ -36,8 +39,31 @@ async function expandShortUrl(url: string): Promise<string> {
       return url
     } catch (error) {
       clearTimeout(timeoutId)
-      return url
+      // Fallback to unshorten.me for URLs that don't support HEAD (e.g., a.co)
+      return await expandViaService(url)
     }
+  } catch {
+    return url
+  }
+}
+
+async function expandViaService(url: string): Promise<string> {
+  try {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 2000)
+
+    const response = await fetch(`https://unshorten.me/json/${encodeURIComponent(url)}`, {
+      signal: controller.signal,
+    })
+
+    clearTimeout(timeoutId)
+
+    if (response.ok) {
+      const data = await response.json() as { resolved_url?: string }
+      return data.resolved_url || url
+    }
+    
+    return url
   } catch {
     return url
   }
