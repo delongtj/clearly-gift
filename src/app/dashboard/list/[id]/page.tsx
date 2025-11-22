@@ -516,12 +516,18 @@ export default function EditListPage() {
                 <div className="flex items-start gap-3 flex-1 min-w-0">
                        <div 
                        data-drag-handle
-                       className="text-gray-400 hover:text-gray-600 cursor-grab active:cursor-grabbing flex-shrink-0 mt-1 transition-colors p-1 rounded hover:bg-gray-100"
+                       className="flex flex-col gap-1 cursor-grab active:cursor-grabbing flex-shrink-0 mt-0.5 transition-opacity hover:opacity-100 opacity-60 p-2"
+                       title="Drag to reorder"
                        >
-                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M8 5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM8 12a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3.5 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM3.5 15a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
-                          </svg>
-                        </div>
+                       <div className="flex gap-1">
+                        <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+                          <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+                          </div>
+                          <div className="flex gap-1">
+                            <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+                            <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+                          </div>
+                         </div>
                        <div className="flex-1 min-w-0">
                       <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.name}</h3>
                       {item.description && (
