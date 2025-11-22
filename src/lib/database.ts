@@ -147,7 +147,7 @@ export class DatabaseService {
     description?: string,
     url?: string
   ): Promise<Item | null> {
-    const formattedUrl = url ? processUrl(url) : undefined
+    const formattedUrl = url ? await processUrl(url) : undefined
 
     const { data, error } = await this.supabase
       .from('items')
@@ -188,7 +188,7 @@ export class DatabaseService {
     // Process URL if it's being updated
     let finalUpdates: any = { ...updates }
     if (updates.url !== undefined) {
-      finalUpdates.formatted_url = updates.url ? processUrl(updates.url) : null
+      finalUpdates.formatted_url = updates.url ? await processUrl(updates.url) : null
     }
 
     const { error } = await this.supabase

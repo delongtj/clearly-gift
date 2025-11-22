@@ -3,22 +3,67 @@ import { nanoid } from 'nanoid'
 export interface AffiliateConfig {
 amazon?: string
 target?: string
-  walmart?: string
-   etsy?: string
- }
-
-const AFFILIATE_CONFIG: AffiliateConfig = {
-  amazon: process.env.AMAZON_AFFILIATE_TAG,
-  target: process.env.TARGET_AFFILIATE_ID,
-  walmart: process.env.WALMART_AFFILIATE_ID,
-  etsy: process.env.ETSY_AFFILIATE_ID,
+walmart?: string
+etsy?: string
 }
 
-export function processUrl(originalUrl: string): string {
+const AFFILIATE_CONFIG: AffiliateConfig = {
+amazon: process.env.AMAZON_AFFILIATE_TAG,
+target: process.env.TARGET_AFFILIATE_ID,
+walmart: process.env.WALMART_AFFILIATE_ID,
+etsy: process.env.ETSY_AFFILIATE_ID,
+}
+
+// Common short URL domains
+const SHORT_URL_DOMAINS = [
+  'bit.ly', 'tinyurl.com', 'ow.ly', 'buff.ly', 'short.link',
+  'goo.gl', 'is.gd', 'tr.im', 'adf.ly', 'j.mp',
+  't.co', 'wp.me', 'youtu.be', 'ift.tt', 'dlvr.it'
+]
+
+async function expandShortUrl(url: string): Promise<string> {
+  try {
+    const urlObj = new URL(url)
+    const isShortUrl = SHORT_URL_DOMAINS.some(domain => 
+      urlObj.hostname === domain || urlObj.hostname.endsWith('.' + domain)
+    )
+    
+    if (!isShortUrl) return url
+
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 1000)
+
+    try {
+      const response = await fetch(url, {
+        method: 'HEAD',
+        redirect: 'manual',
+        signal: controller.signal,
+      })
+
+      clearTimeout(timeoutId)
+
+      if (response.status >= 300 && response.status < 400) {
+        const location = response.headers.get('location')
+        return location || url
+      }
+      
+      return url
+    } catch (error) {
+      clearTimeout(timeoutId)
+      return url
+    }
+  } catch {
+    return url
+  }
+}
+
+export async function processUrl(originalUrl: string): Promise<string> {
   if (!originalUrl) return originalUrl
 
   try {
-    const url = new URL(originalUrl)
+    // Expand short URLs first
+    const expandedUrl = await expandShortUrl(originalUrl)
+    const url = new URL(expandedUrl)
     
     // Strip common tracking parameters
     const trackingParams = [
