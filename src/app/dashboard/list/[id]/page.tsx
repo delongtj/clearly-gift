@@ -112,8 +112,8 @@ export default function EditListPage() {
   setToastType('error')
   setShowToast(true)
   } else {
-  setItems([...items, item])
-       setNewItemName('')
+  setItems([item, ...items])
+  setNewItemName('')
     setNewItemDescription('')
   setNewItemUrl('')
   setShowAddForm(false)
@@ -198,7 +198,12 @@ export default function EditListPage() {
     setEditItemUrl('')
   }
 
-  const handleDragStart = (itemId: string) => {
+  const handleDragStart = (e: React.DragEvent, itemId: string) => {
+    // Don't allow dragging if the drag started from an input or textarea
+    if ((e.target instanceof HTMLInputElement) || (e.target instanceof HTMLTextAreaElement)) {
+      e.preventDefault()
+      return
+    }
     setDraggedItem(itemId)
   }
 
@@ -430,7 +435,7 @@ export default function EditListPage() {
               <div 
                 key={item.id} 
                 draggable
-                onDragStart={() => handleDragStart(item.id)}
+                onDragStart={(e) => handleDragStart(e, item.id)}
                 onDragOver={handleDragOver}
                 onDrop={() => handleDrop(item.id)}
                 className={`bg-white rounded-2xl border border-gray-200 p-6 shadow-sm transition-all cursor-move ${
@@ -498,9 +503,15 @@ export default function EditListPage() {
                     </div>
                   </div>
                 ) : (
-                  // Normal Display Mode
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1 min-w-0">
+                // Normal Display Mode
+                <div className="flex items-start justify-between">
+                <div className="flex items-start gap-3 flex-1 min-w-0">
+                       <div className="text-gray-400 hover:text-gray-600 cursor-grab active:cursor-grabbing flex-shrink-0 mt-1">
+                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                           <path d="M8 5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM8 12a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3.5 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM3.5 15a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
+                         </svg>
+                       </div>
+                       <div className="flex-1 min-w-0">
                       <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.name}</h3>
                       {item.description && (
                         <p className="text-gray-600 text-sm mb-2">{item.description}</p>
@@ -518,8 +529,9 @@ export default function EditListPage() {
                           </svg>
                         </a>
                       )}
-                    </div>
-                    <div className="relative ml-4">
+                        </div>
+                      </div>
+                     <div className="relative ml-4">
                       <button
                         onClick={() => toggleDropdown(item.id)}
                         className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
