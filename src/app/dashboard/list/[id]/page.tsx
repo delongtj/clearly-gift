@@ -204,6 +204,14 @@ export default function EditListPage() {
       e.preventDefault()
       return
     }
+    
+    // Only allow dragging if initiated from the grip control
+    const gripControl = (e.currentTarget as HTMLElement).querySelector('[data-drag-handle]')
+    if (!gripControl || !gripControl.contains(e.target as Node)) {
+      e.preventDefault()
+      return
+    }
+    
     setDraggedItem(itemId)
   }
 
@@ -506,11 +514,14 @@ export default function EditListPage() {
                 // Normal Display Mode
                 <div className="flex items-start justify-between">
                 <div className="flex items-start gap-3 flex-1 min-w-0">
-                       <div className="text-gray-400 hover:text-gray-600 cursor-grab active:cursor-grabbing flex-shrink-0 mt-1">
+                       <div 
+                       data-drag-handle
+                       className="text-gray-400 hover:text-gray-600 cursor-grab active:cursor-grabbing flex-shrink-0 mt-1 transition-colors p-1 rounded hover:bg-gray-100"
+                       >
                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                           <path d="M8 5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM8 12a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3.5 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM3.5 15a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
-                         </svg>
-                       </div>
+                            <path d="M8 5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM8 12a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3.5 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM3.5 15a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
+                          </svg>
+                        </div>
                        <div className="flex-1 min-w-0">
                       <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.name}</h3>
                       {item.description && (
