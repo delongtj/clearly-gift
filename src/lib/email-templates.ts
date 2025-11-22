@@ -200,7 +200,7 @@ export function generateNotificationEmail(
     <div class="content">
       <!-- Summary -->
       <div class="summary">
-        <p><strong>${totalChanges} change${totalChanges === 1 ? '' : 's'}</strong> in the last 30 minutes</p>
+        <p><strong>${totalChanges} change${totalChanges === 1 ? '' : 's'}</strong> in the last hour</p>
       </div>
 
       <!-- New Items -->

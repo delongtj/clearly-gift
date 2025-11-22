@@ -11,7 +11,7 @@ export default function VerifySubscriptionSuccess() {
         <div className="text-5xl mb-4">✓</div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Subscribed!</h1>
         <p className="text-gray-600 mb-6">
-          Your email has been verified. You'll now receive updates about this list every 30 minutes when items are added, claimed, or removed.
+          Your email has been verified. You'll now receive updates about this list every hour when items are added, claimed, or removed.
         </p>
         <Link
           href="/"
