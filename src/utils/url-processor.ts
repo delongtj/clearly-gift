@@ -14,22 +14,8 @@ walmart: process.env.WALMART_AFFILIATE_ID,
 etsy: process.env.ETSY_AFFILIATE_ID,
 }
 
-// Common short URL domains
-const SHORT_URL_DOMAINS = [
-  'bit.ly', 'tinyurl.com', 'ow.ly', 'buff.ly', 'short.link',
-  'goo.gl', 'is.gd', 'tr.im', 'adf.ly', 'j.mp',
-  't.co', 'wp.me', 'youtu.be', 'ift.tt', 'dlvr.it'
-]
-
 async function expandShortUrl(url: string): Promise<string> {
   try {
-    const urlObj = new URL(url)
-    const isShortUrl = SHORT_URL_DOMAINS.some(domain => 
-      urlObj.hostname === domain || urlObj.hostname.endsWith('.' + domain)
-    )
-    
-    if (!isShortUrl) return url
-
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 1000)
 
