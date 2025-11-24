@@ -16,55 +16,27 @@ etsy: process.env.ETSY_AFFILIATE_ID,
 
 async function expandShortUrl(url: string): Promise<string> {
   try {
-    const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 1000)
-
-    try {
-      const response = await fetch(url, {
-        method: 'HEAD',
-        redirect: 'manual',
-        signal: controller.signal,
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; ClearlyGift/1.0)'
-        }
-      })
-
-      clearTimeout(timeoutId)
-
-      if (response.status >= 300 && response.status < 400) {
-        const location = response.headers.get('location')
-        return location || url
+    console.log(`[URL Expansion] Fetching: ${url}`)
+    
+    // Check one level deep for redirects (e.g. short links)
+    const response = await fetch(url, {
+      method: 'GET',
+      redirect: 'manual',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
       }
-      
-      return url
-    } catch (error) {
-      clearTimeout(timeoutId)
-      // Fallback to unshorten.me for URLs that don't support HEAD (e.g., a.co)
-      return await expandViaService(url)
-    }
-  } catch {
-    return url
-  }
-}
-
-async function expandViaService(url: string): Promise<string> {
-  try {
-    const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 2000)
-
-    const response = await fetch(`https://unshorten.me/json/${encodeURIComponent(url)}`, {
-      signal: controller.signal,
     })
 
-    clearTimeout(timeoutId)
-
-    if (response.ok) {
-      const data = await response.json() as { resolved_url?: string }
-      return data.resolved_url || url
+    console.log(`[URL Expansion] Response status: ${response.status} for ${url}`)
+    
+    const expandedUrl = response.headers.get('location') || url
+    if (expandedUrl !== url) {
+      console.log(`[URL Expansion] Expanded to: ${expandedUrl}`)
     }
     
-    return url
-  } catch {
+    return expandedUrl
+  } catch (error) {
+    console.error(`[URL Expansion] Error expanding ${url}:`, error)
     return url
   }
 }
