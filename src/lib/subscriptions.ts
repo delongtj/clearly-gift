@@ -13,7 +13,13 @@ export async function trackSubscriptionEvent(
   metadata?: Record<string, any>
 ): Promise<void> {
   try {
-    const response = await fetch('/api/track-event', {
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.URL
+    if (!baseUrl) {
+      console.warn('[trackSubscriptionEvent] No site URL configured, skipping event tracking')
+      return
+    }
+    
+    const response = await fetch(`${baseUrl}/api/track-event`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

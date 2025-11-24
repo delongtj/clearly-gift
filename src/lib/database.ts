@@ -202,9 +202,9 @@ export class DatabaseService {
       return false
     }
 
-    // Track subscription event
+    // Track subscription event only if user made meaningful changes
     const typedItem = item as { list_id: string; name: string } | null
-    if (typedItem) {
+    if (typedItem && (updates.name || updates.description || updates.url)) {
       await trackItemUpdated(typedItem.list_id, id, typedItem.name, updates)
     }
 
