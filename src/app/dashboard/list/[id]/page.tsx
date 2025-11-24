@@ -5,8 +5,7 @@ import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
-import { db } from '@/lib/database'
-import { processUrl } from '@/utils/url-processor'
+import { createItemAction, updateItemAction } from '@/app/actions'
 import type { List, Item } from '@/types/database'
 import ConfirmDialog from '@/components/ConfirmDialog'
 import Toast from '@/components/Toast'
@@ -99,7 +98,7 @@ export default function EditListPage() {
   normalizedUrl = `https://${normalizedUrl}`
   }
 
-     const item = await db.createItem(
+     const item = await createItemAction(
     listId,
   newItemName.trim(),
   newItemDescription.trim() || undefined,
@@ -133,7 +132,7 @@ export default function EditListPage() {
   normalizedUrl = `https://${normalizedUrl}`
   }
 
-     const success = await db.updateItem(itemId, {
+     const success = await updateItemAction(listId, itemId, {
     name: editItemName.trim(),
   description: editItemDescription.trim() || undefined,
   url: normalizedUrl || undefined
@@ -145,13 +144,11 @@ export default function EditListPage() {
   setToastType('error')
   setShowToast(true)
      } else {
-    const formattedUrl = normalizedUrl ? processUrl(normalizedUrl) : undefined
-  setItems(items.map(i => i.id === itemId ? {
+    setItems(items.map(i => i.id === itemId ? {
     ...i,
     name: editItemName.trim(),
     description: editItemDescription.trim() || undefined,
-      url: normalizedUrl || undefined,
-    formatted_url: formattedUrl
+      url: normalizedUrl || undefined
   } as Item : i))
   cancelEditing()
   }
