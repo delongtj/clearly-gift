@@ -5,7 +5,7 @@ import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
-import { createItemAction, updateItemAction } from '@/app/actions'
+import { createItemAction, updateItemAction, deleteItemAction } from '@/app/actions'
 import type { List, Item } from '@/types/database'
 import ConfirmDialog from '@/components/ConfirmDialog'
 import Toast from '@/components/Toast'
@@ -164,7 +164,7 @@ export default function EditListPage() {
   const confirmDeleteItem = async () => {
   if (!itemToDelete) return
 
-  const success = await db.deleteItem(itemToDelete.id)
+  const success = await deleteItemAction(itemToDelete.id)
 
   if (!success) {
   console.error('Error deleting item')

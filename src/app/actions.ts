@@ -16,5 +16,9 @@ export async function updateItemAction(
   itemId: string,
   updates: { name?: string; description?: string; url?: string }
 ) {
-  return await db.updateItem(listId, itemId, updates)
+  return await db.updateItem(itemId, updates)
+}
+
+export async function deleteItemAction(itemId: string) {
+  return await db.deleteItem(itemId)
 }
