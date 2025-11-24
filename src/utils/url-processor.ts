@@ -42,11 +42,14 @@ async function expandShortUrl(url: string): Promise<string> {
 }
 
 export async function processUrl(originalUrl: string): Promise<string> {
+  console.log(`[processUrl] Starting with URL: ${originalUrl}`)
+  
   if (!originalUrl) return originalUrl
 
   try {
     // Expand short URLs first
     const expandedUrl = await expandShortUrl(originalUrl)
+    console.log(`[processUrl] After expansion: ${expandedUrl}`)
     const url = new URL(expandedUrl)
     
     // Strip common tracking parameters
