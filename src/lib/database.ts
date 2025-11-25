@@ -153,11 +153,9 @@ export class DatabaseService {
     listId: string,
     name: string,
     description?: string,
-    url?: string
+    url?: string,
+    formattedUrl?: string
   ): Promise<Item | null> {
-    // URL is already processed by the server action before this is called
-    const formattedUrl = url || undefined
-
     const { data, error } = await this.supabase
       .from('items')
       // @ts-ignore - Type inference issue with Supabase client
@@ -166,7 +164,7 @@ export class DatabaseService {
         name,
         description,
         url,
-        formatted_url: formattedUrl
+        formatted_url: formattedUrl || url
       })
       .select()
       .single()
@@ -185,7 +183,7 @@ export class DatabaseService {
 
   async updateItem(
     id: string,
-    updates: Partial<Pick<Item, 'name' | 'description' | 'url'>>
+    updates: Partial<Pick<Item, 'name' | 'description' | 'url'>> & { formattedUrl?: string }
   ): Promise<boolean> {
     // Get item info before updating (for tracking)
     const { data: item } = await this.supabase
@@ -194,9 +192,13 @@ export class DatabaseService {
       .eq('id', id)
       .single()
 
-    // URL is already processed by the server action before this is called
+    // Build final updates, handling formatted_url separately
     let finalUpdates: any = { ...updates }
-    if (updates.url !== undefined) {
+    delete finalUpdates.formattedUrl
+    
+    if (updates.formattedUrl !== undefined) {
+      finalUpdates.formatted_url = updates.formattedUrl || null
+    } else if (updates.url !== undefined) {
       finalUpdates.formatted_url = updates.url || null
     }
 

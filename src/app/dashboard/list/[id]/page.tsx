@@ -101,19 +101,20 @@ export default function EditListPage() {
 
   // Process URL server-side if present
   let processedUrl = normalizedUrl
-   if (normalizedUrl) {
-     try {
-       processedUrl = await processUrlAction(normalizedUrl)
-     } catch (error) {
-       console.error('Error processing URL:', error)
-       processedUrl = normalizedUrl
-     }
-   }
+  if (normalizedUrl) {
+  try {
+  processedUrl = await processUrlAction(normalizedUrl)
+  } catch (error) {
+  console.error('Error processing URL:', error)
+  processedUrl = normalizedUrl
+  }
+  }
 
-     const item = await db.createItem(
-    listId,
+  const item = await db.createItem(
+  listId,
   newItemName.trim(),
   newItemDescription.trim() || undefined,
+  normalizedUrl || undefined,
   processedUrl
   )
 
@@ -146,19 +147,20 @@ export default function EditListPage() {
 
   // Process URL server-side if present
   let processedUrl = normalizedUrl
-   if (normalizedUrl) {
-     try {
-       processedUrl = await processUrlAction(normalizedUrl)
-     } catch (error) {
-       console.error('Error processing URL:', error)
-       processedUrl = normalizedUrl
-     }
-   }
+  if (normalizedUrl) {
+  try {
+  processedUrl = await processUrlAction(normalizedUrl)
+  } catch (error) {
+  console.error('Error processing URL:', error)
+  processedUrl = normalizedUrl
+  }
+  }
 
-     const success = await db.updateItem(itemId, {
-    name: editItemName.trim(),
+  const success = await db.updateItem(itemId, {
+  name: editItemName.trim(),
   description: editItemDescription.trim() || undefined,
-  url: processedUrl || undefined
+  url: normalizedUrl || undefined,
+  formattedUrl: processedUrl
   })
 
   if (!success) {
