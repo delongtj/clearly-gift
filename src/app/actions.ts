@@ -11,14 +11,6 @@ export async function createItemAction(
 ) {
   const supabase = await createClient()
   
-  // Verify user is authenticated
-  const { data: { user }, error } = await supabase.auth.getUser()
-  console.log('[createItemAction] Auth check:', { userId: user?.id, error })
-  
-  if (!user) {
-    throw new Error(`Unauthorized: ${error?.message || 'No session'}`)
-  }
-  
   const dbService = new DatabaseService(supabase)
   return await dbService.createItem(listId, name, description, url)
 }
