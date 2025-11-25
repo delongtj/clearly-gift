@@ -13,7 +13,8 @@ export async function trackSubscriptionEvent(
   metadata?: Record<string, any>
 ): Promise<void> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.URL
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || process.env.URL)
+    
     if (!baseUrl) {
       console.warn('[trackSubscriptionEvent] No site URL configured, skipping event tracking')
       return
