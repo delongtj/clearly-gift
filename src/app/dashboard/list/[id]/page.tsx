@@ -5,7 +5,8 @@ import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
-import { createItemAction, updateItemAction, deleteItemAction } from '@/app/actions'
+import { db } from '@/lib/database'
+import { processUrlAction } from '@/app/actions'
 import type { List, Item } from '@/types/database'
 import ConfirmDialog from '@/components/ConfirmDialog'
 import Toast from '@/components/Toast'
@@ -98,7 +99,7 @@ export default function EditListPage() {
   normalizedUrl = `https://${normalizedUrl}`
   }
 
-     const item = await createItemAction(
+     const item = await db.createItem(
     listId,
   newItemName.trim(),
   newItemDescription.trim() || undefined,
@@ -113,7 +114,7 @@ export default function EditListPage() {
   } else {
   setItems([item, ...items])
   setNewItemName('')
-    setNewItemDescription('')
+  setNewItemDescription('')
   setNewItemUrl('')
   setShowAddForm(false)
   }
@@ -132,7 +133,7 @@ export default function EditListPage() {
   normalizedUrl = `https://${normalizedUrl}`
   }
 
-     const success = await updateItemAction(listId, itemId, {
+     const success = await db.updateItem(itemId, {
     name: editItemName.trim(),
   description: editItemDescription.trim() || undefined,
   url: normalizedUrl || undefined
@@ -164,7 +165,7 @@ export default function EditListPage() {
   const confirmDeleteItem = async () => {
   if (!itemToDelete) return
 
-  const success = await deleteItemAction(itemToDelete.id)
+  const success = await db.deleteItem(itemToDelete.id)
 
   if (!success) {
   console.error('Error deleting item')

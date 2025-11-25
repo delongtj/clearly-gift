@@ -1,32 +1,7 @@
 'use server'
 
-import { createClient } from '@/lib/auth'
-import { DatabaseService } from '@/lib/database'
+import { processUrl } from '@/utils/url-processor'
 
-export async function createItemAction(
-  listId: string,
-  name: string,
-  description?: string,
-  url?: string
-) {
-  const supabase = await createClient()
-  
-  const dbService = new DatabaseService(supabase)
-  return await dbService.createItem(listId, name, description, url)
-}
-
-export async function updateItemAction(
-  listId: string,
-  itemId: string,
-  updates: { name?: string; description?: string; url?: string }
-) {
-  const supabase = await createClient()
-  const dbService = new DatabaseService(supabase)
-  return await dbService.updateItem(itemId, updates)
-}
-
-export async function deleteItemAction(itemId: string) {
-  const supabase = await createClient()
-  const dbService = new DatabaseService(supabase)
-  return await dbService.deleteItem(itemId)
+export async function processUrlAction(url: string): Promise<string> {
+  return await processUrl(url)
 }
