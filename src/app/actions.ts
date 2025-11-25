@@ -10,6 +10,13 @@ export async function createItemAction(
   url?: string
 ) {
   const supabase = await createClient()
+  
+  // Verify user is authenticated
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    throw new Error('Unauthorized')
+  }
+  
   const dbService = new DatabaseService(supabase)
   return await dbService.createItem(listId, name, description, url)
 }

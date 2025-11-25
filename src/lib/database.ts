@@ -10,9 +10,9 @@ import {
 import type { List, Item, User, Database } from '@/types/database'
 
 export class DatabaseService {
-  private supabase: ReturnType<typeof createBrowserClient<Database>>
+  private supabase: any
 
-  constructor(supabaseClient?: ReturnType<typeof createBrowserClient<Database>>) {
+  constructor(supabaseClient?: any) {
     if (supabaseClient) {
       this.supabase = supabaseClient
     } else {
