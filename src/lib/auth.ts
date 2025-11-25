@@ -5,6 +5,8 @@ import type { Database } from '@/types/database'
 
 export async function createClient() {
   const cookieStore = await cookies()
+  const authCookie = cookieStore.get('sb-' + process.env.NEXT_PUBLIC_SUPABASE_URL!.split('//')[1].split('.')[0] + '-auth-token')
+  console.log('[createClient] Auth cookie present:', !!authCookie?.value)
 
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -12,7 +14,9 @@ export async function createClient() {
     {
       cookies: {
         get(name: string) {
-          return cookieStore.get(name)?.value
+          const value = cookieStore.get(name)?.value
+          console.log(`[createClient] Cookie get(${name}):`, !!value)
+          return value
         },
         set(name: string, value: string, options: any) {
           try {
