@@ -1,6 +1,7 @@
 'use server'
 
-import { db } from '@/lib/database'
+import { createClient } from '@/lib/auth'
+import { DatabaseService } from '@/lib/database'
 
 export async function createItemAction(
   listId: string,
@@ -8,7 +9,9 @@ export async function createItemAction(
   description?: string,
   url?: string
 ) {
-  return await db.createItem(listId, name, description, url)
+  const supabase = await createClient()
+  const dbService = new DatabaseService(supabase)
+  return await dbService.createItem(listId, name, description, url)
 }
 
 export async function updateItemAction(
@@ -16,9 +19,13 @@ export async function updateItemAction(
   itemId: string,
   updates: { name?: string; description?: string; url?: string }
 ) {
-  return await db.updateItem(itemId, updates)
+  const supabase = await createClient()
+  const dbService = new DatabaseService(supabase)
+  return await dbService.updateItem(itemId, updates)
 }
 
 export async function deleteItemAction(itemId: string) {
-  return await db.deleteItem(itemId)
+  const supabase = await createClient()
+  const dbService = new DatabaseService(supabase)
+  return await dbService.deleteItem(itemId)
 }

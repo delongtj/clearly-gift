@@ -7,13 +7,21 @@ import {
   trackItemUnclaimed,
   trackItemUpdated
 } from '@/lib/subscriptions'
-import type { List, Item, User } from '@/types/database'
+import type { List, Item, User, Database } from '@/types/database'
 
 export class DatabaseService {
-  private supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  private supabase: ReturnType<typeof createBrowserClient<Database>>
+
+  constructor(supabaseClient?: ReturnType<typeof createBrowserClient<Database>>) {
+    if (supabaseClient) {
+      this.supabase = supabaseClient
+    } else {
+      this.supabase = createBrowserClient<Database>(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+    }
+  }
 
   // User operations
   async getCurrentUser(): Promise<User | null> {
