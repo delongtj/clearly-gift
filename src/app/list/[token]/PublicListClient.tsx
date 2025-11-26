@@ -220,11 +220,10 @@ export default function PublicListClient({ token }: PublicListClientProps) {
   window.open(item.formatted_url || item.url || '#', '_blank')
   
   // Increment click count in background
-  // @ts-expect-error - Supabase RPC type definitions
-  supabase.rpc('increment_item_click_count', { item_id: item.id }).then(() => {
-    console.log('Click count incremented for item:', item.id)
-  }).catch((error) => {
-    console.error('Error incrementing click count:', error)
+  Promise.resolve(supabase.rpc('increment_item_click_count', { item_id: item.id } as any)).then(() => {
+  console.log('Click count incremented for item:', item.id)
+  }).catch((error: any) => {
+  console.error('Error incrementing click count:', error)
   })
    }
 
