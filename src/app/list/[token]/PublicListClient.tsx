@@ -219,11 +219,11 @@ export default function PublicListClient({ token }: PublicListClientProps) {
   // Open link immediately
   window.open(item.formatted_url || item.url || '#', '_blank')
   
-  // Increment click count in background
-  supabase.rpc('increment_item_click_count', { item_id: item.id }).catch((error) => {
-      console.error('Error incrementing click count:', error)
-     })
-   }
+   // Increment click count in background
+   ;(supabase.rpc('increment_item_click_count', { item_id: item.id } as any) as any).catch((error: any) => {
+  console.error('Error incrementing click count:', error)
+  })
+  }
 
   if (loading) {
     return (
