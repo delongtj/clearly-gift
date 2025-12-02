@@ -217,7 +217,7 @@ export default function PublicListClient({ token }: PublicListClientProps) {
 
   const handleItemClick = (item: Item) => {
   // Open link immediately
-  window.open(item.displayUrl || '#', '_blank')
+  window.open(item.formatted_url || item.url || '#', '_blank')
   
   // Increment click count in background
   Promise.resolve(supabase.rpc('increment_item_click_count', { item_id: item.id } as any)).then(() => {
@@ -325,10 +325,10 @@ export default function PublicListClient({ token }: PublicListClientProps) {
                           </span>
                         </div>
                       )}
-                      {item.displayUrl ? (
+                      {item.formatted_url || item.url ? (
                         <button
                           onClick={() => handleItemClick(item)}
-                          className="text-lg font-semibold mb-2 transition-colors text-left text-emerald-600 hover:text-emerald-700 underline"
+                          className="text-lg font-semibold mb-2 transition-colors text-left text-emerald-600 hover:text-emerald-700 underline cursor-pointer"
                         >
                           {item.name}
                         </button>
