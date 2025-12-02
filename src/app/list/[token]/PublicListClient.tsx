@@ -290,7 +290,7 @@ export default function PublicListClient({ token }: PublicListClientProps) {
         </div>
         </div>
           <p className="text-gray-600 text-sm leading-relaxed">
-            Click "Claim Gift" to let others know you're getting this item. 🎁
+            Click "Claim Item" to let others know you're getting this item. 🎁
           </p>
         </div>
 
@@ -325,11 +325,22 @@ export default function PublicListClient({ token }: PublicListClientProps) {
                           </span>
                         </div>
                       )}
-                      <h3 className={`text-lg font-semibold mb-2 transition-colors ${
-                        item.claimed_at ? 'text-gray-500' : 'text-gray-900'
-                      }`}>
-                        {item.name}
-                      </h3>
+                      {item.url ? (
+                        <button
+                          onClick={() => handleItemClick(item)}
+                          className={`text-lg font-semibold mb-2 transition-colors text-left ${
+                            item.claimed_at ? 'text-gray-500 hover:text-gray-600' : 'text-emerald-600 hover:text-emerald-700 underline'
+                          }`}
+                        >
+                          {item.name}
+                        </button>
+                      ) : (
+                        <h3 className={`text-lg font-semibold mb-2 transition-colors ${
+                          item.claimed_at ? 'text-gray-500' : 'text-gray-900'
+                        }`}>
+                          {item.name}
+                        </h3>
+                      )}
                       {item.description && (
                         <p className={`text-sm mb-3 leading-relaxed ${
                           item.claimed_at ? 'text-gray-500' : 'text-gray-600'
@@ -344,32 +355,24 @@ export default function PublicListClient({ token }: PublicListClientProps) {
                       )}
                     </div>
                     <div className="ml-4 flex flex-col gap-2 flex-shrink-0">
-                      {item.url && !item.claimed_at && (
-                        <button
-                          onClick={() => handleItemClick(item)}
-                          className="bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-950 text-sm font-medium whitespace-nowrap transition-all active:scale-95 shadow-sm hover:shadow-md"
-                        >
-                          View Item
-                        </button>
-                      )}
-                      {item.claimed_at ? (
-                        <button
-                          onClick={() => handleClaimItem(item)}
-                          disabled={claimingId === item.id}
-                          className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 text-sm font-medium disabled:opacity-50 whitespace-nowrap transition-all disabled:cursor-not-allowed"
-                        >
-                          {claimingId === item.id ? 'Updating...' : 'Unclaim'}
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => handleClaimItem(item)}
-                          disabled={claimingId === item.id}
-                          className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 text-sm font-medium disabled:opacity-50 whitespace-nowrap transition-all active:scale-95 shadow-sm hover:shadow-md disabled:cursor-not-allowed"
-                        >
-                          {claimingId === item.id ? 'Claiming...' : 'Claim Gift'}
-                        </button>
-                      )}
-                    </div>
+                       {item.claimed_at ? (
+                         <button
+                           onClick={() => handleClaimItem(item)}
+                           disabled={claimingId === item.id}
+                           className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 text-sm font-medium disabled:opacity-50 whitespace-nowrap transition-all disabled:cursor-not-allowed"
+                         >
+                           {claimingId === item.id ? 'Updating...' : 'Unclaim'}
+                         </button>
+                       ) : (
+                         <button
+                           onClick={() => handleClaimItem(item)}
+                           disabled={claimingId === item.id}
+                           className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 text-sm font-medium disabled:opacity-50 whitespace-nowrap transition-all active:scale-95 shadow-sm hover:shadow-md disabled:cursor-not-allowed"
+                         >
+                           {claimingId === item.id ? 'Claiming...' : 'Claim Item'}
+                         </button>
+                       )}
+                     </div>
                   </div>
                 </div>
               </div>
@@ -400,8 +403,8 @@ export default function PublicListClient({ token }: PublicListClientProps) {
           setItemToUnclaim(null)
         }}
         onConfirm={confirmUnclaim}
-        title="Unclaim Gift"
-        message="Are you sure you want to unclaim this gift? If you weren't the one who claimed it, unclaiming could result in duplicate gifts being purchased."
+        title="Unclaim Item"
+        message="Are you sure you want to unclaim this item? If you weren't the one who claimed it, unclaiming could result in duplicate items being purchased."
         confirmText="Unclaim"
         isDangerous={true}
       />
@@ -412,10 +415,10 @@ export default function PublicListClient({ token }: PublicListClientProps) {
           setItemToClaim(null)
         }}
         onSubmit={confirmClaim}
-        title="Claim Gift"
-        message="Enter your name so others know you're getting this gift:"
+        title="Claim Item"
+        message="Enter your name so others know you're getting this item:"
         placeholder="Your name (optional)"
-        submitText="Claim Gift"
+        submitText="Claim Item"
       />
       <SubscriptionDialog
         isOpen={showSubscriptionDialog}
