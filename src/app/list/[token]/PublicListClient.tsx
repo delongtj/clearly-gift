@@ -217,7 +217,7 @@ export default function PublicListClient({ token }: PublicListClientProps) {
 
   const handleItemClick = (item: Item) => {
   // Open link immediately
-  window.open(item.formatted_url || item.url || '#', '_blank')
+  window.open(item.displayUrl || '#', '_blank')
   
   // Increment click count in background
   Promise.resolve(supabase.rpc('increment_item_click_count', { item_id: item.id } as any)).then(() => {
@@ -225,7 +225,7 @@ export default function PublicListClient({ token }: PublicListClientProps) {
   }).catch((error: any) => {
   console.error('Error incrementing click count:', error)
   })
-   }
+    }
 
   if (loading) {
     return (
@@ -325,12 +325,10 @@ export default function PublicListClient({ token }: PublicListClientProps) {
                           </span>
                         </div>
                       )}
-                      {item.url ? (
+                      {item.displayUrl ? (
                         <button
                           onClick={() => handleItemClick(item)}
-                          className={`text-lg font-semibold mb-2 transition-colors text-left ${
-                            item.claimed_at ? 'text-gray-500 hover:text-gray-600' : 'text-emerald-600 hover:text-emerald-700 underline'
-                          }`}
+                          className="text-lg font-semibold mb-2 transition-colors text-left text-emerald-600 hover:text-emerald-700 underline"
                         >
                           {item.name}
                         </button>
