@@ -152,7 +152,7 @@ return (
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
             <div className="h-48 bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center">
               <span className="text-4xl">👶</span>
             </div>
@@ -161,7 +161,9 @@ return (
               <p className="text-gray-700 text-sm mb-4">
                 Thoughtful essentials and self-care items to support new parents through this exciting journey.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-new-parents" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
@@ -180,7 +182,7 @@ return (
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
             <div className="h-48 bg-gradient-to-br from-green-100 to-lime-100 flex items-center justify-center">
               <span className="text-4xl">🌱</span>
             </div>
@@ -189,11 +191,13 @@ return (
               <p className="text-gray-700 text-sm mb-4">
                 Tools, plants, and outdoor accessories to help green thumbs create beautiful growing spaces.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-gardeners" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
             <div className="h-48 bg-gradient-to-br from-teal-100 to-cyan-100 flex items-center justify-center">
               <span className="text-4xl">✈️</span>
             </div>
@@ -202,7 +206,9 @@ return (
               <p className="text-gray-700 text-sm mb-4">
                 Smart luggage, comfort accessories, and travel essentials for the jet-setter in your life.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-travelers" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
