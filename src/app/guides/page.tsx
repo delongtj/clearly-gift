@@ -33,9 +33,7 @@ return (
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-48 bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center">
-              <span className="text-4xl">🧸</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1707143017681-777ab2ac79a4?w=800&h=400&fit=crop" alt="Gift ideas for toddlers" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Toddlers</h3>
               <p className="text-gray-700 text-sm mb-4">
@@ -48,9 +46,7 @@ return (
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-48 bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center">
-              <span className="text-4xl">💻</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1585789574224-8cbf3247e581?w=800&h=400&fit=crop" alt="Gift ideas for tech lovers" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Tech Lovers</h3>
               <p className="text-gray-700 text-sm mb-4">
@@ -63,9 +59,7 @@ return (
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center">
-              <span className="text-4xl">☕</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=800&h=400&fit=crop" alt="Gift ideas for coffee lovers" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Coffee Lovers</h3>
               <p className="text-gray-700 text-sm mb-4">
@@ -78,9 +72,7 @@ return (
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-48 bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center">
-              <span className="text-4xl">🏃‍♀️</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1758520706103-41d01f815640?w=800&h=400&fit=crop" alt="Gift ideas for runners" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Runners</h3>
               <p className="text-gray-700 text-sm mb-4">
@@ -93,9 +85,7 @@ return (
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-48 bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
-              <span className="text-4xl">🍳</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800&h=400&fit=crop" alt="Gift ideas for food lovers" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Food Lovers</h3>
               <p className="text-gray-700 text-sm mb-4">
@@ -108,9 +98,7 @@ return (
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-48 bg-gradient-to-br from-red-100 to-pink-100 flex items-center justify-center">
-              <span className="text-4xl">🎮</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1629917629391-47d9209b7c19?w=800&h=400&fit=crop" alt="Gift ideas for gamers" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Gamers</h3>
               <p className="text-gray-700 text-sm mb-4">
@@ -123,9 +111,7 @@ return (
           </div>
           {/* High Priority - Coming Next */}
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-48 bg-gradient-to-br from-yellow-100 to-amber-100 flex items-center justify-center">
-              <span className="text-4xl">📚</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1709924168698-620ea32c3488?w=800&h=400&fit=crop" alt="Gift ideas for book lovers" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Book Lovers</h3>
               <p className="text-gray-700 text-sm mb-4">
@@ -138,9 +124,7 @@ return (
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-48 bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center">
-              <span className="text-4xl">💪</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?w=800&h=400&fit=crop" alt="Gift ideas for fitness enthusiasts" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Fitness Enthusiasts</h3>
               <p className="text-gray-700 text-sm mb-4">
@@ -153,9 +137,7 @@ return (
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-48 bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center">
-              <span className="text-4xl">👶</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1542644416-2289c587843e?w=800&h=400&fit=crop" alt="Gift ideas for new parents" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for New Parents</h3>
               <p className="text-gray-700 text-sm mb-4">
@@ -168,9 +150,7 @@ return (
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-48 bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center">
-              <span className="text-4xl">🍷</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1627626651107-7ce593b9bd76?w=800&h=400&fit=crop" alt="Gift ideas for wine lovers" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Wine Lovers</h3>
               <p className="text-gray-700 text-sm mb-4">
@@ -183,9 +163,7 @@ return (
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-48 bg-gradient-to-br from-green-100 to-lime-100 flex items-center justify-center">
-              <span className="text-4xl">🌱</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1523301551780-cd17359a95d0?w=800&h=400&fit=crop" alt="Gift ideas for gardeners" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Gardeners</h3>
               <p className="text-gray-700 text-sm mb-4">
@@ -198,9 +176,7 @@ return (
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-48 bg-gradient-to-br from-teal-100 to-cyan-100 flex items-center justify-center">
-              <span className="text-4xl">✈️</span>
-            </div>
+            <img src="https://images.unsplash.com/photo-1512254921795-6be4058338b2?w=800&h=400&fit=crop" alt="Gift ideas for travelers" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Travelers</h3>
               <p className="text-gray-700 text-sm mb-4">
@@ -226,9 +202,7 @@ return (
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-          <div className="h-48 bg-gradient-to-br from-emerald-100 to-green-100 flex items-center justify-center">
-          <span className="text-4xl">🐕</span>
-          </div>
+          <img src="https://images.unsplash.com/photo-1609138271629-571665f418a3?w=800&h=400&fit=crop" alt="Gift ideas for pet owners" className="h-48 w-full object-cover" />
           <div className="p-6">
           <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Pet Owners</h3>
           <p className="text-gray-700 text-sm mb-4">
