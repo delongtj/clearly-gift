@@ -2,8 +2,16 @@ import fs from 'fs'
 import path from 'path'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
 import GuideDetailHeader from '@/components/GuideDetailHeader'
+import {
+  getGuide,
+  getRelatedGuides,
+  getEmojiForGuide,
+  getGradientForCategory,
+  categoryEmoji,
+} from '@/lib/guides'
 
 interface GuidePageProps {
   params: {
@@ -13,7 +21,7 @@ interface GuidePageProps {
 
 export async function generateMetadata({ params }: GuidePageProps): Promise<Metadata> {
   const { slug } = await params
-  const guide = await getGuide(slug)
+  const guide = getGuide(slug)
 
   if (!guide) {
     return {
@@ -32,6 +40,14 @@ export async function generateMetadata({ params }: GuidePageProps): Promise<Meta
       publishedTime: guide.frontmatter.date,
       authors: [guide.frontmatter.author],
       tags: [guide.frontmatter.category],
+      ...(guide.frontmatter.heroImage ? {
+        images: [{
+          url: guide.frontmatter.heroImage,
+          width: 1200,
+          height: 600,
+          alt: guide.frontmatter.title,
+        }],
+      } : {}),
     },
     twitter: {
       card: 'summary_large_image',
@@ -57,57 +73,18 @@ export async function generateStaticParams() {
     }))
 }
 
-async function getGuide(slug: string) {
-  try {
-    const filePath = path.join(process.cwd(), 'content/guides', `${slug}.mdx`)
-
-    if (!fs.existsSync(filePath)) {
-      return null
-    }
-
-    const fileContent = fs.readFileSync(filePath, 'utf-8')
-
-    // Extract frontmatter
-    const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/
-    const match = frontmatterRegex.exec(fileContent)
-
-    if (!match) {
-      return null
-    }
-
-    const frontmatterText = match[1]
-    const content = fileContent.replace(frontmatterRegex, '')
-
-    // Parse frontmatter
-    const frontmatter: any = {}
-    frontmatterText.split('\n').forEach(line => {
-      const colonIndex = line.indexOf(':')
-      if (colonIndex > 0) {
-        const key = line.slice(0, colonIndex).trim()
-        const value = line.slice(colonIndex + 1).trim().replace(/^["']|["']$/g, '')
-        frontmatter[key] = value
-      }
-    })
-
-    return {
-      frontmatter,
-      content
-    }
-  } catch (error) {
-    console.error('Error reading guide:', error)
-    return null
-  }
-}
-
 export default async function GuidePage({ params }: GuidePageProps) {
   const { slug } = await params
-  const guide = await getGuide(slug)
+  const guide = getGuide(slug)
 
   if (!guide) {
     notFound()
   }
 
-  // Create a component to render the processed content
+  const emoji = getEmojiForGuide(guide)
+  const gradient = getGradientForCategory(guide.frontmatter.category)
+  const relatedGuides = getRelatedGuides(slug, guide.frontmatter.category)
+
   const MDXContent = () => {
     return (
       <ReactMarkdown
@@ -122,7 +99,22 @@ export default async function GuidePage({ params }: GuidePageProps) {
           ol: ({children}) => <ol className="list-decimal pl-6 mb-4 text-gray-700">{children}</ol>,
           li: ({children}) => <li className="mb-2">{children}</li>,
           hr: () => <hr className="my-8 border-gray-200" />,
-          em: ({children}) => <em className="italic text-gray-700">{children}</em>
+          em: ({children}) => <em className="italic text-gray-700">{children}</em>,
+          img: ({src, alt}) => (
+            <figure className="my-8">
+              <img
+                src={src}
+                alt={alt || ''}
+                className="w-full rounded-xl shadow-md"
+                loading="lazy"
+              />
+              {alt && (
+                <figcaption className="text-center text-sm text-gray-500 mt-3">
+                  {alt}
+                </figcaption>
+              )}
+            </figure>
+          ),
         }}
       >
         {guide.content}
@@ -130,49 +122,102 @@ export default async function GuidePage({ params }: GuidePageProps) {
     )
   }
 
-  const relatedGuides = [
-    { title: "Top Gifts for Toddlers 2025", slug: "toddlers-2025", emoji: "🧸" },
-    { title: "Best Tech Gifts Under $100", slug: "tech-under-100", emoji: "💻" },
-    { title: "Top Gifts for Runners", slug: "runners", emoji: "🏃‍♀️" },
-  ]
-
   return (
-  <div className="bg-gray-50">
-  <GuideDetailHeader />
+    <div className="bg-gray-50">
+      <GuideDetailHeader />
 
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-amber-50 to-orange-100 py-16">
-        <div className="absolute inset-0 opacity-40">
-          <div className="w-full h-full" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f59e0b' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: '60px 60px'
-          }}></div>
-        </div>
-        <div className="relative max-w-4xl mx-auto px-4 text-center">
-          <div className="text-6xl mb-6">☕</div>
-          <div className="flex items-center justify-center space-x-4 text-sm text-amber-800 mb-4">
-            <span className="bg-white bg-opacity-80 text-amber-800 px-4 py-2 rounded-full font-medium">
-              {guide.frontmatter.category}
-            </span>
-            <span className="bg-white bg-opacity-80 px-4 py-2 rounded-full">
-              {new Date(guide.frontmatter.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
-            </span>
-            <span className="bg-white bg-opacity-80 px-4 py-2 rounded-full">
-              By {guide.frontmatter.author}
-            </span>
+      {guide.frontmatter.heroImage ? (
+        <div className="relative h-[400px] overflow-hidden">
+          <Image
+            src={guide.frontmatter.heroImage}
+            alt={guide.frontmatter.title}
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
+          <div className="relative h-full max-w-4xl mx-auto px-4 flex flex-col justify-end pb-12">
+            <div className="flex flex-wrap items-center gap-3 text-sm text-white/90 mb-4">
+              <span className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full font-medium">
+                {emoji} {guide.frontmatter.category}
+              </span>
+              <span className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                {new Date(guide.frontmatter.date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </span>
+              <span className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                By {guide.frontmatter.author}
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
+              {guide.frontmatter.title}
+            </h1>
+            <p className="text-xl text-white/90 max-w-3xl leading-relaxed">
+              {guide.frontmatter.description}
+            </p>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-            {guide.frontmatter.title}
-          </h1>
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            {guide.frontmatter.description}
-          </p>
+          {guide.frontmatter.heroImageCredit && (
+            <div className="absolute bottom-2 right-4 text-xs text-white/60">
+              Photo by{' '}
+              <a
+                href="https://unsplash.com?utm_source=clearly_gift&utm_medium=referral"
+                className="underline hover:text-white/80"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {guide.frontmatter.heroImageCredit}
+              </a>
+              {' '}on{' '}
+              <a
+                href="https://unsplash.com?utm_source=clearly_gift&utm_medium=referral"
+                className="underline hover:text-white/80"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Unsplash
+              </a>
+            </div>
+          )}
         </div>
-      </div>
+      ) : (
+        <div className={`relative bg-gradient-to-br ${gradient.from} ${gradient.to} py-16`}>
+          <div className="absolute inset-0 opacity-40">
+            <div className="w-full h-full" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='${encodeURIComponent(gradient.accent)}' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              backgroundSize: '60px 60px'
+            }}></div>
+          </div>
+          <div className="relative max-w-4xl mx-auto px-4 text-center">
+            <div className="text-6xl mb-6">{emoji}</div>
+            <div className={`flex flex-wrap items-center justify-center gap-3 text-sm ${gradient.textColor} mb-4`}>
+              <span className={`bg-white bg-opacity-80 ${gradient.textColor} px-4 py-2 rounded-full font-medium`}>
+                {guide.frontmatter.category}
+              </span>
+              <span className="bg-white bg-opacity-80 px-4 py-2 rounded-full">
+                {new Date(guide.frontmatter.date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </span>
+              <span className="bg-white bg-opacity-80 px-4 py-2 rounded-full">
+                By {guide.frontmatter.author}
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+              {guide.frontmatter.title}
+            </h1>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+              {guide.frontmatter.description}
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 py-12">
@@ -185,34 +230,36 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </div>
 
         {/* Related Guides */}
-        <div className="mt-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">More Gift Guides</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {relatedGuides.map((relatedGuide, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-6 group">
-                <div className="text-3xl mb-4">{relatedGuide.emoji}</div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors">
-                  {relatedGuide.title}
-                </h3>
-                <a
-                  href={`/guides/${relatedGuide.slug}`}
-                  className="text-emerald-600 hover:text-emerald-700 font-medium inline-flex items-center"
-                >
-                  Read Guide
-                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
-            ))}
+        {relatedGuides.length > 0 && (
+          <div className="mt-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">More Gift Guides</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {relatedGuides.map((relatedGuide) => (
+                <div key={relatedGuide.slug} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-6 group">
+                  <div className="text-3xl mb-4">{getEmojiForGuide(relatedGuide)}</div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors">
+                    {relatedGuide.frontmatter.title}
+                  </h3>
+                  <a
+                    href={`/guides/${relatedGuide.slug}`}
+                    className="text-emerald-600 hover:text-emerald-700 font-medium inline-flex items-center"
+                  >
+                    Read Guide
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* CTA Section */}
         <div className="mt-16 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-2xl p-8 text-center text-white">
           <h2 className="text-2xl font-bold mb-4">Ready to Create Your Own Gift List?</h2>
           <p className="text-emerald-100 mb-6 max-w-2xl mx-auto">
-            Share your wishlist with friends and family using clearly.gift's simple, clutter-free platform.
+            Share your wishlist with friends and family using clearly.gift&apos;s simple, clutter-free platform.
           </p>
           <a
             href="/auth"

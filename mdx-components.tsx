@@ -122,6 +122,21 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </div>
       </div>
     ),
+    img: ({ src, alt }) => (
+      <figure className="my-8">
+        <img
+          src={src || ''}
+          alt={alt || ''}
+          className="w-full rounded-xl shadow-md"
+          loading="lazy"
+        />
+        {alt && (
+          <figcaption className="text-center text-sm text-gray-500 mt-3 italic">
+            {alt}
+          </figcaption>
+        )}
+      </figure>
+    ),
     ...components,
   }
 }

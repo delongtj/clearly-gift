@@ -165,7 +165,7 @@ return (
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
             <div className="h-48 bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center">
               <span className="text-4xl">🍷</span>
             </div>
@@ -174,7 +174,9 @@ return (
               <p className="text-gray-700 text-sm mb-4">
                 Elegant accessories and tasting essentials for wine enthusiasts and casual sippers alike.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-wine-lovers" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
