@@ -235,21 +235,18 @@ export default async function GuidePage({ params }: GuidePageProps) {
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">More Gift Guides</h2>
             <div className="grid md:grid-cols-3 gap-6">
               {relatedGuides.map((relatedGuide) => (
-                <div key={relatedGuide.slug} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-6 group">
+                <a key={relatedGuide.slug} href={`/guides/${relatedGuide.slug}`} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-6 group block">
                   <div className="text-3xl mb-4">{getEmojiForGuide(relatedGuide)}</div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors">
                     {relatedGuide.frontmatter.title}
                   </h3>
-                  <a
-                    href={`/guides/${relatedGuide.slug}`}
-                    className="text-emerald-600 hover:text-emerald-700 font-medium inline-flex items-center"
-                  >
+                  <span className="text-emerald-600 group-hover:text-emerald-700 font-medium inline-flex items-center">
                     Read Guide
                     <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
-                  </a>
-                </div>
+                  </span>
+                </a>
               ))}
             </div>
           </div>
