@@ -45,6 +45,8 @@ export const categoryEmoji: Record<string, string> = {
   'Wellness': '🧘',
   'Cycling': '🚲',
   'Budget Gifts': '💝',
+  'Teens': '🎸',
+  'Luxury': '💎',
 }
 
 export const categoryGradient: Record<string, { from: string; to: string; accent: string; textColor: string }> = {
@@ -67,6 +69,8 @@ export const categoryGradient: Record<string, { from: string; to: string; accent
   'Wellness':           { from: 'from-pink-50',     to: 'to-rose-100',    accent: '#f43f5e', textColor: 'text-pink-800' },
   'Cycling':            { from: 'from-cyan-50',     to: 'to-blue-100',    accent: '#06b6d4', textColor: 'text-cyan-800' },
   'Budget Gifts':       { from: 'from-green-50',    to: 'to-emerald-100', accent: '#10b981', textColor: 'text-green-800' },
+  'Teens':              { from: 'from-orange-50',   to: 'to-amber-100',  accent: '#f97316', textColor: 'text-orange-800' },
+  'Luxury':             { from: 'from-violet-50',   to: 'to-purple-100', accent: '#8b5cf6', textColor: 'text-violet-800' },
 }
 
 const DEFAULT_GRADIENT = { from: 'from-gray-50', to: 'to-gray-100', accent: '#6b7280', textColor: 'text-gray-800' }

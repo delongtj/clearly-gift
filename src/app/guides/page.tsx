@@ -281,43 +281,43 @@ return (
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-amber-100 to-yellow-100 flex items-center justify-center">
-              <span className="text-4xl">🎁</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1638224966976-ae2e4257c09e?w=800&h=400&fit=crop" alt="Gift ideas under $50" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas Under $50</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Great value gifts that deliver maximum impact without breaking the budget.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-under-50" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-violet-100 to-purple-100 flex items-center justify-center">
-              <span className="text-4xl">💎</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1759563871375-d5b140f6646e?w=800&h=400&fit=crop" alt="Luxury gift ideas" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Luxury Gift Ideas</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Premium and splurge-worthy gifts for life's most special occasions and celebrations.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-luxury-gift-ideas" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
           {/* Age & Life Stage */}
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-orange-100 to-amber-100 flex items-center justify-center">
-              <span className="text-4xl">🎸</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1617392079938-d332e5d640e8?w=800&h=400&fit=crop" alt="Gift ideas for teenagers" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Teenagers</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Trendy accessories and experiences that capture the interests of today's teens.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-teenagers" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
