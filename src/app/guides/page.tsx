@@ -321,66 +321,66 @@ return (
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center">
-              <span className="text-4xl">🎓</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1547817651-7fb0cc360536?w=800&h=400&fit=crop" alt="Gift ideas for college students" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for College Students</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Dorm essentials and study tools to help students succeed in their academic journey.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-college-students" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
           {/* Specialized Interests */}
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-red-100 to-orange-100 flex items-center justify-center">
-              <span className="text-4xl">🏕️</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1604854436028-62dbf5fe81c5?w=800&h=400&fit=crop" alt="Gift ideas for outdoor adventurers" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Outdoor Adventurers</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Camping gear and survival tools for those who love exploring the great outdoors.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-outdoor-adventurers" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-gray-100 to-slate-100 flex items-center justify-center">
-              <span className="text-4xl">🔧</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1685320198649-781e83a61de4?w=800&h=400&fit=crop" alt="Gift ideas for DIY enthusiasts" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for DIY Enthusiasts</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Quality tools and project kits for hands-on creators who love building and making.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-diy-enthusiasts" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center">
-              <span className="text-4xl">🏠</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1763812384061-06b86c23ede6?w=800&h=400&fit=crop" alt="Gift ideas for homebodies" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Homebodies</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Cozy comforts and entertainment essentials for those who love staying in and relaxing.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-homebodies" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
         </div>
 
         <div className="text-center mt-12">
           <p className="text-gray-700 mb-4">
-            <strong>19 more comprehensive gift guides coming soon!</strong> We're working hard to bring you expert recommendations across every category.
+            <strong>26 comprehensive gift guides</strong> covering every category — from tech lovers to outdoor adventurers, budget picks to luxury splurges.
           </p>
           <p className="text-gray-600 text-sm">
-            Check back regularly for new guides, or follow us for updates when your favorite categories go live.
+            Each guide features 10 hand-picked products with real prices and links to trusted retailers.
           </p>
         </div>
       </main>

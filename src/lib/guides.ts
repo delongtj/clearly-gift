@@ -47,6 +47,10 @@ export const categoryEmoji: Record<string, string> = {
   'Budget Gifts': '💝',
   'Teens': '🎸',
   'Luxury': '💎',
+  'College': '🎓',
+  'Outdoors': '🏕️',
+  'DIY': '🔧',
+  'Home': '🏠',
 }
 
 export const categoryGradient: Record<string, { from: string; to: string; accent: string; textColor: string }> = {
@@ -71,6 +75,10 @@ export const categoryGradient: Record<string, { from: string; to: string; accent
   'Budget Gifts':       { from: 'from-green-50',    to: 'to-emerald-100', accent: '#10b981', textColor: 'text-green-800' },
   'Teens':              { from: 'from-orange-50',   to: 'to-amber-100',  accent: '#f97316', textColor: 'text-orange-800' },
   'Luxury':             { from: 'from-violet-50',   to: 'to-purple-100', accent: '#8b5cf6', textColor: 'text-violet-800' },
+  'College':            { from: 'from-blue-50',     to: 'to-cyan-100',   accent: '#0ea5e9', textColor: 'text-blue-800' },
+  'Outdoors':           { from: 'from-red-50',      to: 'to-orange-100', accent: '#ef4444', textColor: 'text-red-800' },
+  'DIY':                { from: 'from-gray-50',     to: 'to-slate-100',  accent: '#64748b', textColor: 'text-gray-800' },
+  'Home':               { from: 'from-emerald-50',  to: 'to-teal-100',   accent: '#14b8a6', textColor: 'text-emerald-800' },
 }
 
 const DEFAULT_GRADIENT = { from: 'from-gray-50', to: 'to-gray-100', accent: '#6b7280', textColor: 'text-gray-800' }
