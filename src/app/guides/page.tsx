@@ -241,43 +241,43 @@ return (
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-pink-100 to-rose-100 flex items-center justify-center">
-              <span className="text-4xl">🧘</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1529693662653-9d480530a697?w=800&h=400&fit=crop" alt="Gift ideas for wellness lovers" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Wellness Lovers</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Self-care essentials and mindful accessories for those prioritizing mental and physical wellness.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-wellness-lovers" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-cyan-100 to-blue-100 flex items-center justify-center">
-              <span className="text-4xl">🚲</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1565121504582-6dbd18772bb2?w=800&h=400&fit=crop" alt="Gift ideas for cyclists" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Cyclists</h3>
               <p className="text-gray-700 text-sm mb-4">
                 High-performance gear and safety accessories for road cyclists and mountain biking enthusiasts.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-cyclists" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
           {/* Budget Categories */}
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center">
-              <span className="text-4xl">💝</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1513726214296-1f2e95e452d8?w=800&h=400&fit=crop" alt="Gift ideas under $25" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas Under $25</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Thoughtful and budget-friendly gifts that don't compromise on quality or meaning.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-under-25" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
