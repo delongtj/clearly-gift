@@ -188,16 +188,16 @@ return (
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-purple-100 to-violet-100 flex items-center justify-center">
-              <span className="text-4xl">🎨</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1613744540922-2cbd526b8906?w=800&h=400&fit=crop" alt="Gift ideas for artists" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Artists</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Creative supplies and digital tools to inspire and support artistic expression across all mediums.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-artists" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
@@ -214,30 +214,30 @@ return (
              </div>
            </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-slate-100 to-gray-100 flex items-center justify-center">
-              <span className="text-4xl">📸</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1638128206917-d544cfb6e263?w=800&h=400&fit=crop" alt="Gift ideas for photographers" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Photographers</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Professional gear and creative accessories for capturing life's moments with style and precision.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-photographers" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 
           {/* Popular Categories */}
-          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-75">
-            <div className="h-48 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
-              <span className="text-4xl">🎓</span>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1544191046-397b734b0891?w=800&h=400&fit=crop" alt="Gift ideas for teachers" className="h-48 w-full object-cover" />
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">Top 10 Gift Ideas for Teachers</h3>
               <p className="text-gray-700 text-sm mb-4">
                 Classroom essentials and appreciation gifts to show gratitude for dedicated educators.
               </p>
-              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <a href="/guides/top-10-gift-ideas-for-teachers" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                Read Guide →
+              </a>
             </div>
           </div>
 

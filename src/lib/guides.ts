@@ -39,6 +39,9 @@ export const categoryEmoji: Record<string, string> = {
   'Baby & Parenting': '👶',
   'Garden & Outdoors': '🌱',
   'Travel': '✈️',
+  'Arts & Crafts': '🎨',
+  'Photography': '📸',
+  'Education': '🎓',
 }
 
 export const categoryGradient: Record<string, { from: string; to: string; accent: string; textColor: string }> = {
@@ -55,6 +58,9 @@ export const categoryGradient: Record<string, { from: string; to: string; accent
   'Baby & Parenting':   { from: 'from-rose-50',     to: 'to-pink-100',    accent: '#f43f5e', textColor: 'text-rose-800' },
   'Garden & Outdoors':  { from: 'from-green-50',    to: 'to-lime-100',    accent: '#84cc16', textColor: 'text-green-800' },
   'Travel':             { from: 'from-teal-50',     to: 'to-cyan-100',    accent: '#14b8a6', textColor: 'text-teal-800' },
+  'Arts & Crafts':      { from: 'from-violet-50',   to: 'to-purple-100',  accent: '#8b5cf6', textColor: 'text-violet-800' },
+  'Photography':        { from: 'from-slate-50',    to: 'to-gray-100',    accent: '#64748b', textColor: 'text-slate-800' },
+  'Education':          { from: 'from-indigo-50',   to: 'to-blue-100',    accent: '#6366f1', textColor: 'text-indigo-800' },
 }
 
 const DEFAULT_GRADIENT = { from: 'from-gray-50', to: 'to-gray-100', accent: '#6b7280', textColor: 'text-gray-800' }
