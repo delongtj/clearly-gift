@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: { params: Promise<{ token: st
       type: 'website',
       images: [
         {
-          url: '/og-image.png', // We can create this later
+          url: `/api/og/list?name=${encodeURIComponent(listName)}&items=${itemCount || 0}`,
           width: 1200,
           height: 630,
           alt: listName,
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<{ token: st
       card: 'summary_large_image',
       title,
       description,
-      images: ['/og-image.png'],
+      images: [`/api/og/list?name=${encodeURIComponent(listName)}&items=${itemCount || 0}`],
     },
     robots: {
       index: false, // Don't index individual lists for privacy

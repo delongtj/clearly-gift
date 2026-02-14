@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     siteName: 'clearly.gift',
     images: [
       {
-        url: '/og-image.png',
+        url: '/api/og',
         width: 1200,
         height: 630,
         alt: 'clearly.gift - Share your wishlist. Keep the surprise.',
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'clearly.gift - Share your wishlist. Keep the surprise.',
     description: "Create beautiful, clutter-free wish lists where friends and family can view and claim gifts - no sign-up required.",
-    images: ['/og-image.png'],
+    images: ['/api/og'],
   },
   robots: {
     index: true,
