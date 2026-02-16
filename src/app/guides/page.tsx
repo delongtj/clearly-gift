@@ -375,24 +375,7 @@ return (
           </a>
         </div>
 
-        <div className="text-center mt-12">
-          <p className="text-gray-700 mb-4">
-            <strong>26 comprehensive gift guides</strong> covering every category — from tech lovers to outdoor adventurers, budget picks to luxury splurges.
-          </p>
-          <p className="text-gray-600 text-sm">
-            Each guide features 10 hand-picked products with real prices and links to trusted retailers.
-          </p>
-        </div>
       </main>
-
-      <footer className="border-t border-gray-100 py-8 mt-16">
-        <div className="max-w-6xl mx-auto px-4 text-center text-gray-700">
-          <p>&copy; 2025 clearly.gift. Share your wishlist. Keep the surprise</p>
-          <p className="text-xs text-gray-500 mt-4">
-            This site contains affiliate links. We may earn a commission when you purchase through these links at no additional cost to you.
-          </p>
-        </div>
-      </footer>
     </div>
   )
 }
