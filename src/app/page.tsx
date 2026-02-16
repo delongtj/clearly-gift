@@ -123,6 +123,34 @@ export default function Home() {
          </div>
        </section>
 
+        {/* Gift Guides Section */}
+        <section className="max-w-6xl mx-auto px-4 py-20 bg-gradient-to-b from-gray-50 to-white rounded-3xl border border-gray-200 px-8 mb-16">
+          <h2 className="text-4xl font-bold text-center mb-16 text-gray-900">Gift Guides</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { title: "Top Gifts for Toddlers 2025", desc: "10 perfect picks that'll keep the little ones happy and engaged.", href: "/guides/top-10-gift-ideas-for-toddlers" },
+              { title: "Best Tech Gifts", desc: "Gadgets and accessories for the tech enthusiast in your life.", href: "/guides/top-10-gift-ideas-for-tech-lovers" },
+              { title: "Gifts for Coffee Lovers", desc: "From beans to brewers, everything for the caffeine connoisseur.", href: "/guides/top-10-gift-ideas-for-coffee-lovers" },
+            ].map((guide, i) => (
+              <Link
+                key={i}
+                href={guide.href}
+                className="bg-white p-8 rounded-xl border border-gray-200 hover:border-emerald-200 hover:shadow-lg transition-all hover:scale-105 block"
+              >
+                <h3 className="font-semibold mb-3 text-gray-900">{guide.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{guide.desc}</p>
+              </Link>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <Link href="/guides" className="text-emerald-600 hover:text-emerald-700 font-semibold inline-flex items-center gap-2 transition-colors">
+              View All Guides
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          </div>
+        </section>
 
       </main>
     </div>

@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 // Easy to add/remove footer links - just edit this array!
 const FOOTER_LINKS = [
+  { href: '/guides', label: 'Gift Guides' },
   { href: '/about', label: 'About' },
   { href: '/privacy', label: 'Privacy Policy' },
   { href: '/terms', label: 'Terms of Service' },
