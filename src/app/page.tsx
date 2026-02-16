@@ -128,17 +128,20 @@ export default function Home() {
           <h2 className="text-4xl font-bold text-center mb-16 text-gray-900">Gift Guides</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { title: "Top Gifts for Toddlers 2025", desc: "10 perfect picks that'll keep the little ones happy and engaged.", href: "/guides/top-10-gift-ideas-for-toddlers" },
-              { title: "Best Tech Gifts", desc: "Gadgets and accessories for the tech enthusiast in your life.", href: "/guides/top-10-gift-ideas-for-tech-lovers" },
-              { title: "Gifts for Coffee Lovers", desc: "From beans to brewers, everything for the caffeine connoisseur.", href: "/guides/top-10-gift-ideas-for-coffee-lovers" },
+              { title: "Top Gifts for Toddlers 2025", desc: "10 perfect picks that'll keep the little ones happy and engaged.", href: "/guides/top-10-gift-ideas-for-toddlers", image: "https://images.unsplash.com/photo-1707143017681-777ab2ac79a4?w=800&h=400&fit=crop", alt: "Gift ideas for toddlers" },
+              { title: "Best Tech Gifts", desc: "Gadgets and accessories for the tech enthusiast in your life.", href: "/guides/top-10-gift-ideas-for-tech-lovers", image: "https://images.unsplash.com/photo-1585789574224-8cbf3247e581?w=800&h=400&fit=crop", alt: "Gift ideas for tech lovers" },
+              { title: "Gifts for Coffee Lovers", desc: "From beans to brewers, everything for the caffeine connoisseur.", href: "/guides/top-10-gift-ideas-for-coffee-lovers", image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?w=800&h=400&fit=crop", alt: "Gift ideas for coffee lovers" },
             ].map((guide, i) => (
               <Link
                 key={i}
                 href={guide.href}
-                className="bg-white p-8 rounded-xl border border-gray-200 hover:border-emerald-200 hover:shadow-lg transition-all hover:scale-105 block"
+                className="bg-white rounded-xl border border-gray-200 hover:border-emerald-200 hover:shadow-lg transition-all hover:scale-105 block overflow-hidden"
               >
-                <h3 className="font-semibold mb-3 text-gray-900">{guide.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{guide.desc}</p>
+                <img src={guide.image} alt={guide.alt} className="h-44 w-full object-cover" />
+                <div className="p-6">
+                  <h3 className="font-semibold mb-2 text-gray-900">{guide.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{guide.desc}</p>
+                </div>
               </Link>
             ))}
           </div>
