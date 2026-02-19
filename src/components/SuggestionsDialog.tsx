@@ -38,9 +38,7 @@ export default function SuggestionsDialog({
       })
 
       if (response.status === 429) {
-        const data = await response.json()
-        const seconds = data.retryAfterMs ? Math.ceil(data.retryAfterMs / 1000) : 60
-        setError(`Please wait ${seconds} seconds before generating more suggestions.`)
+        setError('System busy. Try again later.')
         return
       }
 

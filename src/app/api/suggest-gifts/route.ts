@@ -14,12 +14,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Check rate limit
-    const rateLimit = checkRateLimit(listId)
-    if (!rateLimit.allowed) {
-      const retryAfterSeconds = Math.ceil((rateLimit.retryAfterMs || 60_000) / 1000)
+    if (!checkRateLimit().allowed) {
       return NextResponse.json(
-        { error: 'Too many requests. Please wait before trying again.', retryAfterMs: rateLimit.retryAfterMs },
-        { status: 429, headers: { 'Retry-After': String(retryAfterSeconds) } }
+        { error: 'System busy. Try again later.' },
+        { status: 429 }
       )
     }
 
