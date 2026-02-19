@@ -9,7 +9,10 @@ import { db } from '@/lib/database'
 import { processUrlAction } from '@/app/actions'
 import type { List, Item } from '@/types/database'
 import ConfirmDialog from '@/components/ConfirmDialog'
+import SuggestionsDialog from '@/components/SuggestionsDialog'
 import Toast from '@/components/Toast'
+import type { GiftSuggestion } from '@/lib/gemini'
+import { isMeaningfulItem } from '@/lib/item-quality'
 
 export default function EditListPage() {
   const router = useRouter()
@@ -41,6 +44,7 @@ export default function EditListPage() {
   const [toastMessage, setToastMessage] = useState('')
   const [toastType, setToastType] = useState<'success' | 'error' | 'info'>('success')
   const [draggedItem, setDraggedItem] = useState<string | null>(null)
+  const [showSuggestions, setShowSuggestions] = useState(false)
 
   useEffect(() => {
     checkAuth()
@@ -300,6 +304,24 @@ export default function EditListPage() {
     setShowToast(true)
   }
 
+  const handleAddSuggestedItem = async (suggestion: GiftSuggestion) => {
+    const item = await db.createItem(
+      listId,
+      suggestion.name,
+      suggestion.description
+    )
+    if (item) {
+      setItems(prev => [item, ...prev])
+      setToastMessage(`"${suggestion.name}" added to your list!`)
+      setToastType('success')
+      setShowToast(true)
+    } else {
+      setToastMessage('Failed to add item. Please try again.')
+      setToastType('error')
+      setShowToast(true)
+    }
+  }
+
   if (loading) {
     return (
       <div className="bg-gray-50 flex items-center justify-center flex-1">
@@ -347,15 +369,27 @@ export default function EditListPage() {
               <h1 className="text-4xl font-bold text-gray-900">{list.name}</h1>
               <p className="text-gray-600 mt-1">Add and manage items for this list</p>
             </div>
-            <button
-              onClick={copyShareLink}
-              className="px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all active:scale-95 shadow-sm hover:shadow-md flex items-center gap-2"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-              </svg>
-              Share
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShowSuggestions(true)}
+                disabled={!items.some(i => isMeaningfulItem(i.name))}
+                className="px-4 py-2 border border-emerald-600 text-emerald-600 text-sm font-medium rounded-lg hover:bg-emerald-50 transition-all active:scale-95 shadow-sm flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+                Suggest Gifts
+              </button>
+              <button
+                onClick={copyShareLink}
+                className="px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all active:scale-95 shadow-sm hover:shadow-md flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+                Share
+              </button>
+            </div>
           </div>
         </div>
 
@@ -621,6 +655,16 @@ export default function EditListPage() {
       </main>
 
       {/* Dialogs */}
+      {list && (
+        <SuggestionsDialog
+          isOpen={showSuggestions}
+          onClose={() => setShowSuggestions(false)}
+          onAddItem={handleAddSuggestedItem}
+          listId={listId}
+          listName={list.name}
+          items={items.map(i => ({ name: i.name, description: i.description }))}
+        />
+      )}
       <ConfirmDialog
         isOpen={showDeleteConfirm}
         onClose={() => setShowDeleteConfirm(false)}
