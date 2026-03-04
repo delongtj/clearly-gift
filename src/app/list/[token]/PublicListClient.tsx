@@ -216,8 +216,8 @@ export default function PublicListClient({ token }: PublicListClientProps) {
   }
 
   const trackItemClick = (itemId: string) => {
-    supabase.rpc('increment_item_click_count', { item_id: itemId } as any).catch((error: any) => {
-      console.error('Error incrementing click count:', error)
+    supabase.rpc('increment_item_click_count', { item_id: itemId } as any).then(({ error }) => {
+      if (error) console.error('Error incrementing click count:', error)
     })
   }
 
