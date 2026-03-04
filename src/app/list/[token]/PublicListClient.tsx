@@ -215,17 +215,11 @@ export default function PublicListClient({ token }: PublicListClientProps) {
   setItemToClaim(null)
   }
 
-  const handleItemClick = (item: Item) => {
-  // Open link immediately
-  window.open(item.formatted_url || item.url || '#', '_blank')
-  
-  // Increment click count in background
-  Promise.resolve(supabase.rpc('increment_item_click_count', { item_id: item.id } as any)).then(() => {
-  console.log('Click count incremented for item:', item.id)
-  }).catch((error: any) => {
-  console.error('Error incrementing click count:', error)
-  })
-    }
+  const trackItemClick = (itemId: string) => {
+    supabase.rpc('increment_item_click_count', { item_id: itemId } as any).catch((error: any) => {
+      console.error('Error incrementing click count:', error)
+    })
+  }
 
   if (loading) {
     return (
@@ -326,12 +320,15 @@ export default function PublicListClient({ token }: PublicListClientProps) {
                         </div>
                       )}
                       {item.formatted_url || item.url ? (
-                        <button
-                          onClick={() => handleItemClick(item)}
-                          className="text-lg font-semibold mb-2 transition-colors text-left text-emerald-600 hover:text-emerald-700 underline cursor-pointer"
+                        <a
+                          href={item.formatted_url || item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => trackItemClick(item.id)}
+                          className="text-lg font-semibold mb-2 transition-colors text-emerald-600 hover:text-emerald-700 underline"
                         >
                           {item.name}
-                        </button>
+                        </a>
                       ) : (
                         <h3 className={`text-lg font-semibold mb-2 transition-colors ${
                           item.claimed_at ? 'text-gray-500' : 'text-gray-900'
