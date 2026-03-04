@@ -43,7 +43,7 @@ export default function EditListPage() {
   const [showToast, setShowToast] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
   const [toastType, setToastType] = useState<'success' | 'error' | 'info'>('success')
-  const [draggedItem, setDraggedItem] = useState<string | null>(null)
+  const [reordering, setReordering] = useState(false)
   const [showSuggestions, setShowSuggestions] = useState(false)
 
   useEffect(() => {
@@ -224,75 +224,43 @@ export default function EditListPage() {
     setEditItemUrl('')
   }
 
-  const handleDragStart = (e: React.DragEvent, itemId: string) => {
-    // Don't allow dragging if the drag started from an input or textarea
-    if ((e.target instanceof HTMLInputElement) || (e.target instanceof HTMLTextAreaElement)) {
-      e.preventDefault()
-      return
-    }
-    
-    // Only allow dragging if initiated from the grip control
-    const gripControl = (e.currentTarget as HTMLElement).querySelector('[data-drag-handle]')
-    if (!gripControl || !gripControl.contains(e.target as Node)) {
-      e.preventDefault()
-      return
-    }
-    
-    setDraggedItem(itemId)
-  }
+  const moveItem = async (index: number, direction: 'up' | 'down') => {
+    const targetIndex = direction === 'up' ? index - 1 : index + 1
+    if (targetIndex < 0 || targetIndex >= items.length || reordering) return
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault()
-  }
+    setReordering(true)
 
-  const handleDrop = async (targetItemId: string) => {
-    if (!draggedItem || draggedItem === targetItemId) {
-      setDraggedItem(null)
-      return
-    }
-
-    const draggedIndex = items.findIndex(i => i.id === draggedItem)
-    const targetIndex = items.findIndex(i => i.id === targetItemId)
-    
-    if (draggedIndex === -1 || targetIndex === -1) {
-      setDraggedItem(null)
-      return
-    }
-
-    // Reorder items locally
+    // Swap items locally
     const newItems = [...items]
-    const [movedItem] = newItems.splice(draggedIndex, 1)
-    newItems.splice(targetIndex, 0, movedItem)
+    const temp = newItems[index]
+    newItems[index] = newItems[targetIndex]
+    newItems[targetIndex] = temp
 
-    // Update positions
-    const updatedItems = newItems.map((item, idx) => ({
-      ...item,
-      position: idx
-    }))
+    // Update positions to match new array order
+    newItems[index] = { ...newItems[index], position: index }
+    newItems[targetIndex] = { ...newItems[targetIndex], position: targetIndex }
 
-    setItems(updatedItems)
-    setDraggedItem(null)
+    setItems(newItems)
 
-    // Persist to database
-    const updates = updatedItems.map(item => ({
-      id: item.id,
-      position: item.position
-    }))
+    // Persist only the two swapped items
+    const { error: err1 } = await supabase
+      .from('items')
+      // @ts-expect-error - Type inference issue with Supabase client
+      .update({ position: newItems[index].position })
+      .eq('id', newItems[index].id)
 
-    for (const update of updates) {
-      const { error } = await supabase
-        .from('items')
-        // @ts-expect-error - Type inference issue with Supabase client
-        .update({ position: update.position })
-        .eq('id', update.id)
+    const { error: err2 } = await supabase
+      .from('items')
+      // @ts-expect-error - Type inference issue with Supabase client
+      .update({ position: newItems[targetIndex].position })
+      .eq('id', newItems[targetIndex].id)
 
-      if (error) {
-        console.error('Error updating item position:', error)
-        // Reload items on error
-        loadListAndItems()
-        return
-      }
+    if (err1 || err2) {
+      console.error('Error updating item position:', err1 || err2)
+      loadListAndItems()
     }
+
+    setReordering(false)
   }
 
   const copyShareLink = () => {
@@ -495,18 +463,10 @@ export default function EditListPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            {items.map((item) => (
-              <div 
-                key={item.id} 
-                draggable
-                onDragStart={(e) => handleDragStart(e, item.id)}
-                onDragOver={handleDragOver}
-                onDrop={() => handleDrop(item.id)}
-                className={`bg-white rounded-2xl border border-gray-200 p-6 shadow-sm transition-all cursor-move ${
-                  draggedItem === item.id 
-                    ? 'opacity-50 border-emerald-400 bg-emerald-50' 
-                    : 'hover:shadow-md hover:border-emerald-200'
-                }`}
+            {items.map((item, index) => (
+              <div
+                key={item.id}
+                className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm transition-all hover:shadow-md hover:border-emerald-200"
               >
                 {editingItemId === item.id ? (
                   // Inline Edit Mode
@@ -570,20 +530,28 @@ export default function EditListPage() {
                 // Normal Display Mode
                 <div className="flex items-start justify-between">
                 <div className="flex items-start gap-3 flex-1 min-w-0">
-                       <div 
-                       data-drag-handle
-                       className="flex flex-col gap-1 cursor-grab active:cursor-grabbing flex-shrink-0 mt-0.5 transition-opacity hover:opacity-100 opacity-60 p-2"
-                       title="Drag to reorder"
-                       >
-                       <div className="flex gap-1">
-                        <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                          <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                          </div>
-                          <div className="flex gap-1">
-                            <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                            <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                          </div>
-                         </div>
+                       <div className="flex flex-col gap-0.5 flex-shrink-0">
+                         <button
+                           onClick={() => moveItem(index, 'up')}
+                           disabled={index === 0 || reordering}
+                           className="p-1 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded transition-colors disabled:opacity-30 disabled:hover:text-gray-400 disabled:hover:bg-transparent"
+                           aria-label="Move up"
+                         >
+                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                           </svg>
+                         </button>
+                         <button
+                           onClick={() => moveItem(index, 'down')}
+                           disabled={index === items.length - 1 || reordering}
+                           className="p-1 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded transition-colors disabled:opacity-30 disabled:hover:text-gray-400 disabled:hover:bg-transparent"
+                           aria-label="Move down"
+                         >
+                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                           </svg>
+                         </button>
+                       </div>
                        <div className="flex-1 min-w-0">
                       <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.name}</h3>
                       {item.description && (
