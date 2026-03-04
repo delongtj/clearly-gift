@@ -417,8 +417,8 @@ export default function Dashboard() {
                          <h2 className="text-lg font-semibold text-gray-900 mb-3 hover:text-emerald-600 hover:underline cursor-pointer transition-colors">{list.name}</h2>
                        </Link>
                       <div className="flex items-center space-x-4 text-sm text-gray-500">
-                      <span>{list.view_count || 0} views</span>
-                      <span>{listClickCounts[list.id] || 0} link clicks</span>
+                      <span>{list.view_count || 0} {(list.view_count || 0) === 1 ? 'view' : 'views'}</span>
+                      <span>{listClickCounts[list.id] || 0} link {(listClickCounts[list.id] || 0) === 1 ? 'click' : 'clicks'}</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 ml-4 flex-shrink-0">
