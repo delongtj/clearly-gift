@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import { db } from '@/lib/database'
-import { processUrlAction } from '@/app/actions'
+import { processUrlAction, fetchMetadataAction } from '@/app/actions'
 import type { List, Item } from '@/types/database'
 import ConfirmDialog from '@/components/ConfirmDialog'
 import SuggestionsDialog from '@/components/SuggestionsDialog'
@@ -224,6 +224,30 @@ export default function EditListPage() {
     setEditItemUrl('')
   }
 
+  const handleNewUrlBlur = async () => {
+    const url = newItemUrl.trim()
+    if (!url) return
+
+    try {
+      const metadata = await fetchMetadataAction(url)
+      console.log('[metadata] Would auto-fill add form:', metadata)
+    } catch (err) {
+      console.log('[metadata] Fetch failed for add form:', err)
+    }
+  }
+
+  const handleEditUrlBlur = async () => {
+    const url = editItemUrl.trim()
+    if (!url) return
+
+    try {
+      const metadata = await fetchMetadataAction(url)
+      console.log('[metadata] Would auto-fill edit form:', metadata)
+    } catch (err) {
+      console.log('[metadata] Fetch failed for edit form:', err)
+    }
+  }
+
   const moveItem = async (index: number, direction: 'up' | 'down') => {
     const targetIndex = direction === 'up' ? index - 1 : index + 1
     if (targetIndex < 0 || targetIndex >= items.length || reordering) return
@@ -415,6 +439,7 @@ export default function EditListPage() {
               id="itemUrl"
               value={newItemUrl}
               onChange={(e) => setNewItemUrl(e.target.value)}
+              onBlur={handleNewUrlBlur}
               placeholder="amazon.com/product or https://..."
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900"
               disabled={saving}
@@ -479,6 +504,7 @@ export default function EditListPage() {
                         type="text"
                         value={editItemName}
                         onChange={(e) => setEditItemName(e.target.value)}
+                        placeholder=""
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900"
                         autoFocus
                         disabled={saving}
@@ -504,6 +530,7 @@ export default function EditListPage() {
                         type="text"
                         value={editItemUrl}
                         onChange={(e) => setEditItemUrl(e.target.value)}
+                        onBlur={handleEditUrlBlur}
                         placeholder="amazon.com/product or https://..."
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900"
                         disabled={saving}
