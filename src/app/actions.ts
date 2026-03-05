@@ -12,5 +12,8 @@ export async function fetchMetadataAction(url: string): Promise<UrlMetadata> {
   if (normalizedUrl && !normalizedUrl.match(/^https?:\/\//i)) {
     normalizedUrl = `https://${normalizedUrl}`
   }
-  return fetchUrlMetadata(normalizedUrl)
+  console.log('[metadata] fetchMetadataAction called with:', JSON.stringify({ raw: url, normalized: normalizedUrl }))
+  const result = await fetchUrlMetadata(normalizedUrl)
+  console.log('[metadata] fetchMetadataAction result:', JSON.stringify(result))
+  return result
 }

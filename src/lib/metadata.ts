@@ -49,11 +49,16 @@ const microlinkProvider: MetadataProvider = async (url) => {
 
   try {
     const apiUrl = `https://api.microlink.io/?url=${encodeURIComponent(url)}`
+    console.log('[metadata] Fetching:', apiUrl)
     const response = await fetch(apiUrl, { signal: controller.signal })
 
-    if (!response.ok) return EMPTY
+    if (!response.ok) {
+      console.log('[metadata] Non-OK response:', response.status)
+      return EMPTY
+    }
 
     const json = await response.json()
+    console.log('[metadata] Response status:', json?.status, 'data keys:', json?.data ? Object.keys(json.data) : 'none')
     const data = json?.data
     if (!data) return EMPTY
 
