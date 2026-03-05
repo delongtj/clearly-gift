@@ -45,7 +45,7 @@ function isAmazonUrl(url: string): boolean {
 
 const microlinkProvider: MetadataProvider = async (url) => {
   const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), 10_000)
+  const timeout = setTimeout(() => controller.abort(), 20_000)
 
   try {
     const apiUrl = `https://api.microlink.io/?url=${encodeURIComponent(url)}`
@@ -75,7 +75,8 @@ const microlinkProvider: MetadataProvider = async (url) => {
     }
 
     return { title, description: rawDescription, image }
-  } catch {
+  } catch (err) {
+    console.log('[metadata] Fetch error:', err instanceof Error ? err.message : err)
     return EMPTY
   } finally {
     clearTimeout(timeout)
