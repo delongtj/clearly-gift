@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f9fafb"/>
+
+  <g>
+    <image href="clearly-gift-logo.png" x="352" y="184" width="84" height="84" preserveAspectRatio="xMidYMid meet"/>
+    <text x="456" y="246" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700" letter-spacing="-2">clearly.gift</text>
+  </g>
+
+  <text x="600" y="330" fill="#6b7280" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="400" text-anchor="middle" letter-spacing="-0.5">Share your wishlist. Keep the surprise.</text>
+
+  <g fill="#059669" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="400" text-anchor="middle">
+    <text x="390" y="438">Simple wish lists</text>
+    <text x="600" y="438">No sign-up to claim</text>
+    <text x="810" y="438">Free forever</text>
+  </g>
+</svg>
