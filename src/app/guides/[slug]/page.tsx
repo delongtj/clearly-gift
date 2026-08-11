@@ -7,10 +7,8 @@ import ReactMarkdown from 'react-markdown'
 import GuideDetailHeader from '@/components/GuideDetailHeader'
 import {
   getGuide,
-  getRelatedGuides,
   getEmojiForGuide,
   getGradientForCategory,
-  categoryEmoji,
 } from '@/lib/guides'
 
 interface GuidePageProps {
@@ -83,8 +81,6 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
   const emoji = getEmojiForGuide(guide)
   const gradient = getGradientForCategory(guide.frontmatter.category)
-  const relatedGuides = getRelatedGuides(slug, guide.frontmatter.category)
-
   const MDXContent = () => {
     return (
       <ReactMarkdown
@@ -229,42 +225,6 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </article>
         </div>
 
-        {/* Related Guides */}
-        {relatedGuides.length > 0 && (
-          <div className="mt-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">More Gift Guides</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {relatedGuides.map((relatedGuide) => (
-                <a key={relatedGuide.slug} href={`/guides/${relatedGuide.slug}`} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden group block">
-                  {relatedGuide.frontmatter.heroImage ? (
-                    <img
-                      src={`${relatedGuide.frontmatter.heroImage}&w=400&h=200&fit=crop`}
-                      alt={relatedGuide.frontmatter.title}
-                      className="w-full h-40 object-cover"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-full h-40 bg-gray-100 flex items-center justify-center text-4xl">
-                      {getEmojiForGuide(relatedGuide)}
-                    </div>
-                  )}
-                  <div className="p-5">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors">
-                      {relatedGuide.frontmatter.title}
-                    </h3>
-                    <span className="text-emerald-600 group-hover:text-emerald-700 font-medium inline-flex items-center">
-                      Read Guide
-                      <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </span>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* CTA Section */}
         <div className="mt-16 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-2xl p-8 text-center text-white">
           <h2 className="text-2xl font-bold mb-4">Ready to Create Your Own Gift List?</h2>
@@ -294,7 +254,6 @@ export default async function GuidePage({ params }: GuidePageProps) {
               Share your wishlist. Keep the surprise
             </p>
             <div className="flex justify-center space-x-6 text-sm text-gray-600">
-              <a href="/guides" className="hover:text-gray-900">All Guides</a>
               <a href="/" className="hover:text-gray-900">Home</a>
               <a href="/auth" className="hover:text-gray-900">Sign Up</a>
             </div>

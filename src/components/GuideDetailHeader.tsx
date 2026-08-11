@@ -31,9 +31,6 @@ export default function GuideDetailHeader() {
              <span className="text-xl font-bold text-gray-900">clearly.gift</span>
            </a>
           <div className="flex items-center space-x-4">
-            <a href="/guides" className="text-gray-600 hover:text-gray-900 font-medium">
-              All Guides
-            </a>
             <a href="/" className="text-gray-600 hover:text-gray-900 font-medium">
               Home
             </a>
