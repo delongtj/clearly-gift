@@ -172,8 +172,8 @@ export default function Dashboard() {
     const token = generateListToken()
     const { data, error } = await supabase
       .from('lists')
-      // @ts-expect-error - Type inference issue with Supabase client
       .insert({
+        // @ts-expect-error - Supabase table types do not infer the insert shape here
         user_id: user.id,
         name: newListName.trim(),
         token
